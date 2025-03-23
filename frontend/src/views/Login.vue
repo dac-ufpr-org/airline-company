@@ -20,7 +20,7 @@
           required
           :error="errors.password"
         />
-        <Button blue label="Entrar" @click="register()" />
+        <Button blue label="Entrar" @click="login()" />
         <div class="flex justify-end mt-6"></div>
       </div>
     </div>
@@ -41,7 +41,7 @@ export default {
     errors: {},
   }),
   methods: {
-    async register() {
+    async login() {
       if (this.object.email && this.object.name && this.object.password) {
         // const response = await this.register(this.object) //implementar depois no backend
         // if (!response?.data) {
