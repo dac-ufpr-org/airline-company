@@ -1,37 +1,36 @@
 <template>
-    <button
-        :disabled="disabled"
-        :class="[
-        { 'opacity-50 cursor-auto': disabled },
-        { [blueClass]: blue && !outlined },
-        { [blueBorderClass]: blue && outlined },
-        { [greenClass]: green && !outlined },
-        { [greenBorderClass]: green && outlined },
-        { [redClass]: red && !outlined },
-        { [redBorderClass]: red && outlined },
-        { [yellowClass]: yellow && !outlined },
-        { [yellowBorderClass]: yellow && outlined },
-        { 'rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300': gray },
-        { 'rounded-lg 0 border border-slate-20 hover:bg-gray-50': light },
-        { 'cursor-pointer': !disabled }
-        ]"
-        class="py-1 w-full rounded-lg flex items-center justify-center"
-    >
-        <div :class="size === 'text-xs' || size === 'text-sm' ? 'px-2' : 'px-4'" class="py-2 flex items-center justify-center">
-            <slot>
-                <i class="fa-solid" :class="label ? `mr-2 ${this.icon}` : `${this.icon}`" v-if="icon"></i>
-                <p :class="size ? size : ''">{{ label }}</p>
-            </slot>
-        </div>
-    </button>
-  
+  <button
+    :disabled="disabled"
+    :class="[
+      { 'opacity-50 cursor-auto': disabled },
+      { [blueClass]: blue && !outlined },
+      { [blueBorderClass]: blue && outlined },
+      { [greenClass]: green && !outlined },
+      { [greenBorderClass]: green && outlined },
+      { [redClass]: red && !outlined },
+      { [redBorderClass]: red && outlined },
+      { [lightBlueClass]: lightBlue && !outlined },
+      { [lightGreenClass]: lightGreen && !outlined },
+      { [lightRedClass]: lightRed && !outlined },
+      { 'rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300': gray },
+      { 'rounded-lg border border-slate-200 hover:bg-gray-50': light },
+      { 'cursor-pointer': !disabled }
+    ]"
+    class="py-1 w-full rounded-lg flex items-center justify-center transition-colors duration-200"
+  >
+    <div :class="size === 'text-xs' || size === 'text-sm' ? 'px-2' : 'px-4'" class="py-2 flex items-center justify-center">
+      <slot>
+        <i class="fa-solid" :class="label ? `mr-2 ${icon}` : icon" v-if="icon"></i>
+        <p :class="size ? size : ''">{{ label }}</p>
+      </slot>
+    </div>
+  </button>
 </template>
 
 <script>
 export default {
-    props: {
+  props: {
     label: String,
-    color: String,
     icon: String,
     disabled: {
       type: Boolean,
@@ -42,8 +41,9 @@ export default {
     blue: [Boolean, Number],
     green: [Boolean, Number],
     red: [Boolean, Number],
-    yellow: [Boolean, Number],
-    dark: [Boolean, Number],
+    lightBlue: [Boolean, Number],
+    lightGreen: [Boolean, Number],
+    lightRed: [Boolean, Number],
     gray: [Boolean, Number],
     light: [Boolean, Number],
   },
@@ -52,26 +52,29 @@ export default {
       return 'bg-blue-600 hover:bg-blue-700 text-white'
     },
     greenClass() {
-      return 'bg-green-500 hover:bg-green-600'
+      return 'bg-green-600 hover:bg-green-700 text-white'
     },
     redClass() {
-      return 'bg-red-500 hover:bg-red-600'
+      return 'bg-red-600 hover:bg-red-700 text-white'
     },
-    yellowClass() {
-      return 'bg-yellow-500 hover:bg-yellow-600'
+    lightBlueClass() {
+      return 'bg-blue-100 hover:bg-blue-200 text-blue-800'
+    },
+    lightGreenClass() {
+      return 'bg-green-100 hover:bg-green-200 text-green-800'
+    },
+    lightRedClass() {
+      return 'bg-red-100 hover:bg-red-200 text-red-800'
     },
     blueBorderClass() {
-      return 'border border-blue-600 hover:border-blue-700 text-blue-600'
+      return 'border border-blue-600 hover:border-blue-700 text-blue-600 hover:bg-blue-50'
     },
     greenBorderClass() {
-      return 'border border-green-500 hover:border-green-600 text-green-500'
+      return 'border border-green-600 hover:border-green-700 text-green-600 hover:bg-green-50'
     },
     redBorderClass() {
-      return 'border border-red-500 hover:border-red-600 text-red-500'
-    },
-    yellowBorderClass() {
-      return ' border border-yellow-500 hover:border-yellow-600 text-yellow-500'
-    },
-  },
+      return 'border border-red-600 hover:border-red-700 text-red-600 hover:bg-red-50'
+    }
+  }
 }
 </script>

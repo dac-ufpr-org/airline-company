@@ -21,7 +21,12 @@
           :error="errors.password"
         />
         <Button blue label="Entrar" @click="login()" />
-        <div class="flex justify-end mt-6"></div>
+        <div class="flex justify-end mt-6">
+          <p class="cursor-pointer hover:text-blue-900 text-blue-800 font-semibold" 
+             @click="$router.push('/register')">
+            Não tem conta? Cadastre-se
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -42,15 +47,31 @@ export default {
   }),
   methods: {
     async login() {
-      if (this.object.email && this.object.name && this.object.password) {
-        // const response = await this.register(this.object) //implementar depois no backend
-        // if (!response?.data) {
-        // }
-        this.$router.push("login");
-      } else {
-        if (!this.object.name) this.errors.name = "Nome é obrigatório";
-        if (!this.object.email) this.errors.email = "Email é obrigatório";
-        if (!this.object.password) this.errors.password = "Senha é obrigatória";
+      // Reset erros anteriores
+      this.errors = {};
+      
+      // Validação básica
+      if (!this.object.email) this.errors.email = "Email é obrigatório";
+      if (!this.object.password) this.errors.password = "Senha é obrigatória";
+      
+      // Se não houver erros, procede com o login
+      if (Object.keys(this.errors).length === 0) {
+        try {
+          // Implementar aqui a chamada real ao backend posteriormente
+          // const response = await authService.login(this.object);
+          // if (response.success) {
+          //  this.$router.push({ name: 'clientDashboard' });
+          // } else {
+          //   this.errors.general = "Credenciais inválidas";
+          // }
+          
+          // Por enquanto, apenas redireciona
+          this.$router.push({ name: 'clientDashboard' });
+          
+        } catch (error) {
+          console.error("Erro no login:", error);
+          this.errors.general = "Ocorreu um erro durante o login";
+        }
       }
     },
   },
