@@ -1,7 +1,8 @@
 <template>
   <button
     :disabled="disabled"
-    :class="[
+    @click="$emit('click')"
+    :class="[ 
       { 'opacity-50 cursor-auto': disabled },
       { [blueClass]: blue && !outlined },
       { [blueBorderClass]: blue && outlined },
