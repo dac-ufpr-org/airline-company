@@ -1,7 +1,6 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
-      <HeaderComponent 
-        :milhas="0"
+      <HeaderFuncionario
         pageTitle="Dashboard do Funcionário"
         @logout="logout"
       />
@@ -41,7 +40,7 @@
   </template>
   
   <script>
-  import HeaderComponent from '../components/HeaderComponent.vue'
+  import HeaderComponent from '../components/HeaderFuncionario.vue'
   import FlightsTable from '../components/FlightsTable.vue'
   import Button from '../components/Button.vue'
   
