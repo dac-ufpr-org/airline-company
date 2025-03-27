@@ -2,11 +2,18 @@
     <div class="grid grid-cols-2 h-[100vh] w-[100vw]">
         <div class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"></div>
         <div class="flex justify-center items-center">
-            <div class="mb-3 h-[60%] w-[70%] rounded rounded-lg p-6">
+            <div class="mb-3 h-[90%] w-[70%] rounded rounded-lg p-6">
                 <p class="mb-6 text-4xl font-semibold text-blue-800">Cadastre-se</p>
                 <Input title="Nome" v-model="object.name" required :error="this.errors.name" />
                 <Input title="Email" type="email" v-model="object.email" required :error="errors.email" />
-                <Input title="Senha" type="password" v-model="object.password" required :error="errors.password" />
+                <Input title="CPF" type="text" v-model="object.cpf" required :error="errors.cpf"/>
+                <Input title="CEP" type="number" v-model="object.cep" required :error="errors.cep"/>
+                <Input title="Rua" type="text" v-model="object.rua" required :error="errors.rua"/>
+                <Input title="Número" type="number" v-model="object.numero" required :error="errors.numero"/>
+                <Input title="Complemento" type="text" v-model="object.complemento" required :error="errors.complemento"/>
+                <Input title="Cidade" type="text" v-model="object.cidade" required :error="errors.cidade"/>
+                <Input title="Estado" type="text" v-model="object.estado" required :error="errors.estado"/>
+               <!-- <Input title="Senha" type="password" v-model="object.password" required :error="errors.password" /> -->
                 <Button blue label="Cadastrar" @click="register()" />
                 <div class="flex justify-end mt-6">
                     <p class="cursor-pointer hover:text-blue-900 text-blue-800 font-semibold" @click="this.$router.push('login')">Já tem conta? Entrar</p>
