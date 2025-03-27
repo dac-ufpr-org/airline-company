@@ -40,13 +40,14 @@
   </template>
   
   <script>
-  import HeaderComponent from '../components/HeaderFuncionario.vue'
+  
   import FlightsTable from '../components/FlightsTable.vue'
   import Button from '../components/Button.vue'
+  import HeaderFuncionario from '../components/HeaderFuncionario.vue'
   
   export default {
     components: {
-      HeaderComponent,
+      HeaderFuncionario,
       FlightsTable,
       Button
     },
