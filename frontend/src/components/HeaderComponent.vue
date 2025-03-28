@@ -10,7 +10,7 @@
           <h1 class="text-2xl font-bold">{{ pageTitle }}</h1>
         </div>
         
-        <div class="flex items-center gap-x-3"> <!-- Reduzi o space-x de 4 para 3 -->
+        <div class="flex items-center gap-x-3">
           <slot id="default"></slot>
         </div>
       </div>
@@ -23,10 +23,6 @@
   export default {
     components: { Button },
     props: {
-      milhas: {
-        type: Number,
-        default: 0
-      },
       pageTitle: {
         type: String,
         default: 'Dashboard do Cliente'
