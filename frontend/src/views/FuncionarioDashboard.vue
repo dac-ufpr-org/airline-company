@@ -1,9 +1,19 @@
 <template>
     <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
-      <HeaderFuncionario
+      <HeaderComponent
         pageTitle="Dashboard do Funcionário"
         @logout="logout"
-      />
+      >
+        <template #default>
+          <Button
+            red
+            label="Sair"
+            @click="$emit('logout')"
+            class="px-3 py-1.5 w-[50px] text-sm hover:bg-red-700 transition-colors"
+            icon="fa-sign-out-alt"
+          />
+        </template>
+      </HeaderComponent>
   
       <div class="container mx-auto flex mt-6 p-4">
         <main class="flex-1 bg-white p-6 rounded-xl shadow-lg border border-blue-200">
@@ -43,11 +53,11 @@
   
   import FlightsTable from '../components/FlightsTable.vue'
   import Button from '../components/Button.vue'
-  import HeaderFuncionario from '../components/HeaderFuncionario.vue'
+  import HeaderComponent from '../components/HeaderComponent.vue'
   
   export default {
     components: {
-      HeaderFuncionario,
+      HeaderComponent,
       FlightsTable,
       Button
     },
