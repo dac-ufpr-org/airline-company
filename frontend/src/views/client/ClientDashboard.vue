@@ -121,10 +121,10 @@ export default {
         }
       ],
       tableColumns: [
-        { key: 'dataHora', label: 'Data/Hora', formatter: this.formatDateTime },
+        { key: 'dataHora', label: 'Data/Hora', formatter: (val) => this.$filters.formatDateTime(val) ?? '-'  },
         { key: 'origem', label: 'Origem' },
         { key: 'destino', label: 'Destino' },
-        { key: 'milhas', label: 'Milhas', formatter: (val) => val > 0 ? `${val} milhas` : '-' },
+        { key: 'milhas', label: 'Milhas', formatter: (val) => `${val} milhas` ?? '-' },
         { key: 'status', label: 'Status' },
         { key: 'actions', label: 'Ações', class: 'text-right' }
       ]
@@ -141,16 +141,6 @@ export default {
     }
   },
   methods: {
-    formatDateTime(dateTime) {
-      const options = { 
-        year: 'numeric', 
-        month: '2-digit', 
-        day: '2-digit',
-        hour: '2-digit', 
-        minute: '2-digit' 
-      }
-      return new Date(dateTime).toLocaleString('pt-BR', options)
-    },
     viewReservation(reservation) {
       this.reservaSelecionada = reservation
       this.mostrarModal = true
