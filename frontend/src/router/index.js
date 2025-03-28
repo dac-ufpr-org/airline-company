@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Register from "../views/Register.vue";
 import Login from "../views/Login.vue";
-import ClientDashboard from '../views/ClientDashboard.vue';
-import FuncionarioDashboard from "@/views/FuncionarioDashboard.vue";
+import ClientDashboard from "../views/client/ClientDashboard.vue";
+import ClientMilesExtract from "../views/client/ClientMilesExtract.vue";
+import EmployeeDashboard from "@/views/employee/EmployeeDashboard.vue";
 
 const routes = [
   {
@@ -15,13 +16,20 @@ const routes = [
     name: "login",
     component: Login,
   },
+  //client routes
   { path: '/client/dashboard', 
-    name: "clientDashboard",
+    name: "Dashboard do Cliente",
     component: ClientDashboard 
   },
-  { path: '/funcionario/dashboard', 
-    name: "funcionarioDashboard",
-    component: FuncionarioDashboard
+  { path: '/client/miles-extract', 
+    name: "Extrato de Milhas",
+    component: ClientMilesExtract 
+  },
+
+  //employee routes
+  { path: '/employee/dashboard', 
+    name: "Dashboard do Funcionário",
+    component: EmployeeDashboard
   },
 ];
 
