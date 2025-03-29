@@ -21,7 +21,7 @@ const routes = [
     name: "Dashboard do Cliente",
     component: ClientDashboard 
   },
-  { path: '/client/miles-extract', 
+  { path: '/client/mileage-extract', 
     name: "Extrato de Milhas",
     component: ClientMilesExtract 
   },

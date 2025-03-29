@@ -1,66 +1,61 @@
 // ✅ ClientDashboard.vue
 <template>
   <div>
-    <div class="container mx-auto flex mt-6 p-4">
-      <SidebarMenu 
-        :active-tab="activeTab" 
-        @tab-change="activeTab = $event"
+    <main>
+      <FlightsTable 
+        activeSidebar
+        :items="currentItems" 
+        :columns="tableColumns"
+        :initial-search-term="searchTerm"
+        @tab-change="updateTab"
+      >
+        <template #cell-status="{ item }">
+          <FlightStatusBadge :status="item.status" />
+        </template>
+
+        <template #cell-actions="{ item }">
+          <div class="flex items-center space-x-3">   
+            <Button 
+              v-if="item.status === 'Reservado'"
+              lightBlue
+              label="Ver Detalhes" 
+              @click="viewReservation(item)" 
+              size="text-sm"
+              class="mr-2"
+              icon="fa-eye"
+            />
+            <Button 
+              v-if="item.status === 'Reservado'"
+              lightRed
+              label="Cancelar" 
+              @click="cancelReservation(item)" 
+              size="text-sm"
+              icon="fa-times"
+            />
+            <Button 
+              v-if="item.status === 'Realizado'"
+              lightGreen
+              label="Avaliar" 
+              @click="rateFlight(item)" 
+              size="text-sm"
+              class="ml-2"
+              icon="fa-star"
+            />
+          </div>
+        </template>
+      </FlightsTable>
+
+      <ModalDetalhesViagem
+        v-if="mostrarModal"
+        :viagem="reservaSelecionada"
+        @close="mostrarModal = false"
       />
-      <main class="flex-1 bg-white p-6 rounded-xl shadow-lg border border-blue-200">
-        <FlightsTable 
-          :items="currentItems" 
-          :columns="tableColumns"
-          :initial-search-term="searchTerm"
-        >
-          <template #cell-status="{ item }">
-            <FlightStatusBadge :status="item.status" />
-          </template>
-
-          <template #cell-actions="{ item }">
-            <div class="flex items-center space-x-3">   
-              <Button 
-                v-if="item.status === 'Reservado'"
-                lightBlue
-                label="Ver Detalhes" 
-                @click="viewReservation(item)" 
-                size="text-sm"
-                class="mr-2"
-                icon="fa-eye"
-              />
-              <Button 
-                v-if="item.status === 'Reservado'"
-                lightRed
-                label="Cancelar" 
-                @click="cancelReservation(item)" 
-                size="text-sm"
-                icon="fa-times"
-              />
-              <Button 
-                v-if="item.status === 'Realizado'"
-                lightGreen
-                label="Avaliar" 
-                @click="rateFlight(item)" 
-                size="text-sm"
-                class="ml-2"
-                icon="fa-star"
-              />
-            </div>
-          </template>
-        </FlightsTable>
-
-        <ModalDetalhesViagem
-          v-if="mostrarModal"
-          :viagem="reservaSelecionada"
-          @close="mostrarModal = false"
-        />
-      </main>
-    </div>
+    </main>
   </div>
 </template>
 
 <script>
 import HeaderComponent from '../../components/HeaderComponent.vue'
-import SidebarMenu from '../../components/SidebarMenu.vue'
 import FlightStatusBadge from '../../components/FlightStatusBadge.vue'
 import FlightsTable from '../../components/FlightsTable.vue'
 import Button from '../../components/Button.vue'
@@ -69,7 +64,6 @@ import ModalDetalhesViagem from '../../components/ModalDetalhesViagem.vue'
 export default {
   components: {
     HeaderComponent,
-    SidebarMenu,
     FlightStatusBadge,
     FlightsTable,
     Button,
@@ -78,8 +72,8 @@ export default {
   data() {
     return {
       milhas: 3250,
-      activeTab: 'reservas',
       searchTerm: '',
+      activeTab: 'reservas',
       mostrarModal: false,
       reservaSelecionada: null,
       reservas: [
@@ -144,6 +138,9 @@ export default {
     viewReservation(reservation) {
       this.reservaSelecionada = reservation
       this.mostrarModal = true
+    },
+    updateTab(newTab) {
+      this.activeTab = newTab
     },
     cancelReservation(reservation) {
       if (confirm(`Deseja realmente cancelar a reserva ${reservation.id} para ${reservation.destino}?`)) {

@@ -1,5 +1,5 @@
 <template>
-    <aside class="w-64 bg-white p-4 rounded-xl shadow-lg border border-blue-200">
+    <aside class="my-4 ml-4 w-64 bg-white p-4 rounded-xl shadow-lg border border-blue-200">
       <nav>
         <ul class="space-y-3">
           <li v-for="item in menuItems" :key="item.id">

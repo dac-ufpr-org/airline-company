@@ -11,7 +11,7 @@
             v-if="this.group === 'client'"
             blue 
             label="3250 milhas" 
-            @click="this.$router.push('/client/mileageExtract')" 
+            @click="this.$router.push('/client/mileage-extract')" 
             icon="fa-star"
           />
           <Button 

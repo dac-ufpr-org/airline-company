@@ -1,5 +1,11 @@
 <template>
-    <div>
+  <main class="flex w-full">
+    <SidebarMenu 
+      v-if="activeSidebar"
+      :active-tab="activeTab"
+      @tab-change="handleTabChange"
+    />
+    <div :class="!activeSidebar ? 'ml-4' : ''" class="bg-white my-4 mr-4 w-full p-6 rounded-xl shadow-lg border border-blue-200">
       <div class="mb-6">
         <Input 
           title="Buscar voos" 
@@ -36,13 +42,15 @@
         Nenhum registro encontrado.
       </div>
     </div>
+  </main>
   </template>
   
   <script>
   import Input from './Input.vue'
+  import SidebarMenu from './SidebarMenu.vue'
   
   export default {
-    components: { Input },
+    components: { Input, SidebarMenu },
     props: {
       items: {
         type: Array,
@@ -55,11 +63,16 @@
       initialSearchTerm: {
         type: String,
         default: ''
-      }
+      },
+      activeSidebar: {
+        type: Boolean,
+        default: false
+      },
     },
     data() {
       return {
-        searchTerm: this.initialSearchTerm
+        searchTerm: this.initialSearchTerm,
+        activeTab: 'reservas'
       }
     },
     computed: {
@@ -73,8 +86,14 @@
               ? column.formatter(item[column.key]) 
               : item[column.key]
             return String(value).toLowerCase().includes(term)
-          }) // Faltava este parêntese para fechar o some()
-        ) // Faltava este parêntese para fechar o filter()
+          }) 
+        )
+      }
+    },
+    methods: {
+      handleTabChange(newTab){
+        this.activeTab = newTab
+        this.$emit('tab-change', newTab)
       }
     }
   }
