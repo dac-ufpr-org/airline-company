@@ -2,7 +2,7 @@
   <div>
     <div class="container mx-auto flex mt-6 p-4">
       <main class="flex-1 bg-white p-6 rounded-xl shadow-lg border border-blue-200">
-        <FlightsTable 
+        <Table 
           :items="voos" 
           :columns="tableColumns"
         >
@@ -28,7 +28,7 @@
               />
             </div>
           </template>
-        </FlightsTable>
+        </Table>
       </main>
     </div>
   </div>
@@ -36,14 +36,14 @@
   
   <script>
   
-  import FlightsTable from '../../components/FlightsTable.vue'
+  import Table from '../../components/Table.vue'
   import Button from '../../components/Button.vue'
   import HeaderComponent from '../../components/HeaderComponent.vue'
   
   export default {
     components: {
       HeaderComponent,
-      FlightsTable,
+      Table,
       Button
     },
     data() {

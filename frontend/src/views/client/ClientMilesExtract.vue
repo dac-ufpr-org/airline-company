@@ -2,7 +2,7 @@
 <template>
   <div>
     <main>
-      <FlightsTable 
+      <Table 
         :items="items" 
         :columns="tableColumns"
         :initial-search-term="searchTerm"
@@ -42,7 +42,7 @@
             />
           </div>
         </template>
-      </FlightsTable>
+      </Table>
 
       <ModalDetalhesViagem
         v-if="mostrarModal"
@@ -56,14 +56,14 @@
 <script>
 import HeaderComponent from '../../components/HeaderComponent.vue'
 import ColorBadge from '../../components/ColorBadge.vue'
-import FlightsTable from '../../components/FlightsTable.vue'
+import Table from '../../components/Table.vue'
 import Button from '../../components/Button.vue'
 
 export default {
   components: {
     HeaderComponent,
     ColorBadge,
-    FlightsTable,
+    Table,
     Button,
   },
   data() {

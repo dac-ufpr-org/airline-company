@@ -2,7 +2,7 @@
 <template>
   <div>
     <main>
-      <FlightsTable 
+      <Table 
         activeSidebar
         :items="currentItems" 
         :columns="tableColumns"
@@ -43,7 +43,7 @@
             />
           </div>
         </template>
-      </FlightsTable>
+      </Table>
 
       <ModalDetalhesViagem
         v-if="mostrarModal"
@@ -57,7 +57,7 @@
 <script>
 import HeaderComponent from '../../components/HeaderComponent.vue'
 import FlightStatusBadge from '../../components/FlightStatusBadge.vue'
-import FlightsTable from '../../components/FlightsTable.vue'
+import Table from '../../components/Table.vue'
 import Button from '../../components/Button.vue'
 import ModalDetalhesViagem from '../../components/ModalDetalhesViagem.vue'
 
@@ -65,7 +65,7 @@ export default {
   components: {
     HeaderComponent,
     FlightStatusBadge,
-    FlightsTable,
+    Table,
     Button,
     ModalDetalhesViagem
   },
