@@ -1,6 +1,6 @@
 <template>
     <header class="text-white p-4 shadow-lg" style="background-color: #0a205d;">
-      <div class="container mx-auto flex justify-between items-center">
+      <div class="flex justify-between items-center">
         <div class="flex items-center space-x-3">
           <img 
             src="@/assets/airplaneIcon.png" 
