@@ -54,6 +54,7 @@
     props: {
       items: {
         type: Array,
+        default: [],
         required: true
       },
       columns: {
@@ -77,17 +78,20 @@
     },
     computed: {
       filteredItems() {
-        if (!this.searchTerm) return this.items
-        
-        const term = this.searchTerm.toLowerCase()
-        return this.items.filter(item => 
-          this.columns.some(column => {
-            const value = column.formatter 
-              ? column.formatter(item[column.key]) 
-              : item[column.key]
-            return String(value).toLowerCase().includes(term)
-          }) 
-        )
+        if (this.items.length) {
+          if (!this.searchTerm) return this.items
+          
+          const term = this.searchTerm.toLowerCase()
+          return this.items.filter(item => 
+            this.columns.some(column => {
+              const value = column.formatter 
+                ? column.formatter(item[column.key]) 
+                : item[column.key]
+              return String(value).toLowerCase().includes(term)
+            }) 
+          )
+        }
+        return []
       }
     },
     methods: {

@@ -150,26 +150,6 @@ export default {
     rateFlight(flight) {
       console.log('Avaliar voo:', flight.id)
     },
-    logout() {
-      console.log('Logout realizado')
-      this.$router.push('/login')
-    }
   }
 }
 </script>
-
-<style scoped>
-header {
-  background-size: 150%;
-  animation: gradientShift 8s ease infinite alternate;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-tbody tr:hover {
-  background-color: #f8fafc;
-}
-</style>

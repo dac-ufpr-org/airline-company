@@ -13,6 +13,7 @@
       { [lightBlueClass]: lightBlue && !outlined },
       { [lightGreenClass]: lightGreen && !outlined },
       { [lightRedClass]: lightRed && !outlined },
+      { [lightYellowClass]: lightYellow && !outlined },
       { 'rounded-lg bg-gray-200 hover:bg-gray-300 border border-gray-300': gray },
       { 'rounded-lg border border-slate-200 hover:bg-gray-50': light },
       { 'cursor-pointer': !disabled }
@@ -52,6 +53,7 @@ export default {
     lightBlue: [Boolean, Number],
     lightGreen: [Boolean, Number],
     lightRed: [Boolean, Number],
+    lightYellow: [Boolean, Number],
     gray: [Boolean, Number],
     light: [Boolean, Number],
   },
@@ -74,6 +76,9 @@ export default {
     lightRedClass() {
       return 'bg-red-100 hover:bg-red-200 text-red-800'
     },
+    lightYellowClass() {
+      return 'bg-yellow-100 hover:bg-yellow-200 text-yellow-800'
+    },
     blueBorderClass() {
       return 'border border-blue-600 hover:border-blue-700 text-blue-600 hover:bg-blue-50'
     },
@@ -82,6 +87,9 @@ export default {
     },
     redBorderClass() {
       return 'border border-red-600 hover:border-red-700 text-red-600 hover:bg-red-50'
+    },
+    yellowBorderClass() {
+      return 'border border-yellow-600 hover:border-yellow-700 text-yellow-600 hover:bg-yellow-50'
     }
   }
 }

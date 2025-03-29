@@ -4,7 +4,7 @@
       <HeaderComponent 
         class="sticky top-0 left-0 w-full bg-white shadow-md z-50" 
         :pageTitle="this.$route.name"
-        @logout="logout"
+        @logout="this.$router.push('login')"
       >
         <template #default>
           <Button 
