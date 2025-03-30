@@ -4,6 +4,9 @@ import Login from "../views/Login.vue";
 import ClientDashboard from "../views/client/ClientDashboard.vue";
 import ClientMilesExtract from "../views/client/ClientMilesExtract.vue";
 import EmployeeDashboard from "@/views/employee/EmployeeDashboard.vue";
+import NewReservation from "@/views/client/NewReservation.vue";
+import ReservationConfirmation from "@/views/client/ReservationConfirmation.vue";
+import ReservationReceipt from "@/views/client/ReservationReceipt.vue";
 
 const routes = [
   {
@@ -25,7 +28,21 @@ const routes = [
     name: "Extrato de Milhas",
     component: ClientMilesExtract 
   },
-
+  {
+    path: '/reservas/nova',
+    name: 'Nova Reserva',
+    component: NewReservation,
+  },
+  {
+    path: '/reservas/confirmar',
+    name: 'Confirmar Reserva',
+    component: ReservationConfirmation,
+  },
+  {
+    path: '/reservas/comprovante',
+    name: 'Reserva Recebida',
+    component: ReservationReceipt,
+  },
   //employee routes
   { path: '/employee/dashboard', 
     name: "Dashboard do Funcionário",

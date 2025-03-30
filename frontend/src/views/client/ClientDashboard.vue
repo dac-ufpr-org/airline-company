@@ -1,4 +1,3 @@
-// ✅ ClientDashboard.vue
 <template>
   <div>
     <main>
