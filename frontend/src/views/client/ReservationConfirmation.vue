@@ -126,7 +126,7 @@
           // Simulação de chamada API
           const reserva = await this.mockCreateReservation()
           this.$router.push({
-            path: '/reservas/comprovante',
+            path: '/client/reservas/comprovante',
             query: { codigo: reserva.codigo }
           })
         } finally {

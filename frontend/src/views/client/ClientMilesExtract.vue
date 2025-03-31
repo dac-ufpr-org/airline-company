@@ -11,6 +11,16 @@
           <ColorBadge :label='this.labelName[item.type]' :green="item.type === 'entry'" :red="item.type === 'exit'" />
         </template>
 
+        <template #table-actions>
+            <Input 
+                title="Buscar voos" 
+                type="text" 
+                placeholder="Digite para filtrar..." 
+                search 
+                v-model="searchTerm"
+            />
+        </template>
+
         <template #cell-actions="{ item }">
           <div class="flex items-center space-x-3">   
             <Button 
@@ -53,17 +63,19 @@
 </template>
 
 <script>
-import HeaderComponent from '../../components/HeaderComponent.vue'
+import Header from '../../components/Header.vue'
 import ColorBadge from '../../components/ColorBadge.vue'
 import Table from '../../components/Table.vue'
 import Button from '../../components/Button.vue'
+import Input from '../../components/Input.vue'
 
 export default {
   components: {
-    HeaderComponent,
+    Header,
     ColorBadge,
     Table,
     Button,
+    Input
   },
   data() {
     return {

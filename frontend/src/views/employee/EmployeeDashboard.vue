@@ -28,6 +28,16 @@
               />
             </div>
           </template>
+
+          <template #table-actions>
+            <Input 
+              title="Buscar voos" 
+              type="text" 
+              placeholder="Digite para filtrar..." 
+              search 
+              v-model="searchTerm"
+            />
+          </template>
         </Table>
       </main>
     </div>
@@ -38,13 +48,15 @@
   
   import Table from '../../components/Table.vue'
   import Button from '../../components/Button.vue'
-  import HeaderComponent from '../../components/HeaderComponent.vue'
+  import Header from '../../components/Header.vue'
+  import Input from '../../components/Input.vue'
   
   export default {
     components: {
-      HeaderComponent,
+      Header,
       Table,
-      Button
+      Button,
+      Input
     },
     data() {
       return {

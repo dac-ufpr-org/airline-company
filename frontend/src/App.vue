@@ -1,7 +1,7 @@
 <template>
   <div class="main flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
     <main class="flex-1">
-      <HeaderComponent 
+      <Header 
         class="sticky top-0 left-0 w-full bg-white shadow-md z-50" 
         :pageTitle="this.$route.name"
         @logout="this.$router.push('login')"
@@ -21,19 +21,19 @@
             icon="fa-sign-out-alt"
           />
         </template>
-      </HeaderComponent>
+      </Header>
       <router-view/>
     </main>
   </div>
 </template>
 
 <script>
-import HeaderComponent from './components/HeaderComponent.vue'
+import Header from './components/Header.vue'
 import Button from './components/Button.vue'
 
 export default {
   components: {
-    HeaderComponent,
+    Header,
     Button
   },
   data: () => ({

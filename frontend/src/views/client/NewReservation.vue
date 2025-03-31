@@ -109,7 +109,7 @@
   
       goToReservationDetails(voo) {
         this.$router.push({
-          path: '/reservas/confirmar',
+          path: '/client/reservas/confirmar',
           query: { vooId: voo.id }
         })
       }

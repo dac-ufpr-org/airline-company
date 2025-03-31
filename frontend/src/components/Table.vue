@@ -6,15 +6,19 @@
       @tab-change="handleTabChange"
     />
     <div :class="!activeSidebar ? 'ml-4' : ''" class="overflow-x-auto bg-white my-4 mr-4 w-full p-6 rounded-xl shadow-lg border border-blue-200">
-      <div class="mb-6">
-        <Input 
+      <div class="flex gap-4">
+
+      </div>
+      <slot name="table-actions">
+
+      </slot>
+        <!-- <Input 
           title="Buscar voos" 
           type="text" 
           placeholder="Digite para filtrar..." 
           search 
           v-model="searchTerm"
-        />
-      </div>
+        /> -->
   
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">

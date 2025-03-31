@@ -55,7 +55,7 @@ export default {
     const router = useRouter()
 
     const handleNewReservation = () => {
-      router.push('/reservas/nova')
+      router.push('/client/reservas/nova')
     }
 
     return { handleNewReservation }
