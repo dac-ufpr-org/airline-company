@@ -1,8 +1,6 @@
 <template>
-  <div class="grid grid-cols-2 h-[100vh] w-[100vw]">
-    <div
-      class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"
-    ></div>
+  <div class="grid grid-cols-2 h-full w-full">
+    <div class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"></div>
     <div class="flex justify-center items-center">
       <div class="mb-3 h-[60%] w-[70%] rounded rounded-lg p-6">
         <p class="mb-6 text-4xl font-semibold text-blue-800">Entrar</p>
@@ -33,8 +31,8 @@
 </template>
 
 <script>
-import Input from "../components/Input.vue";
-import Button from "../components/Button.vue";
+import Input from "../components/general/Input.vue";
+import Button from "../components/general/Button.vue";
 
 export default {
   components: {

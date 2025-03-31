@@ -10,15 +10,7 @@
 
       </div>
       <slot name="table-actions">
-
       </slot>
-        <!-- <Input 
-          title="Buscar voos" 
-          type="text" 
-          placeholder="Digite para filtrar..." 
-          search 
-          v-model="searchTerm"
-        /> -->
   
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
@@ -50,8 +42,8 @@
   </template>
   
   <script>
-  import Input from './Input.vue'
-  import ClientSidebarMenu from './ClientSidebarMenu.vue'
+  import Input from '../general/Input.vue'
+  import ClientSidebarMenu from './TableSidebar.vue'
   
   export default {
     components: { Input, ClientSidebarMenu },

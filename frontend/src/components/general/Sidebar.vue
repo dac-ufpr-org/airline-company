@@ -10,7 +10,7 @@
 
       <nav>
         <ul>
-          <li v-for="item in menuItems" :key="item.text" class="mb-4 cursor-pointer">
+          <li v-for="item in items" :key="item.text" class="mb-4 cursor-pointer">
             <a @click="this.$router.push(item.route)" class="block px-4 py-2 rounded-lg hover:bg-[#0a205d]">
               {{ item.text }}
             </a>
@@ -27,16 +27,12 @@ export default {
     isOpen: {
       type: Boolean,
       required: true
+    },
+    items: {
+      type: Array,
+      default: []
     }
   },
-  data() {
-    return {
-      menuItems: [
-        { text: 'Dashboard', route: '/client/dashboard' },
-        { text: 'Reservas', route: '/client/reservas/nova' },
-      ]
-    };
-  }
 }
 </script>
 

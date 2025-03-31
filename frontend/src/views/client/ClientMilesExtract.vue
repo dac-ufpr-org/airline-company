@@ -63,11 +63,11 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue'
+import Header from '../../components/general/Header.vue'
 import ColorBadge from '../../components/ColorBadge.vue'
-import Table from '../../components/Table.vue'
-import Button from '../../components/Button.vue'
-import Input from '../../components/Input.vue'
+import Table from '../../components/general/Table.vue'
+import Button from '../../components/general/Button.vue'
+import Input from '../../components/general/Input.vue'
 
 export default {
   components: {

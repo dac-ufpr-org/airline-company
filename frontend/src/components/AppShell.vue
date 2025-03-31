@@ -1,12 +1,13 @@
 <template>
-<div class="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden">
-    <Sidebar :isOpen="isOpen" @toggle-sidebar="toggleSidebar" />
+  <div class="flex min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden">
+    <Sidebar :class="{ 'hidden': isLoginRegister }" :isOpen="isOpen" @toggle-sidebar="toggleSidebar" :items="menuItems" />
 
     <main 
       class="flex-1 transition-all duration-300 overflow-auto"
       :class="{ 'ml-[-260px]': !isOpen, 'ml-0': isOpen }"
     >
       <Header 
+       :class="{ 'hidden': isLoginRegister }"
         class="sticky top-0 left-0 w-full bg-white shadow-md z-50" 
         :pageTitle="$route.name"
         @logout="$router.push('login')"
@@ -31,7 +32,7 @@
           <Button 
             red 
             label="Sair" 
-            @click="$emit('logout')" 
+            @click="logout()" 
             icon="fa-sign-out-alt"
           />
         </template>
@@ -43,9 +44,9 @@
 </template>
 
 <script>
-import Header from './Header.vue'
-import Button from './Button.vue'
-import Sidebar from './Sidebar.vue'
+import Header from './general/Header.vue'
+import Button from './general/Button.vue'
+import Sidebar from './general/Sidebar.vue'
 
 export default {
   components: {
@@ -55,17 +56,36 @@ export default {
   },
   data: () => ({
     isOpen: true,
-    group: null
+    group: null,
+    menuItems: [],
+    clientMenuItems: [
+      { text: 'Dashboard', route: '/client/dashboard' },
+      { text: 'Reservas', route: '/client/reservas/nova' }
+    ],
+    employeeMenuItems: [
+      { text: 'Dashboard', route: '/employee/dashboard' },
+    ],
   }),
   methods: {
     toggleSidebar() {
-      this.isOpen = !this.isOpen;
+      this.isOpen = !this.isOpen
+    },
+    logout() {
+      this.$emit('logout')
+      this.$router.push('/login')
+    },
+  },
+  computed: {
+    isLoginRegister() {
+      console.log(this.$route.path);
       
+      return this.$route.path.includes('login') || this.$route.path.includes('register')
     }
   },
   mounted() {
     // lógica de ver de qual grupo o usuário pertence
     this.group = (window.location.pathname).includes('client') ? 'client' : 'employee';
+    this.menuItems = this.group === 'client' ? this.clientMenuItems : this.employeeMenuItems
   }
 }
 </script>

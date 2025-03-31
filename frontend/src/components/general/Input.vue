@@ -24,7 +24,8 @@
 </template>
 
 <script>
-import Label from '../components/Label.vue'
+import Label from '../general/Label.vue'
+
 export default {
     data: () => ({
         inputValue: '',
