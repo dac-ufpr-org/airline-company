@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-6">
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4">
       <div class="container mx-auto max-w-3xl">
         <h1 class="text-2xl font-bold text-blue-800 mb-6">Confirmar Reserva</h1>
         

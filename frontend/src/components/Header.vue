@@ -1,7 +1,9 @@
 <template>
     <header class="text-white p-4 shadow-lg" style="background-color: #0a205d;">
-      <div class="flex justify-between items-center">
+      <div class="items-center w-full flex justify-between">
         <div class="flex items-center space-x-3">
+          <slot name="toggle-sidebar">
+          </slot>
           <img 
             src="@/assets/airplaneIcon.png" 
             alt="Ícone Avião"

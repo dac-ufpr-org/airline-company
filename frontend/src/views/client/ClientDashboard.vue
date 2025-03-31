@@ -1,66 +1,64 @@
 <template>
-  <div>
-    <main>
-      <Table 
-        activeSidebar
-        :items="currentItems" 
-        :columns="tableColumns"
-        :initial-search-term="searchTerm"
-        @tab-change="updateTab"
-      >
-        <template #cell-status="{ item }">
-          <FlightStatusBadge :status="item.status" />
-        </template>
+  <main>
+    <Table 
+      activeSidebar
+      :items="currentItems" 
+      :columns="tableColumns"
+      :initial-search-term="searchTerm"
+      @tab-change="updateTab"
+    >
+      <template #cell-status="{ item }">
+        <FlightStatusBadge :status="item.status" />
+      </template>
 
-        <template #table-actions>
-          <Input 
-            title="Buscar voos" 
-            type="text" 
-            placeholder="Digite para filtrar..." 
-            search 
-            v-model="searchTerm"
+      <template #table-actions>
+        <Input 
+          title="Buscar voos" 
+          type="text" 
+          placeholder="Digite para filtrar..." 
+          search 
+          v-model="searchTerm"
+        />
+      </template>
+
+      <template #cell-actions="{ item }">
+        <div class="flex items-center space-x-3">   
+          <Button 
+            v-if="item.status === 'Reservado'"
+            lightBlue
+            label="Ver Detalhes" 
+            @click="viewReservation(item)" 
+            size="text-sm"
+            class="mr-2"
+            icon="fa-eye"
           />
-        </template>
+          <Button 
+            v-if="item.status === 'Reservado'"
+            lightRed
+            label="Cancelar" 
+            @click="cancelReservation(item)" 
+            size="text-sm"
+            icon="fa-times"
+          />
+          <Button 
+            v-if="item.status === 'Realizado'"
+            lightGreen
+            label="Avaliar" 
+            @click="rateFlight(item)" 
+            size="text-sm"
+            class="ml-2"
+            icon="fa-star"
+          />
+        </div>
+      </template>
+    </Table>
 
-        <template #cell-actions="{ item }">
-          <div class="flex items-center space-x-3">   
-            <Button 
-              v-if="item.status === 'Reservado'"
-              lightBlue
-              label="Ver Detalhes" 
-              @click="viewReservation(item)" 
-              size="text-sm"
-              class="mr-2"
-              icon="fa-eye"
-            />
-            <Button 
-              v-if="item.status === 'Reservado'"
-              lightRed
-              label="Cancelar" 
-              @click="cancelReservation(item)" 
-              size="text-sm"
-              icon="fa-times"
-            />
-            <Button 
-              v-if="item.status === 'Realizado'"
-              lightGreen
-              label="Avaliar" 
-              @click="rateFlight(item)" 
-              size="text-sm"
-              class="ml-2"
-              icon="fa-star"
-            />
-          </div>
-        </template>
-      </Table>
-
-      <ModalDetalhesViagem
-        v-if="mostrarModal"
-        :viagem="reservaSelecionada"
-        @close="mostrarModal = false"
-      />
-    </main>
-  </div>
+    <ModalDetalhesViagem
+      v-if="mostrarModal"
+      :viagem="reservaSelecionada"
+      @close="mostrarModal = false"
+    />
+  </main>
 </template>
 
 <script>

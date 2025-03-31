@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-6 rounded-xl shadow-lg border border-blue-200 mb-6">
+    <div class="bg-white p-4 rounded-xl shadow-lg border border-blue-200 m-4">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"> <!-- items-end para alinhar pela base -->
         <div class="flex flex-col">
           <label class="text-sm font-medium text-gray-700 mb-1">Aeroporto Origem</label>

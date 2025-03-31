@@ -1,34 +1,32 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-6">
-      <div class="container mx-auto">
-        <h1 class="text-2xl font-bold text-blue-800 mb-6">Reservar Novo Voo</h1>
-        
-        <FlightSearchForm @search="handleSearch" />
-        
-        <div v-if="loading" class="text-center py-8">
-          <p>Buscando voos disponíveis...</p>
-        </div>
-        
-        <div v-else>
-          <div v-if="voos.length === 0 && searchPerformed" class="text-center py-8 text-gray-500">
-            <p>Nenhum voo encontrado. Tente alterar seus critérios de busca.</p>
-          </div>
-          
-          <div v-else-if="voos.length > 0" class="grid grid-cols-1 gap-4">
-            <FlightSelectionCard 
-              v-for="voo in voos" 
-              :key="voo.id" 
-              :voo="voo"
-              @select="goToReservationDetails"
-            />
-          </div>
-  
-          <div v-else class="text-center py-8 text-gray-500">
-            <p>Informe os critérios de busca para encontrar voos disponíveis.</p>
-          </div>
-        </div>
+  <main>
+    <h1 class="text-2xl font-bold text-blue-800 m-4">Reservar Novo Voo</h1>
+    
+    <FlightSearchForm @search="handleSearch" />
+    
+    <div v-if="loading" class="text-center py-8">
+      <p>Buscando voos disponíveis...</p>
+    </div>
+    
+    <div v-else>
+      <div v-if="voos.length === 0 && searchPerformed" class="text-center py-8 text-gray-500">
+        <p>Nenhum voo encontrado. Tente alterar seus critérios de busca.</p>
+      </div>
+      
+      <div v-else-if="voos.length > 0" class="grid grid-cols-1 gap-4">
+        <FlightSelectionCard 
+          v-for="voo in voos" 
+          :key="voo.id" 
+          :voo="voo"
+          @select="goToReservationDetails"
+        />
+      </div>
+
+      <div v-else class="text-center py-8 text-gray-500">
+        <p>Informe os critérios de busca para encontrar voos disponíveis.</p>
       </div>
     </div>
+  </main>
   </template>
   
   <script>
