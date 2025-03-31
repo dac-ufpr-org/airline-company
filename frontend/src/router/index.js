@@ -29,17 +29,17 @@ const routes = [
     component: ClientMilesExtract 
   },
   {
-    path: '/reservas/nova',
+    path: '/client/reservas/nova',
     name: 'Nova Reserva',
     component: NewReservation,
   },
   {
-    path: '/reservas/confirmar',
+    path: '/client/reservas/confirmar',
     name: 'Confirmar Reserva',
     component: ReservationConfirmation,
   },
   {
-    path: '/reservas/comprovante',
+    path: '/client/reservas/comprovante',
     name: 'Reserva Recebida',
     component: ReservationReceipt,
   },
