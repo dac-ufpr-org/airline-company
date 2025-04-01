@@ -1,6 +1,6 @@
 <template>
-  <main class="flex w-full">
-    <ClientSidebarMenu 
+  <main class="flex w-full h-full">
+    <TableSidebar 
       v-if="activeSidebar"
       :active-tab="activeTab"
       @tab-change="handleTabChange"
@@ -43,10 +43,10 @@
   
   <script>
   import Input from '../general/Input.vue'
-  import ClientSidebarMenu from './TableSidebar.vue'
+  import TableSidebar from './TableSidebar.vue'
   
   export default {
-    components: { Input, ClientSidebarMenu },
+    components: { Input, TableSidebar },
     props: {
       items: {
         type: Array,
