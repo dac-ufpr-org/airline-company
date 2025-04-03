@@ -12,14 +12,7 @@
                 label="Confirmar Embarque"
                 size="text-sm"
                 icon="fa-check"
-              />
-
-              <Button
-                blue
-                label="Cadastrar Voo"
-                size="text-sm"
-                icon="fa-plus"
-                @click="$router.push('/employee/flight-registration')"
+                @click="openModal('boarding')"
               />
 
               <Button
@@ -27,8 +20,16 @@
                 label="Realizar Voo"
                 size="text-sm"
                 icon="fa-plane-departure"
+                @click="openModal('completion')"
               />
-              <Button red label="Cancelar Voo" size="text-sm" icon="fa-times" />
+
+              <Button 
+              red 
+              label="Cancelar Voo" 
+              size="text-sm" 
+              icon="fa-times"
+              @click="openModal('cancellation')"
+               />
             </div>
           </template>
 
@@ -40,10 +41,20 @@
               search
               v-model="searchTerm"
             />
+            <Button
+                blue
+                label="Cadastrar Voo"
+                size="text-sm"
+                icon="fa-plus"
+                @click="$router.push('/employee/flight-registration')"
+              />
           </template>
         </Table>
       </main>
     </div>
+    <ModalBoardingConfirmation v-if="modalType === 'boarding'" @close="closeModal" />
+    <ModalFlightCancellation v-if="modalType === 'cancellation'" @close="closeModal" />
+    <ModalFlightCompletion v-if="modalType === 'completion'" @close="closeModal" />
   </div>
 </template>
 
@@ -52,6 +63,9 @@ import Table from "../../components/general/Table.vue";
 import Button from "../../components/general/Button.vue";
 import Header from "../../components/general/Header.vue";
 import Input from "../../components/general/Input.vue";
+import ModalBoardingConfirmation from "../../components/ModalBoardingConfirmation.vue";
+import ModalFlightCancellation from "../../components/ModalFlightCancellation.vue";
+import ModalFlightCompletion from "../../components/ModalFlightCompletion.vue";
 
 export default {
   components: {
@@ -59,9 +73,13 @@ export default {
     Table,
     Button,
     Input,
+    ModalBoardingConfirmation,
+    ModalFlightCancellation,
+    ModalFlightCompletion,
   },
   data() {
     return {
+      modalType: null,
       voos: [
         {
           dataHora: "2023-12-15T14:30:00",
@@ -83,6 +101,12 @@ export default {
     };
   },
   methods: {
+    openModal(type) {            
+      this.modalType = type;
+    },
+    closeModal() {               
+      this.modalType = null;
+    },
     formatDateTime(dateTime) {
       const options = {
         year: "numeric",
