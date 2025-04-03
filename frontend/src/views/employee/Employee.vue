@@ -1,5 +1,18 @@
 <template>
-  <div>
+  <div class="p-4 bg-white rounded-lg shadow-md">
+    <!-- Container para o botão colado com a tabela -->
+    <div>
+      <Button
+        blue
+        label="Cadastrar Funcionário"
+        size="text-sm"
+        icon="fa-plus"
+        @click="$router.push('/employee/employee-registration')"
+        class="mb-0"  
+      />
+    </div>
+
+    <!-- Tabela de Funcionários -->
     <Table :items="filteredEmployees" :columns="columns">
       <template #table-actions>
         <Input
@@ -27,10 +40,12 @@
 
 <script>
 import Table from '@/components/general/Table.vue'
+import Button from '@/components/general/Button.vue'  // Importando o Button.vue
 
 export default {
   components: {
     Table,
+    Button,  // Registrando o componente Button para uso na página
   },
   data() {
     return {
@@ -40,7 +55,7 @@ export default {
         { key: 'cpf', label: 'CPF' },
         { key: 'email', label: 'E-mail' },
         { key: 'telefone', label: 'Telefone' },
-        { key: 'actions', label: 'Ações' }, // editar e remover colocar depois
+        { key: 'actions', label: 'Ações' },
       ],
       employees: [
         { nome: 'Sabrina Nunes', cpf: '123.456.789-00', email: 'sabrina@email.com', telefone: '(11) 99999-9999' },
@@ -58,3 +73,7 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+/* Estilos para a página de funcionários */
+</style>
