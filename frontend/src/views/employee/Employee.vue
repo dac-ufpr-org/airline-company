@@ -43,9 +43,9 @@ export default {
         { key: 'actions', label: 'Ações' }, // editar e remover colocar depois
       ],
       employees: [
-        { nome: 'Sabrina Nunes', cpf: '123.456.789-00', email: 'sabrina@email.com', telefone: '(11) 99999-9999' },
+        { nome: 'Sabrina de Araújo', cpf: '123.456.789-00', email: 'sabrina@email.com', telefone: '(11) 99999-9999' },
         { nome: 'Lívia Araújo', cpf: '987.654.321-00', email: 'livia@email.com', telefone: '(21) 98888-8888' },
-        { nome: 'Carlos Oliveira', cpf: '555.666.777-00', email: 'carlos@email.com', telefone: '(31) 97777-7777' },
+        { nome: 'Leonardo Nunes', cpf: '555.666.777-00', email: 'leonardo@emial.com', telefone: '(31) 97777-7777' },
       ],
     }
   },
