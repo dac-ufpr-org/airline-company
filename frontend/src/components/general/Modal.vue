@@ -8,9 +8,12 @@
       <div class="mb-3">
         <slot name="content"></slot>
       </div>
-      <div class="flex justify-end">
-        <Button red @click="$emit('close')" label="Fechar" />
+      <div class="flex justify-between mt-4">
+        <slot name="footer">
+          <Button red @click="$emit('close')" label="Fechar" />
+        </slot>
       </div>
+
     </div>
   </div>
 </template>
