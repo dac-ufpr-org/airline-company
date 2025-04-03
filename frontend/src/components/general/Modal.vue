@@ -4,25 +4,33 @@
     @click.self="$emit('close')"
   >
     <div class="bg-white p-6 rounded-lg w-full max-w-sm shadow-lg">
-      <p class="text-lg font-semibold mb-4">{{ title }}</p>
-      <p v-for="(item, index) in item" :key="index" class="font-bold">
-        <b>{{ item }}</b>
-      </p>
+      <p class="font-bold mb-3 text-lg text-blue-800 border-b pb-3">{{ title }}</p>
+      <div class="mb-3">
+        <slot name="content"></slot>
+      </div>
+      <div class="flex justify-end">
+        <Button red @click="$emit('close')" label="Fechar" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import Button from '../general/Button.vue'
+
 export default {
-    props: {
-      item: {
-        type: Object,
-        default: {}
-      },
-      title: {
-        type: String,
-        default: ''
-      }
+  components: {
+    Button
+  },
+  props: {
+    item: {
+      type: Object,
+      default: {}
+    },
+    title: {
+      type: String,
+      default: ''
     }
+  }
 };
 </script>

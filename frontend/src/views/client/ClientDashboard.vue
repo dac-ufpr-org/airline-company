@@ -53,11 +53,15 @@
       </template>
     </Table>
 
-    <ModalDetalhesViagem
-      v-if="mostrarModal"
-      :viagem="reservaSelecionada"
-      @close="mostrarModal = false"
-    />
+    <Modal v-if="mostrarModal" title="Detalhes da Reserva" @close="mostrarModal = false">
+      <template #content>
+        <div class="flex" v-for="(item, index) in modalInfo" :key="index">
+          <p class="font-bold mr-2">{{ `${item.label}: ` }}</p>
+          {{ reservaSelecionada[item.key] }}
+        </div>
+      </template>
+    </Modal>
+
   </main>
 </template>
 
@@ -66,7 +70,7 @@ import Header from '../../components/general/Header.vue'
 import FlightStatusBadge from '../../components/FlightStatusBadge.vue'
 import Table from '../../components/general/Table.vue'
 import Button from '../../components/general/Button.vue'
-import ModalDetalhesViagem from '../../components/ModalDetalhesViagem.vue'
+import Modal from '../../components/general/Modal.vue'
 import Input from '../../components/general/Input.vue'
 
 export default {
@@ -75,11 +79,18 @@ export default {
     FlightStatusBadge,
     Table,
     Button,
-    ModalDetalhesViagem,
-    Input
+    Input,
+    Modal
   },
   data() {
     return {
+      modalInfo: [
+        { label: 'Origem', key: 'origem' , filter: null },
+        { label: 'Destino', key: 'destino' , filter: null },
+        { label: 'Data/Hora', key: 'dataHora' , filter: 'formatDateTime' },
+        { label: 'Milhas', key: 'milhas' , filter: null },
+        { label: 'Status', key: 'status' , filter: null }
+      ],
       milhas: 3250,
       searchTerm: '',
       activeTab: 'reservas',

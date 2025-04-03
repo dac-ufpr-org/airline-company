@@ -53,11 +53,6 @@
         </template>
       </Table>
 
-      <ModalDetalhesViagem
-        v-if="mostrarModal"
-        :viagem="reservaSelecionada"
-        @close="mostrarModal = false"
-      />
     </main>
   </div>
 </template>
