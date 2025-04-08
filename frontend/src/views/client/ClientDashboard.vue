@@ -24,7 +24,7 @@
       <template #cell-actions="{ item }">
         <div class="flex items-center space-x-3">   
           <Button 
-            v-if="item.status === 'Reservado'"
+            v-if="item.status === 'Reservado' || item.status === 'Check-in'"
             lightBlue
             label="Ver Detalhes" 
             @click="viewReservation(item)" 
@@ -33,10 +33,10 @@
             icon="fa-eye"
           />
           <Button 
-            v-if="item.status === 'Reservado'"
+            v-if="item.status === 'Reservado' || item.status === 'Check-in'"
             lightRed
             label="Cancelar" 
-            @click="cancelReservation(item)" 
+            @click="openCancelModal(item)" 
             size="text-sm"
             icon="fa-times"
           />
@@ -62,6 +62,12 @@
       </template>
     </Modal>
 
+    <ModalCancelReservation
+      v-if="showCancelModal"
+      :reservation="reservaParaCancelar"
+      @close="showCancelModal = false"
+      @confirm="processCancelReservation"
+    />
   </main>
 </template>
 
@@ -72,6 +78,7 @@ import Table from '../../components/general/Table.vue'
 import Button from '../../components/general/Button.vue'
 import Modal from '../../components/general/Modal.vue'
 import Input from '../../components/general/Input.vue'
+import ModalCancelReservation from '../../components/ModalCancelReservation.vue'
 
 export default {
   components: {
@@ -79,63 +86,70 @@ export default {
     FlightStatusBadge,
     Table,
     Button,
+    Modal,
     Input,
-    Modal
+    ModalCancelReservation
   },
   data() {
     return {
       modalInfo: [
-        { label: 'Origem', key: 'origem' , filter: null },
-        { label: 'Destino', key: 'destino' , filter: null },
-        { label: 'Data/Hora', key: 'dataHora' , filter: 'formatDateTime' },
-        { label: 'Milhas', key: 'milhas' , filter: null },
-        { label: 'Status', key: 'status' , filter: null }
+        { label: 'Origem', key: 'origem' },
+        { label: 'Destino', key: 'destino' },
+        { label: 'Data/Hora', key: 'dataHora', filter: 'formatDateTime' },
+        { label: 'Milhas', key: 'milhas' },
+        { label: 'Status', key: 'status' }
       ],
       milhas: 3250,
       searchTerm: '',
       activeTab: 'reservas',
       mostrarModal: false,
+      showCancelModal: false,
       reservaSelecionada: null,
+      reservaParaCancelar: null,
       reservas: [
         {
-          id: 1,
+          id: 'ABC123',
           dataHora: '2023-12-15T14:30:00',
           origem: 'GRU - Guarulhos',
           destino: 'GIG - Galeão',
           status: 'Reservado',
-          milhas: 1200
+          milhas: 1200,
+          valor: 600.00
         },
         {
-          id: 2,
+          id: 'DEF456',
           dataHora: '2023-12-20T08:15:00',
           origem: 'CGH - Congonhas',
           destino: 'BSB - Brasília',
           status: 'Reservado',
-          milhas: 850
+          milhas: 850,
+          valor: 425.00
         }
       ],
       voosRealizados: [
         {
-          id: 3,
+          id: 'GHI789',
           dataHora: '2023-11-10T10:45:00',
           origem: 'GRU - Guarulhos',
           destino: 'SSA - Salvador',
           status: 'Realizado',
-          milhas: 1500
+          milhas: 1500,
+          valor: 750.00
         }
       ],
       voosCancelados: [
         {
-          id: 4,
+          id: 'JKL012',
           dataHora: '2023-10-05T16:20:00',
           origem: 'CGH - Congonhas',
           destino: 'POA - Porto Alegre',
           status: 'Cancelado',
-          milhas: 0
+          milhas: 0,
+          valor: 0.00
         }
       ],
       tableColumns: [
-        { key: 'dataHora', label: 'Data/Hora', formatter: (val) => this.$filters.formatDateTime(val) ?? '-'  },
+        { key: 'dataHora', label: 'Data/Hora', formatter: (val) => this.$filters.formatDateTime(val) ?? '-' },
         { key: 'origem', label: 'Origem' },
         { key: 'destino', label: 'Destino' },
         { key: 'milhas', label: 'Milhas', formatter: (val) => `${val} milhas` ?? '-' },
@@ -147,7 +161,7 @@ export default {
   computed: {
     currentItems() {
       switch (this.activeTab) {
-        case 'reservas': return this.reservas.filter(i => i.status === 'Reservado')
+        case 'reservas': return this.reservas.filter(i => i.status === 'Reservado' || i.status === 'Check-in')
         case 'voos': return this.voosRealizados
         case 'cancelados': return this.voosCancelados
         default: return []
@@ -159,17 +173,62 @@ export default {
       this.reservaSelecionada = reservation
       this.mostrarModal = true
     },
+    openCancelModal(reservation) {
+      this.reservaParaCancelar = reservation
+      this.showCancelModal = true
+    },
     updateTab(newTab) {
       this.activeTab = newTab
     },
-    cancelReservation(reservation) {
-      if (confirm(`Deseja realmente cancelar a reserva ${reservation.id} para ${reservation.destino}?`)) {
-        console.log('Cancelar reserva:', reservation.id)
+    async processCancelReservation(reservation) {
+      try {
+        // Simular chamada API
+        await new Promise(resolve => setTimeout(resolve, 1000))
+        
+        // Atualizar status da reserva
+        const index = this.reservas.findIndex(r => r.id === reservation.id)
+        if (index !== -1) {
+          this.reservas[index].status = 'Cancelado'
+          
+          // Devolver milhas
+          this.milhas += reservation.milhas
+          
+          // Mover para lista de cancelados
+          this.voosCancelados.unshift({
+            ...this.reservas[index],
+            dataHoraCancelamento: new Date().toISOString()
+          })
+          
+          // Remover da lista de reservas
+          this.reservas.splice(index, 1)
+          
+          // Registrar no extrato (simulado)
+          this.registrarExtrato({
+            data: new Date().toISOString(),
+            codigoReserva: reservation.id,
+            valor: 0,
+            milhas: reservation.milhas,
+            descricao: `${reservation.origem.split(' - ')[0]}->${reservation.destino.split(' - ')[0]}`,
+            tipo: 'ENTRADA',
+            motivo: 'CANCELAMENTO'
+          })
+          
+          this.$toast.success('Reserva cancelada com sucesso! Milhas devolvidas.')
+        }
+        
+        this.showCancelModal = false
+      } catch (error) {
+        this.$toast.error('Ocorreu um erro ao cancelar a reserva.')
+        console.error('Erro ao cancelar reserva:', error)
       }
+    },
+    registrarExtrato(transacao) {
+      // Aqui você faria a chamada API para registrar no extrato
+      console.log('Registrando no extrato:', transacao)
     },
     rateFlight(flight) {
       console.log('Avaliar voo:', flight.id)
-    },
+    }
   }
 }
 </script>
