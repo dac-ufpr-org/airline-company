@@ -1,19 +1,17 @@
 <template>
   <main>
-    <h1 class="text-2xl font-bold text-blue-800 m-4">Reservar Novo Voo</h1>
+    <Title label="Reservar Novo Voo" />
     
-    <FlightSearchForm @search="handleSearch" />
-    
-    <div v-if="loading" class="text-center py-8">
-      <p>Buscando voos disponíveis...</p>
-    </div>
+    <SearchForm @search="handleSearch" :items="formItems" />
+
+    <Loading v-if="loading" label="Buscando voos disponíveis..." />
     
     <div v-else>
       <div v-if="voos.length === 0 && searchPerformed" class="text-center py-8 text-gray-500">
         <p>Nenhum voo encontrado. Tente alterar seus critérios de busca.</p>
       </div>
       
-      <div v-else-if="voos.length > 0" class="grid grid-cols-1 gap-4">
+      <div v-else-if="voos.length > 0">
         <FlightSelectionCard 
           v-for="voo in voos" 
           :key="voo.id" 
@@ -30,16 +28,22 @@
   </template>
   
   <script>
-  import FlightSearchForm from '@/components/FlightSearchForm.vue'
+  import SearchForm from '@/components/general/SearchForm.vue'
   import FlightSelectionCard from '@/components/FlightSelectionCard.vue'
+  import Title from '@/components/general/Title.vue'
+  import Loading from '@/components/general/Loading.vue'
   
   export default {
-    components: { FlightSearchForm, FlightSelectionCard },
+    components: { SearchForm, FlightSelectionCard, Title, Loading },
     data() {
       return {
         loading: false,
         voos: [],
-        searchPerformed: false
+        searchPerformed: false,
+        formItems: [
+          { key: 'origem', label: 'Aeroporto Origem', icon: 'fa-plane-departure' },
+          { key: 'destino', label: 'Aeroporto Destino', icon: 'fa-plane-arrival' },
+        ]
       }
     },
     methods: {

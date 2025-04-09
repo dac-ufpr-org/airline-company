@@ -1,61 +1,84 @@
 <template>
-  <div>
-    <div class="container mx-auto flex mt-6 p-4">
-      <main
-        class="flex-1 bg-white p-6 rounded-xl shadow-lg border border-blue-200"
-      >
-        <Table :items="voos" :columns="tableColumns">
-          <template #cell-actions>
-            <div class="flex items-center space-x-3">
-              <Button
-                blue
-                label="Confirmar Embarque"
-                size="text-sm"
-                icon="fa-check"
-                @click="openModal('boarding')"
-              />
+  <main>
+    <Table :items="voos" :columns="tableColumns">
+      <template #cell-actions>
+        <div class="flex items-center space-x-3">
+          <Button
+            blue
+            label="Confirmar Embarque"
+            size="text-sm"
+            icon="fa-check"
+            @click="openModal('boarding')"
+          />
 
-              <Button
-                green
-                label="Realizar Voo"
-                size="text-sm"
-                icon="fa-plane-departure"
-                @click="openModal('completion')"
-              />
+          <Button
+            green
+            label="Realizar Voo"
+            size="text-sm"
+            icon="fa-plane-departure"
+            @click="openModal('completion')"
+          />
 
-              <Button 
-              red 
-              label="Cancelar Voo" 
-              size="text-sm" 
-              icon="fa-times"
-              @click="openModal('cancellation')"
-               />
-            </div>
-          </template>
-
-          <template #table-actions>
-            <Input
-              title="Buscar voos"
-              type="text"
-              placeholder="Digite para filtrar..."
-              search
-              v-model="searchTerm"
+          <Button 
+          red 
+          label="Cancelar Voo" 
+          size="text-sm" 
+          icon="fa-times"
+          @click="openModal('cancellation')"
             />
-            <Button
-                blue
-                label="Cadastrar Voo"
-                size="text-sm"
-                icon="fa-plus"
-                @click="$router.push('/employee/flight-registration')"
-              />
-          </template>
-        </Table>
-      </main>
-    </div>
-    <ModalBoardingConfirmation v-if="modalType === 'boarding'" @close="closeModal" />
-    <ModalFlightCancellation v-if="modalType === 'cancellation'" @close="closeModal" />
-    <ModalFlightCompletion v-if="modalType === 'completion'" @close="closeModal" />
-  </div>
+        </div>
+      </template>
+
+      <template #table-actions>
+        <div class="grid grid-cols-4 flex items-end gap-3">
+          <Input
+            class="col-span-3"
+            title="Buscar voos"
+            type="text"
+            placeholder="Digite para filtrar..."
+            search
+            v-model="searchTerm"
+          />
+          <Button
+            class="mb-3"
+            blue
+            label="Cadastrar Voo"
+            size="text-sm"
+            icon="fa-plus"
+            @click="$router.push('/employee/flight-registration')"
+          />
+        </div>
+      </template>
+    </Table>
+    <Modal v-if="modalType === 'boarding'" @close="closeModal">
+      <template #content>
+        <h2 class="text-lg font-semibold mb-4">Boarding Confirmation</h2>
+        <p>Digite o código da reserva para confirmar o embarque do cliente.</p>
+        <input
+          type="text"
+          placeholder="Código da reserva"
+          class="border px-4 py-2 w-full rounded mt-2"
+        />
+          <Button label="Confirmar" @click="closeModal" class="my-3" blue />
+      </template>
+    </Modal>
+    <Modal v-if="modalType === 'cancellation'" @close="closeModal">
+      <template #content>
+        <h2 class="text-lg font-semibold mb-4">Flight Cancellation</h2>
+        <p>Você tem certeza que deseja cancelar este voo?</p>
+        <p class="font-semibold">Todas as reservas vinculadas serão canceladas.</p>
+        <Button label="Confirmar" @click="closeModal" class="my-3" blue  />
+      </template>
+    </Modal>
+    <Modal v-if="modalType === 'completion'" @close="closeModal">
+      <template #content>
+        <h2 class="text-lg font-semibold mb-4">Flight Completion</h2>
+        <p>Confirme que este voo foi realizado com sucesso.</p>
+        <p class="font-semibold">As reservas embarcadas serão atualizadas automaticamente.</p>
+        <Button label="Confirmar Realização" @click="closeModal" blue class="my-3" />
+      </template>
+    </Modal>
+  </main>
 </template>
 
 <script>
@@ -63,9 +86,7 @@ import Table from "../../components/general/Table.vue";
 import Button from "../../components/general/Button.vue";
 import Header from "../../components/general/Header.vue";
 import Input from "../../components/general/Input.vue";
-import ModalBoardingConfirmation from "../../components/ModalBoardingConfirmation.vue";
-import ModalFlightCancellation from "../../components/ModalFlightCancellation.vue";
-import ModalFlightCompletion from "../../components/ModalFlightCompletion.vue";
+import Modal from "../../components/general/Modal.vue";
 
 export default {
   components: {
@@ -73,9 +94,7 @@ export default {
     Table,
     Button,
     Input,
-    ModalBoardingConfirmation,
-    ModalFlightCancellation,
-    ModalFlightCompletion,
+    Modal
   },
   data() {
     return {
@@ -93,7 +112,7 @@ export default {
         },
       ],
       tableColumns: [
-        { key: "dataHora", label: "Data/Hora", formatter: this.formatDateTime },
+        { key: "dataHora", label: "Data/Hora", formatter: (val) => this.$filters.formatDateTime(val) ?? '-' },
         { key: "origem", label: "Origem" },
         { key: "destino", label: "Destino" },
         { key: "actions", label: "Ações", class: "text-right" },
@@ -107,40 +126,7 @@ export default {
     closeModal() {               
       this.modalType = null;
     },
-    formatDateTime(dateTime) {
-      const options = {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      };
-      return new Date(dateTime).toLocaleString("pt-BR", options);
-    },
-    logout() {
-      console.log("Logout realizado");
-      this.$router.push("/login");
-    },
   },
 };
 </script>
 
-<style scoped>
-header {
-  background-size: 150%;
-  animation: gradientShift 8s ease infinite alternate;
-}
-
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
-tbody tr:hover {
-  background-color: #f8fafc;
-}
-</style>
