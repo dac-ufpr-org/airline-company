@@ -7,6 +7,7 @@ import EmployeeDashboard from '@/views/employee/EmployeeDashboard.vue'
 import NewReservation from '@/views/client/NewReservation.vue'
 import ReservationConfirmation from '@/views/client/ReservationConfirmation.vue'
 import ReservationReceipt from '@/views/client/ReservationReceipt.vue'
+import Reservation from '@/views/client/Reservation.vue'
 import Employee from '@/views/employee/Employee.vue'
 
 const routes = [
@@ -37,6 +38,11 @@ const routes = [
     path: '/client/reservas/comprovante',
     name: 'Reserva Recebida',
     component: ReservationReceipt,
+  },
+  {
+    path: '/client/consultar-reservas',
+    name: 'Consultar Reserva',
+    component: Reservation,
   },
   //employee routes
   { path: '/employee/dashboard', name: 'Dashboard do Funcionário', component: EmployeeDashboard },

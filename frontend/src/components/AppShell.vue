@@ -59,8 +59,8 @@ export default {
     group: null,
     menuItems: [],
     clientMenuItems: [
-      { text: 'Dashboard', route: '/client/dashboard' },
-      { text: 'Reservas', route: '/client/reservas/nova' }
+      { id: 1, text: 'Dashboard', route: '/client/dashboard' },
+      { id: 2, text: 'Reservas', route: '/client/consultar-reservas' },
     ],
     employeeMenuItems: [
       { text: 'Dashboard', route: '/employee/dashboard' },
@@ -77,8 +77,6 @@ export default {
   },
   computed: {
     isLoginRegister() {
-      console.log(this.$route.path);
-      
       return this.$route.path.includes('login') || this.$route.path.includes('register')
     }
   },

@@ -59,7 +59,7 @@
 
 <script>
 import Header from '../../components/general/Header.vue'
-import ColorBadge from '../../components/ColorBadge.vue'
+import ColorBadge from '../../components/general/ColorBadge.vue'
 import Table from '../../components/general/Table.vue'
 import Button from '../../components/general/Button.vue'
 import Input from '../../components/general/Input.vue'
