@@ -3,7 +3,7 @@
         <Label :title="title" :required="required"/>
         <div class="flex">
             <i 
-                :class="this.icon ? `fa ${this.icon}` : ''"
+                :class="this.icon ? `fa ${this.icon} text-gray-400` : ''"
                 class="p-3 border border-gray-300 bg-slate-100 rounded-l-lg"
             ></i>
             <input 
@@ -28,8 +28,7 @@ import Label from '../general/Label.vue'
 
 export default {
     data: () => ({
-        inputValue: '',
-        icon: null
+        inputValue: ''
     }),
     components: {
         Label
@@ -62,6 +61,10 @@ export default {
         type: {
             type: String,
             default: 'text'
+        },
+        icon: {
+        type: String,
+        default: null
         },
         modelValue: [String, Number]
     },
