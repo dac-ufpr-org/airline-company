@@ -18,7 +18,7 @@
       { 'rounded-lg border border-slate-200 hover:bg-gray-50': light },
       { 'cursor-pointer': !disabled }
     ]"
-    class="py-1 px-4 min-w-auto rounded-lg flex items-center justify-center transition-colors duration-200"
+    class="py-1 w-full px-4 min-w-auto rounded-lg flex items-center justify-center transition-colors duration-200"
   >
     <div 
       :class="size === 'text-xs' || size === 'text-sm' ? 'px-2' : 'px-4'" 

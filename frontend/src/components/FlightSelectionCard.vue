@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white p-4 rounded-lg shadow-md border border-blue-100 hover:border-blue-300 transition-colors mx-4">
+    <div class="mb-4 bg-white p-4 rounded-lg shadow-md border border-blue-100 hover:border-blue-300 transition-colors mx-4">
       <div class="flex justify-between items-start">
         <div>
           <h3 class="font-bold text-blue-800">{{ voo.origem }} → {{ voo.destino }}</h3>
@@ -9,6 +9,7 @@
       </div>
       <div class="mt-4 flex justify-end">
         <Button 
+          class="max-w-[90px]"
           blue
           label="Selecionar"
           @click="$emit('select', voo)"
