@@ -48,7 +48,7 @@ const routes = [
   //employee routes
   { path: '/employee/dashboard', name: 'Dashboard do Funcionário', component: EmployeeDashboard },
   { path: '/employee', name: 'Funcionários', component: Employee },
-  { path: '/employee/employee-registration', name: 'Cadastro de Funcionário', component: EmployeeRegistration },  // Nova rota para cadastro de funcionários
+  { path: '/employee/employee-registration', name: 'Cadastro de Funcionário', component: EmployeeRegistration },  
   { path: '/employee/flight-registration', name: 'Cadastro de Voo', component: FlightRegistration}
 ]
 

@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 bg-white rounded-lg shadow-md">
-    <!-- Container para o botão colado com a tabela -->
+  
     <div>
       <Button
         blue
@@ -12,7 +12,7 @@
       />
     </div>
 
-    <!-- Tabela de Funcionários -->
+  
     <Table :items="filteredEmployees" :columns="columns">
       <template #table-actions>
         <Input
@@ -40,12 +40,12 @@
 
 <script>
 import Table from '@/components/general/Table.vue'
-import Button from '@/components/general/Button.vue'  // Importando o Button.vue
+import Button from '@/components/general/Button.vue'  
 
 export default {
   components: {
     Table,
-    Button,  // Registrando o componente Button para uso na página
+    Button,  
   },
   data() {
     return {
@@ -74,6 +74,3 @@ export default {
 }
 </script>
 
-<style scoped>
-/* Estilos para a página de funcionários */
-</style>

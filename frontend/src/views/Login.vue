@@ -1,6 +1,8 @@
 <template>
   <div class="grid grid-cols-2 h-full w-full">
-    <div class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"></div>
+    <div
+      class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"
+    ></div>
     <div class="flex justify-center items-center">
       <div class="mb-3 h-[60%] w-[70%] rounded rounded-lg p-6">
         <p class="mb-6 text-4xl font-semibold text-blue-800">Entrar</p>
@@ -20,8 +22,10 @@
         />
         <Button blue label="Entrar" @click="login()" />
         <div class="flex justify-end mt-6">
-          <p class="cursor-pointer hover:text-blue-900 text-blue-800 font-semibold" 
-             @click="$router.push('/register')">
+          <p
+            class="cursor-pointer hover:text-blue-900 text-blue-800 font-semibold"
+            @click="$router.push({ name: 'register' })"
+          >
             Não tem conta? Cadastre-se
           </p>
         </div>
@@ -47,11 +51,11 @@ export default {
     async login() {
       // Reset erros anteriores
       this.errors = {};
-      
+
       // Validação básica
       if (!this.object.email) this.errors.email = "Email é obrigatório";
       if (!this.object.password) this.errors.password = "Senha é obrigatória";
-      
+
       // Se não houver erros, procede com o login
       if (Object.keys(this.errors).length === 0) {
         try {
@@ -62,10 +66,9 @@ export default {
           // } else {
           //   this.errors.general = "Credenciais inválidas";
           // }
-          
+
           // Por enquanto, apenas redireciona
-          this.$router.push({ name: 'clientDashboard' });
-          
+          this.$router.push({ name: "clientDashboard" });
         } catch (error) {
           console.error("Erro no login:", error);
           this.errors.general = "Ocorreu um erro durante o login";
