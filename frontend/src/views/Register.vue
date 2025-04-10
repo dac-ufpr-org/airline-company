@@ -1,19 +1,34 @@
 <template>
-    <div class="grid grid-cols-2">
-        <div class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"></div>
-        <div class="flex justify-center items-center">
-            <div class="mb-4 h-[90%] w-[70%] rounded rounded-lg p-6">
-                <p class="mb-6 text-4xl font-semibold text-blue-800">Cadastre-se</p>
-                <Input v-for="(item, index) in inputs" :key="index" :title="item.title" :type="item.type" v-model="object[item.model]" :required="item.required" :error="this.errors[item.error]" />
-               <!-- <Input title="Senha" type="password" v-model="object.password" required :error="errors.password" /> -->
-                <Button blue label="Cadastrar" @click="register()" class="w-full" />
-                <div class="flex justify-end mt-6">
-                    <p class="cursor-pointer hover:text-blue-900 text-blue-800 font-semibold" @click="this.$router.push('login')">Já tem conta? Entrar</p>
-                </div>
-            </div>
+    <div class="grid grid-cols-2 h-screen">
+      <div class="bg-[#0a205d] flex items-center justify-center">
+        <img src="@/assets/logo.png" alt="Logo" class="w-1/2 max-w-xs" />
+      </div>
+      <div class="overflow-y-auto h-screen flex justify-center items-start">
+        <div class="mt-10 mb-10 w-[70%] rounded-lg p-6">
+          <p class="mb-6 text-4xl font-semibold text-blue-800">Cadastre-se</p>
+          <Input
+            v-for="(item, index) in inputs"
+            :key="index"
+            :title="item.title"
+            :type="item.type"
+            v-model="object[item.model]"
+            :required="item.required"
+            :error="errors[item.error]"
+          />
+          <Button blue label="Cadastrar" @click="register()" class="w-full" />
+          <div class="flex justify-end mt-6">
+            <p
+              class="cursor-pointer hover:text-blue-900 text-blue-800 font-semibold"
+              @click="this.$router.push('login')"
+            >
+              Já tem conta? Entrar
+            </p>
+          </div>
         </div>
+      </div>
     </div>
-</template>
+  </template>
+  
 
 <script>
 import Input from '../components/general/Input.vue'

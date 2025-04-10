@@ -1,8 +1,8 @@
 <template>
   <div class="grid grid-cols-2 h-full w-full">
-    <div
-      class="bg-red-500 bg-center bg-cover bg-[url(@/assets/airplane.png)]"
-    ></div>
+    <div class="bg-[#0a205d] flex items-center justify-center">
+        <img src="@/assets/logo.png" alt="Logo" class="w-1/2 max-w-xs" />
+      </div>
     <div class="flex justify-center items-center">
       <div class="mb-3 h-[60%] w-[70%] rounded rounded-lg p-6">
         <p class="mb-6 text-4xl font-semibold text-blue-800">Entrar</p>

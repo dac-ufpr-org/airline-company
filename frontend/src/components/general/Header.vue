@@ -5,7 +5,7 @@
           <slot name="toggle-sidebar">
           </slot>
           <img 
-            src="@/assets/airplaneIcon.png" 
+            src="@/assets/logo.png" 
             alt="Ícone Avião"
             class="w-8 h-8 object-contain"
           >
