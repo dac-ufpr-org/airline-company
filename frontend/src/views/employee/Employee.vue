@@ -1,18 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded-lg shadow-md">
-  
-    <div>
-      <Button
-        blue
-        label="Cadastrar Funcionário"
-        size="text-sm"
-        icon="fa-plus"
-        @click="$router.push('/employee/employee-registration')"
-        class="mb-0"  
-      />
-    </div>
-
-  
+  <div>
     <Table :items="filteredEmployees" :columns="columns">
       <template #table-actions>
         <Input
@@ -40,12 +27,12 @@
 
 <script>
 import Table from '@/components/general/Table.vue'
-import Button from '@/components/general/Button.vue'  
+import Button from '@/components/general/Button.vue'
 
 export default {
   components: {
     Table,
-    Button,  
+    Button,
   },
   data() {
     return {
@@ -73,4 +60,3 @@ export default {
   },
 }
 </script>
-
