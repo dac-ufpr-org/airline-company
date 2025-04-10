@@ -62,10 +62,6 @@ export default {
             type: String,
             default: 'text'
         },
-        icon: {
-        type: String,
-        default: null
-        },
         modelValue: [String, Number]
     },
     methods: {
