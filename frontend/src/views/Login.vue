@@ -35,14 +35,8 @@
 </template>
 
 <script>
-import Input from "../components/general/Input.vue";
-import Button from "../components/general/Button.vue";
 
 export default {
-  components: {
-    Input,
-    Button,
-  },
   data: () => ({
     object: {},
     errors: {},

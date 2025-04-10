@@ -24,15 +24,11 @@
 </template>
 
 <script>
-import Label from '../general/Label.vue'
 
 export default {
     data: () => ({
         inputValue: ''
     }),
-    components: {
-        Label
-    },
     props: {
         title: {
             type: String, 

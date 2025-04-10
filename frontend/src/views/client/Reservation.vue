@@ -55,14 +55,8 @@
 </template>
 
 <script>
-import SearchForm from '../../components/general/SearchForm.vue'
-import Title from '../../components/general/Title.vue'
-import Card from '../../components/general/Card.vue'
-import LoadingDots from '../../components/general/LoadingDots.vue'
-import Button from '../../components/general/Button.vue'
 
 export default {
-    components: { SearchForm, Title, Card, LoadingDots, Button },
     data() {
         return {
             loading: false,

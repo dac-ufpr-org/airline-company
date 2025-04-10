@@ -42,11 +42,8 @@
   </template>
   
   <script>
-  import Input from '../general/Input.vue'
-  import TableSidebar from './TableSidebar.vue'
   
   export default {
-    components: { Input, TableSidebar },
     props: {
       items: {
         type: Array,

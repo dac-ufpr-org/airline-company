@@ -36,11 +36,8 @@
   </template>
   
   <script>
-  import Modal from './general/Modal.vue'
-  import Button from './general/Button.vue'
   
   export default {
-    components: { Modal, Button },
     props: {
       reservation: {
         type: Object,

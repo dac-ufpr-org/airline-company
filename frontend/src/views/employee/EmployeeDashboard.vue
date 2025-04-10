@@ -82,20 +82,8 @@
 </template>
 
 <script>
-import Table from "../../components/general/Table.vue";
-import Button from "../../components/general/Button.vue";
-import Header from "../../components/general/Header.vue";
-import Input from "../../components/general/Input.vue";
-import Modal from "../../components/general/Modal.vue";
 
 export default {
-  components: {
-    Header,
-    Table,
-    Button,
-    Input,
-    Modal
-  },
   data() {
     return {
       modalType: null,

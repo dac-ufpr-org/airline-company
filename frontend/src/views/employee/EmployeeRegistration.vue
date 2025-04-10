@@ -61,14 +61,8 @@
 </template>
 
 <script>
-import Button from "@/components/general/Button.vue";
-import Input from "@/components/general/Input.vue";
 
 export default {
-  components: {
-    Button,
-    Input,
-  },
   data() {
     return {
       object: {},

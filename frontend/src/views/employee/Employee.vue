@@ -1,6 +1,5 @@
 <template>
   <div class="p-4 bg-white rounded-lg shadow-md">
-  
     <div>
       <Button
         blue
@@ -39,14 +38,8 @@
 </template>
 
 <script>
-import Table from '@/components/general/Table.vue'
-import Button from '@/components/general/Button.vue'  
 
 export default {
-  components: {
-    Table,
-    Button,  
-  },
   data() {
     return {
       searchTerm: '',

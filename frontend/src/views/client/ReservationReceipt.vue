@@ -27,10 +27,8 @@
 </template>
 
 <script>
-import Button from '@/components/general/Button.vue';
 
 export default {
-  components: { Button },
   methods: {
     goToDashboard() {
       // Redireciona para a rota do dashboard do cliente

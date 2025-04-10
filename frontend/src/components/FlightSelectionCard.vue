@@ -20,10 +20,8 @@
   </template>
   
   <script>
-  import Button from './general/Button.vue'
   
   export default {
-    components: { Button },
     props: {
       voo: {
         type: Object,
