@@ -40,7 +40,6 @@
       <router-view></router-view>
     </main>
   </div>
-  
 </template>
 
 <script>
@@ -60,10 +59,14 @@ export default {
     menuItems: [],
     clientMenuItems: [
       { id: 1, text: 'Dashboard', route: '/client/dashboard' },
-      { id: 2, text: 'Reservas', route: '/client/consultar-reservas' },
+      { id: 2, text: 'Consultar Reservas', route: '/client/consultar-reservas' },
+      { id: 3, text: 'Nova Reserva', route: '/client/reservas/nova' },
+      { id: 4, text: 'Extrato de Milhas', route: '/client/mileage-extract' },
     ],
     employeeMenuItems: [
       { text: 'Dashboard', route: '/employee/dashboard' },
+      { text: 'Cadastro de Funcionário', route: '/employee/employee-registration' },
+      { text: 'Cadastro de Voo', route: '/employee/flight-registration' },
     ],
   }),
   methods: {
@@ -81,10 +84,9 @@ export default {
     }
   },
   mounted() {
-    // lógica de ver de qual grupo o usuário pertence
+    // Lógica de verificação de grupo
     this.group = (window.location.pathname).includes('client') ? 'client' : 'employee';
     this.menuItems = this.group === 'client' ? this.clientMenuItems : this.employeeMenuItems
   }
 }
 </script>
-
