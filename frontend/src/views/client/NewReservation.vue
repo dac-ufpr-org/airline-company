@@ -24,6 +24,8 @@
         <p>Informe os critérios de busca para encontrar voos disponíveis.</p>
       </div>
     </div>
+
+    <LoadingDots v-if="loading" />
   </main>
   </template>
   
@@ -32,9 +34,10 @@
   import FlightSelectionCard from '@/components/FlightSelectionCard.vue'
   import Title from '@/components/general/Title.vue'
   import Loading from '@/components/general/Loading.vue'
+  import LoadingDots from '@/components/general/LoadingDots.vue'
   
   export default {
-    components: { SearchForm, FlightSelectionCard, Title, Loading },
+    components: { SearchForm, FlightSelectionCard, Title, Loading, LoadingDots },
     data() {
       return {
         loading: false,

@@ -68,6 +68,7 @@
       @close="showCancelModal = false"
       @confirm="processCancelReservation"
     />
+
   </main>
 </template>
 
@@ -88,7 +89,7 @@ export default {
     Button,
     Modal,
     Input,
-    ModalCancelReservation
+    ModalCancelReservation,
   },
   data() {
     return {
