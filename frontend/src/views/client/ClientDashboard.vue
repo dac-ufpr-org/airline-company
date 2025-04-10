@@ -8,7 +8,7 @@
       @tab-change="updateTab"
     >
       <template #cell-status="{ item }">
-        <FlightStatusBadge :status="item.status" />
+        <ColorBadge :flightStatus="item.status" />
       </template>
 
       <template #table-actions>
@@ -73,7 +73,7 @@
 
 <script>
 import Header from '../../components/general/Header.vue'
-import FlightStatusBadge from '../../components/FlightStatusBadge.vue'
+import ColorBadge from '../../components/general/ColorBadge.vue'
 import Table from '../../components/general/Table.vue'
 import Button from '../../components/general/Button.vue'
 import Modal from '../../components/general/Modal.vue'
@@ -83,7 +83,7 @@ import ModalCancelReservation from '../../components/ModalCancelReservation.vue'
 export default {
   components: {
     Header,
-    FlightStatusBadge,
+    ColorBadge,
     Table,
     Button,
     Modal,
