@@ -5,13 +5,12 @@
       @input="formChanged = true"
       class="space-y-4"
     >
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 gap-4">
         <Input
           title="Nome Completo"
           type="text"
           v-model="object.name"
           id="nome"
-          class="col-span-2"
           placeholder="Digite o nome completo"
           required
           :error="errors.name"
@@ -22,18 +21,16 @@
           v-model="object.cpf"
           type="text"
           id="cpf"
-          class="col-span-2"
           placeholder="Digite o CPF"
           required
           :error="errors.cpf"
         />
       </div>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 gap-4">
         <Input
           title="E-mail"
           v-model="object.email"
           type="email"
-          class="col-span-2"
           id="email"
           placeholder="Digite o e-mail"
           required
@@ -45,7 +42,6 @@
           v-model="object.phone"
           type="text"
           id="telefone"
-          class="col-span-2"
           placeholder="Digite o telefone"
           required
           :error="errors.phone"
