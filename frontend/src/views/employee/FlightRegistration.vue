@@ -105,18 +105,7 @@
   </template>
   
   <script>
-  import Header from "@/components/general/Header.vue";
-  import Input from "@/components/general/Input.vue";
-  import Button from "@/components/general/Button.vue";
-  import Modal from "@/components/general/Modal.vue";
-  
   export default {
-    components: {
-      Header,
-      Input,
-      Button,
-      Modal,
-    },
     data() {
       return {
         form: {

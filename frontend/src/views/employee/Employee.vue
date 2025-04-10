@@ -1,5 +1,17 @@
 <template>
-  <div>
+  <div class="p-4 bg-white rounded-lg shadow-md">
+    <div>
+      <Button
+        blue
+        label="Cadastrar Funcionário"
+        size="text-sm"
+        icon="fa-plus"
+        @click="$router.push('/employee/employee-registration')"
+        class="mb-0"  
+      />
+    </div>
+
+  
     <Table :items="filteredEmployees" :columns="columns">
       <template #table-actions>
         <Input
@@ -26,14 +38,8 @@
 </template>
 
 <script>
-import Table from '@/components/general/Table.vue'
-import Button from '@/components/general/Button.vue'
 
 export default {
-  components: {
-    Table,
-    Button,
-  },
   data() {
     return {
       searchTerm: '',

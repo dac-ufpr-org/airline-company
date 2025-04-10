@@ -73,24 +73,8 @@
 </template>
 
 <script>
-import Header from '../../components/general/Header.vue'
-import ColorBadge from '../../components/general/ColorBadge.vue'
-import Table from '../../components/general/Table.vue'
-import Button from '../../components/general/Button.vue'
-import Modal from '../../components/general/Modal.vue'
-import Input from '../../components/general/Input.vue'
-import ModalCancelReservation from '../../components/ModalCancelReservation.vue'
 
 export default {
-  components: {
-    Header,
-    ColorBadge,
-    Table,
-    Button,
-    Modal,
-    Input,
-    ModalCancelReservation,
-  },
   data() {
     return {
       modalInfo: [

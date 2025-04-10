@@ -44,16 +44,8 @@
 </template>
 
 <script>
-import Header from './general/Header.vue'
-import Button from './general/Button.vue'
-import Sidebar from './general/Sidebar.vue'
 
 export default {
-  components: {
-    Header,
-    Button,
-    Sidebar
-  },
   data: () => ({
     isOpen: true,
     group: null,

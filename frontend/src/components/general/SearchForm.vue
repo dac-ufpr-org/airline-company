@@ -43,10 +43,8 @@
 
 <script>
 import { reactive, toRefs } from 'vue'
-import Button from '../general/Button.vue'
 
 export default {
-  components: { Button },
   props: {
     items: {
       type: Array,

@@ -31,11 +31,9 @@
 </template>
 
 <script>
-import Button from './Button.vue'
 import { useRouter } from 'vue-router'
 
 export default {
-  components: { Button },
   props: {
     activeTab: {
       type: String,

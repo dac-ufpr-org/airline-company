@@ -30,14 +30,8 @@
   </template>
   
   <script>
-  import SearchForm from '@/components/general/SearchForm.vue'
-  import FlightSelectionCard from '@/components/FlightSelectionCard.vue'
-  import Title from '@/components/general/Title.vue'
-  import Loading from '@/components/general/Loading.vue'
-  import LoadingDots from '@/components/general/LoadingDots.vue'
   
   export default {
-    components: { SearchForm, FlightSelectionCard, Title, Loading, LoadingDots },
     data() {
       return {
         loading: false,
