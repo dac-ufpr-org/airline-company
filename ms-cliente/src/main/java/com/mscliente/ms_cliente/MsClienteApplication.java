@@ -1,13 +1,13 @@
-package com.airline.airline_backend;
+package com.mscliente.ms_cliente;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AirlineBackendApplication {
+public class MsClienteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AirlineBackendApplication.class, args);
+		SpringApplication.run(MsClienteApplication.class, args);
 	}
 
 }

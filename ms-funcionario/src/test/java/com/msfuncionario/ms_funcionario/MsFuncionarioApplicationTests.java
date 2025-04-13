@@ -1,10 +1,10 @@
-package com.airline.airline_backend;
+package com.msfuncionario.ms_funcionario;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AirlineBackendApplicationTests {
+class MsFuncionarioApplicationTests {
 
 	@Test
 	void contextLoads() {
