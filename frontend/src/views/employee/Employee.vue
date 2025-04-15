@@ -2,12 +2,24 @@
   <div>
     <Table :items="filteredEmployees" :columns="columns">
       <template #table-actions>
-        <Input
-          title="Buscar funcionários"
-          type="text"
-          placeholder="Digite para filtrar..."
-          search
-          v-model="searchTerm" />
+        <div class="grid grid-cols-4 flex items-end gap-3">
+          <Input
+              class="col-span-3"
+              title="Buscar funcionários"
+              type="text"
+              placeholder="Digite para filtrar..."
+              search
+              v-model="searchTerm" 
+            />
+            <Button
+                class="mb-3"
+                blue
+                label="Cadastrar Funcionário"
+                size="text-sm"
+                icon="fa-plus"
+                @click="$router.push('/employee/employee-registration')"
+            />
+        </div>
       </template>
 
       <template #cell-actions="{ item }">
