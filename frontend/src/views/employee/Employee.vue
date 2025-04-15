@@ -2,12 +2,24 @@
   <div>
     <Table :items="filteredEmployees" :columns="columns">
       <template #table-actions>
-        <Input
-          title="Buscar funcionários"
-          type="text"
-          placeholder="Digite para filtrar..."
-          search
-          v-model="searchTerm" />
+        <div class="grid grid-cols-4 flex items-end gap-3">
+          <Input
+              class="col-span-3"
+              title="Buscar funcionários"
+              type="text"
+              placeholder="Digite para filtrar..."
+              search
+              v-model="searchTerm" 
+            />
+            <Button
+                class="mb-3"
+                blue
+                label="Cadastrar Funcionário"
+                size="text-sm"
+                icon="fa-plus"
+                @click="$router.push('/employee/employee-registration')"
+            />
+        </div>
       </template>
 
       <template #cell-actions="{ item }">
@@ -17,11 +29,26 @@
             label="Editar"
             size="text-sm"
             icon="fa-pen-to-square"
-            @click="$router.push(`/employee/employee-registration?id=${item.cpf}`)" />
-          <Button red label="Remover" size="text-sm" icon="fa-trash" />
+            @click="$router.push(`/employee/employee-registration?id=${item.cpf}`)" 
+          />
+          <Button 
+            red 
+            label="Remover Funcionário" 
+            size="text-sm" 
+            icon="fa-times"
+            @click="openModal('remove')"
+          />
         </div>
       </template>
     </Table>
+    <Modal v-if="modalType === 'remove'" @close="closeModal">
+      <template #content>
+        <h2 class="text-lg font-semibold mb-4">Remover Funcionário</h2>
+        <p>Você tem certeza que deseja remover este funcionário?</p>
+        <p class="font-semibold">Esse funcionário será removido permanentemente.</p>
+        <Button label="Confirmar" @click="closeModal" class="my-3" blue  />
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -29,6 +56,7 @@
 export default {
   data() {
     return {
+      modalType: null,
       searchTerm: '',
       columns: [
         { key: 'nome', label: 'Nome' },
@@ -49,6 +77,14 @@ export default {
       return this.employees.filter((employee) =>
         Object.values(employee).some((value) => value.toLowerCase().includes(this.searchTerm.toLowerCase()))
       )
+    },
+  },
+  methods: {
+    openModal(type) {            
+      this.modalType = type;
+    },
+    closeModal() {               
+      this.modalType = null;
     },
   },
 }

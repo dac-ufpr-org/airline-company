@@ -56,6 +56,7 @@ export default {
     ],
     employeeMenuItems: [
       { text: 'Dashboard', route: '/employee/dashboard' },
+      { text: 'Funcionários', route: '/employee' },
     ],
   }),
   methods: {

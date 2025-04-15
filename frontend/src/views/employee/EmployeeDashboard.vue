@@ -52,7 +52,7 @@
     </Table>
     <Modal v-if="modalType === 'boarding'" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Boarding Confirmation</h2>
+        <h2 class="text-lg font-semibold mb-4">Confirmação de Embarque</h2>
         <p>Digite o código da reserva para confirmar o embarque do cliente.</p>
         <input
           type="text"
@@ -64,7 +64,7 @@
     </Modal>
     <Modal v-if="modalType === 'cancellation'" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Flight Cancellation</h2>
+        <h2 class="text-lg font-semibold mb-4">Cancelamento de Voo</h2>
         <p>Você tem certeza que deseja cancelar este voo?</p>
         <p class="font-semibold">Todas as reservas vinculadas serão canceladas.</p>
         <Button label="Confirmar" @click="closeModal" class="my-3" blue  />
@@ -72,7 +72,7 @@
     </Modal>
     <Modal v-if="modalType === 'completion'" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Flight Completion</h2>
+        <h2 class="text-lg font-semibold mb-4">Confirmação de Voo Realizado</h2>
         <p>Confirme que este voo foi realizado com sucesso.</p>
         <p class="font-semibold">As reservas embarcadas serão atualizadas automaticamente.</p>
         <Button label="Confirmar Realização" @click="closeModal" blue class="my-3" />
