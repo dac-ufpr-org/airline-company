@@ -13,6 +13,7 @@
 
       <template #table-actions>
         <Input 
+          class="col-span-3"
           title="Buscar voos" 
           type="text" 
           placeholder="Digite para filtrar..." 
@@ -85,7 +86,7 @@ export default {
         { label: 'Status', key: 'status' }
       ],
       milhas: 3250,
-      searchTerm: '',
+
       activeTab: 'reservas',
       mostrarModal: false,
       showCancelModal: false,

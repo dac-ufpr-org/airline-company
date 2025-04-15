@@ -2,20 +2,22 @@
     <div class="mb-3">
         <Label :title="title" :required="required"/>
         <div class="flex">
-            <i 
-                :class="this.icon ? `fa ${this.icon} text-gray-400` : ''"
-                class="p-3 border border-gray-300 bg-slate-100 rounded-l-lg"
-            ></i>
             <input 
                 :type="type" 
                 @input="updateValue"
-                class="border border-gray-300 bg-slate-100 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500 focus:border-blue-500 block w-full focus:ring-0 p-3"
+                class="border border-gray-300 bg-slate-100 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block w-full focus:ring-0 p-3"
                 :class="[{ 'bg-slate-100': disabled, 'border-red-500': error }]"
                 v-model="inputValue"
                 :disabled="disabled"
                 :placeholder="placeholder"
                 :error="error"
             >
+            <i 
+                :class="this.icon ? `fa ${this.icon} text-gray-400` : ''"
+                class="p-3 border border-gray-300 bg-slate-100 rounded-r-lg cursor-pointer"
+                v-if="icon"
+                @click="search ? $emit('search') : null"
+            />
         </div>
         <div class="text-red-400 text-xs p-2 mt-3" v-if="error">
             <b>{{ error }}</b>
