@@ -48,6 +48,7 @@
             icon="fa-money-bill"
             v-model="form.valor"
             placeholder="Ex: 350,00"
+            @input="formatCurrency"
         />
         
         <Input
@@ -66,7 +67,17 @@
           icon="fa-couch"
           v-model.number="form.poltronas"
           placeholder="Ex: 180"
+          min="1"
         />
+
+        <p
+        v-if="poltronasError"
+        class="text-red-600 
+        text-sm 
+        font-medium"
+        >
+        A quantidade de poltronas deve ser maior que 0.
+        </p>
       
         <div
           v-if="formError"
@@ -105,6 +116,8 @@
   </template>
   
   <script>
+import formatCurrency from '@/utils/formatMoney';
+
   export default {
     data() {
       return {
@@ -113,13 +126,14 @@
           hora: "",
           origem: "",
           destino: "",
-          valor: "",
+          valor: "", // string porfavor
           poltronas: null,
         },
         modalVisible: false,
         vooCodigo: "",
         formChanged: false,
         formError: false,
+        poltronasError: false,
       };
     },
     methods: {
@@ -137,11 +151,34 @@
           this.formError = true;
           return;
         }
+
+        if (poltronas <= 0){
+          this.poltronasError = true;
+          return;
+        }
   
         this.vooCodigo = "TADS" + Math.floor(1000 + Math.random() * 9000);
         this.modalVisible = true;
         this.formChanged = false;
         this.formError = false;
+      },
+
+      formatCurrency(event) {
+        let value = event.target.value;
+
+        value = value.replace(/\D/g, '');
+
+        if (!value) {
+          this.form.valor = '';
+          return;
+        }
+
+        const numberValue = parseFloat(value) / 100;
+
+        this.form.valor = numberValue.toLocaleString('pt-BR', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
       },
     },
     beforeRouteLeave(to, from, next) {

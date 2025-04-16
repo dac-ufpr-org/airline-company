@@ -3,6 +3,7 @@ import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import ClientDashboard from '../views/client/ClientDashboard.vue'
 import ClientMilesExtract from '../views/client/ClientMilesExtract.vue'
+import BuyMiles from '@/views/client/BuyMiles.vue'
 import EmployeeDashboard from '@/views/employee/EmployeeDashboard.vue'
 import NewReservation from '@/views/client/NewReservation.vue'
 import ReservationConfirmation from '@/views/client/ReservationConfirmation.vue'
@@ -23,8 +24,22 @@ const routes = [
     component: Login,
   },
   //client routes
-  { path: '/client/dashboard', name: 'Dashboard do Cliente', component: ClientDashboard },
-  { path: '/client/mileage-extract', name: 'Extrato de Milhas', component: ClientMilesExtract },
+  { 
+    path: '/client/dashboard', 
+    name: 'Dashboard do Cliente', 
+    component: ClientDashboard },
+
+  { 
+    path: '/client/mileage-extract', 
+    name: 'Extrato de Milhas', 
+    component: ClientMilesExtract },
+
+  { 
+    path:'/client/buy-miles',
+    name: 'Compra de Milhas',
+    component: BuyMiles
+  }, 
+
   {
     path: '/client/reservas/nova',
     name: 'Nova Reserva',
