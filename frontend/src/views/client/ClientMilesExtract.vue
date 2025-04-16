@@ -1,24 +1,38 @@
 <template>
   <div>
     <main>
+
       <Table 
         :items="items" 
         :columns="tableColumns"
         :initial-search-term="searchTerm"
         @tab-change="updateTab"
       >
+
+
         <template #cell-type="{ item }">
           <ColorBadge :label='this.labelName[item.type]' :green="item.type === 'entry'" :red="item.type === 'exit'" />
         </template>
 
         <template #table-actions>
+
             <Input 
-                title="Buscar voos" 
+                title="Buscar transação" 
                 type="text" 
                 placeholder="Digite para filtrar..." 
                 search 
                 v-model="searchTerm"
+                class="w-full"
             />
+
+            <Button
+                blue
+                label="Comprar Milhas"
+                icon="fa-dollar-sign"
+                @click="BuyMiles"
+                class="w-auto max-w-[200px] text-sm"
+            />
+
         </template>
 
         <template #cell-actions="{ item }">
@@ -98,6 +112,10 @@ export default {
     }
   },
   methods: {
+
+    buyMiles() {
+      this.$router.push({ name: 'Compra de Milhas' }); 
+    }
    
   }
 }
