@@ -47,7 +47,7 @@
 
 export default {
   data: () => ({
-    isOpen: true,
+    isOpen: false, // Alterado de true para false para iniciar fechado
     group: null,
     menuItems: [],
     clientMenuItems: [
@@ -80,4 +80,3 @@ export default {
   }
 }
 </script>
-

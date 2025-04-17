@@ -25,14 +25,14 @@
       <template #cell-actions="{ item }">
         <div class="flex items-center space-x-3">
           <Button
-            blue
+            lightBlue
             label="Editar"
             size="text-sm"
             icon="fa-pen-to-square"
-            @click="$router.push(`/employee/employee-registration?id=${item.cpf}`)" 
+            @click="$router.push(`/employee/employee-edit?id=${item.cpf}`)" 
           />
           <Button 
-            red 
+            lightRed 
             label="Remover Funcionário" 
             size="text-sm" 
             icon="fa-times"
@@ -42,14 +42,16 @@
       </template>
     </Table>
     
-    <Modal v-if="modalType === 'remove'" @close="closeModal">
+    <Modal v-if="modalType === 'remove'" title="Remover Funcionário" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Remover Funcionário</h2>
-        <p>Você tem certeza que deseja remover este funcionário?</p>
-        <p class="font-semibold">Esse funcionário será removido permanentemente.</p>
-        <Button label="Confirmar" @click="closeModal" class="my-3" blue  />
+        <div class="mb-4">
+          <p class="mb-2">Você tem certeza que deseja remover este funcionário?</p>
+          <p class="font-semibold text-red-600">Esse funcionário será removido permanentemente.</p>
+        </div>
+        <Button label="Confirmar" @click="closeModal" class="my-3" blue />
       </template>
     </Modal>
+
   </div>
 </template>
 

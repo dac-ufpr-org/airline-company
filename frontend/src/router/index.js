@@ -11,7 +11,9 @@ import ReservationReceipt from '@/views/client/ReservationReceipt.vue'
 import Reservation from '@/views/client/Reservation.vue'
 import Employee from '@/views/employee/Employee.vue'
 import EmployeeRegistration from '@/views/employee/EmployeeRegistration.vue'  // Nova rota de cadastro de funcionário
+import EmployeeEdit from '@/views/employee/EmployeeEdit.vue'
 import FlightRegistration from '@/views/employee/FlightRegistration.vue'
+
 const routes = [
   {
     path: '/register',
@@ -64,7 +66,8 @@ const routes = [
   { path: '/employee/dashboard', name: 'Dashboard do Funcionário', component: EmployeeDashboard },
   { path: '/employee', name: 'Funcionários', component: Employee },
   { path: '/employee/employee-registration', name: 'Cadastro de Funcionário', component: EmployeeRegistration },  
-  { path: '/employee/flight-registration', name: 'Cadastro de Voo', component: FlightRegistration}
+  { path: '/employee/flight-registration', name: 'Cadastro de Voo', component: FlightRegistration},
+  { path: '/employee/employee-edit', name: 'Edição de Funcionário', component: EmployeeEdit}
 ]
 
 const router = createRouter({
