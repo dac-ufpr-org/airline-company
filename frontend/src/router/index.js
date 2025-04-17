@@ -69,7 +69,7 @@ const routes = [
   { path: '/employee', name: 'Funcionários', component: Employee },
   { path: '/employee/employee-registration', name: 'Cadastro de Funcionário', component: EmployeeRegistration },
   { path: '/employee/flight-registration', name: 'Cadastro de Voo', component: FlightRegistration },
-  { path: '/employee/employee-edit', name: 'Edição de Funcionário', component: EmployeeEdit}
+  { path: '/employee/employee-edit', name: 'Edição de Funcionário', component: EmployeeEdit},
   {
     path: '/',
     redirect: '/login',
