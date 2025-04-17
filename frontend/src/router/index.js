@@ -26,21 +26,23 @@ const routes = [
     component: Login,
   },
   //client routes
-  { 
-    path: '/client/dashboard', 
-    name: 'Dashboard do Cliente', 
-    component: ClientDashboard },
+  {
+    path: '/client/dashboard',
+    name: 'Dashboard do Cliente',
+    component: ClientDashboard,
+  },
 
-  { 
-    path: '/client/mileage-extract', 
-    name: 'Extrato de Milhas', 
-    component: ClientMilesExtract },
+  {
+    path: '/client/mileage-extract',
+    name: 'Extrato de Milhas',
+    component: ClientMilesExtract,
+  },
 
-  { 
-    path:'/client/buy-miles',
+  {
+    path: '/client/buy-miles',
     name: 'Compra de Milhas',
-    component: BuyMiles
-  }, 
+    component: BuyMiles,
+  },
 
   {
     path: '/client/reservas/nova',
@@ -65,9 +67,13 @@ const routes = [
   //employee routes
   { path: '/employee/dashboard', name: 'Dashboard do Funcionário', component: EmployeeDashboard },
   { path: '/employee', name: 'Funcionários', component: Employee },
-  { path: '/employee/employee-registration', name: 'Cadastro de Funcionário', component: EmployeeRegistration },  
-  { path: '/employee/flight-registration', name: 'Cadastro de Voo', component: FlightRegistration},
+  { path: '/employee/employee-registration', name: 'Cadastro de Funcionário', component: EmployeeRegistration },
+  { path: '/employee/flight-registration', name: 'Cadastro de Voo', component: FlightRegistration },
   { path: '/employee/employee-edit', name: 'Edição de Funcionário', component: EmployeeEdit}
+  {
+    path: '/',
+    redirect: '/login',
+  }  
 ]
 
 const router = createRouter({
@@ -76,3 +82,4 @@ const router = createRouter({
 })
 
 export default router
+
