@@ -41,6 +41,7 @@
         </div>
       </template>
     </Table>
+    
     <Modal v-if="modalType === 'remove'" @close="closeModal">
       <template #content>
         <h2 class="text-lg font-semibold mb-4">Remover Funcionário</h2>

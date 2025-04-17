@@ -8,14 +8,11 @@
         :initial-search-term="searchTerm"
         @tab-change="updateTab"
       >
-
-
         <template #cell-type="{ item }">
           <ColorBadge :label='this.labelName[item.type]' :green="item.type === 'entry'" :red="item.type === 'exit'" />
         </template>
 
         <template #table-actions>
-
             <Input 
                 title="Buscar transação" 
                 type="text" 
@@ -24,7 +21,6 @@
                 v-model="searchTerm"
                 class="w-full"
             />
-
             <Button
                 blue
                 label="Comprar Milhas"
@@ -32,7 +28,6 @@
                 @click="BuyMiles"
                 class="w-auto max-w-[200px] text-sm"
             />
-
         </template>
 
         <template #cell-actions="{ item }">

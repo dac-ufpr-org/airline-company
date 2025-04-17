@@ -1,78 +1,79 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-4">
-      <div class="container mx-auto max-w-3xl">
-        <h1 class="text-2xl font-bold text-blue-800 mb-6">Confirmar Reserva</h1>
-        
-        <div class="bg-white p-6 rounded-xl shadow-lg border border-blue-200 mb-6">
-          <h2 class="text-xl font-semibold mb-4">Detalhes do Voo</h2>
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <p class="text-gray-600">Origem</p>
-              <p class="font-medium">{{ voo.origem }}</p>
-            </div>
-            <div>
-              <p class="text-gray-600">Destino</p>
-              <p class="font-medium">{{ voo.destino }}</p>
-            </div>
-            <div>
-              <p class="text-gray-600">Data/Hora</p>
-              <p class="font-medium">{{ formatDateTime(voo.dataHora) }}</p>
-            </div>
-            <div>
-              <p class="text-gray-600">Preço por assento</p>
-              <p class="font-medium">{{ formatCurrency(voo.preco) }}</p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="bg-white p-6 rounded-xl shadow-lg border border-blue-200 mb-6">
-          <h2 class="text-xl font-semibold mb-4">Sua Reserva</h2>
-          
-          <Input 
-            title="Quantidade de Passagens" 
-            type="number" 
-            v-model="quantidade" 
-            min="1"
-            class="mb-4"
-          />
-          
-          <div class="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <p class="text-gray-600">Total em Dinheiro</p>
-              <p class="font-bold text-lg">{{ formatCurrency(totalDinheiro) }}</p>
-            </div>
-            <div>
-              <p class="text-gray-600">Total em Milhas</p>
-              <p class="font-bold text-lg">{{ totalMilhas }} milhas</p>
+    <div class="container mx-auto max-w-3xl">
+      <Title label="Confirmar Reserva" />
+      
+      <Card>
+        <template #default>
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Detalhes do Voo</h2>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p class="text-gray-600">Origem</p>
+                <p class="font-medium">{{ voo.origem }}</p>
+              </div>
+              <div>
+                <p class="text-gray-600">Destino</p>
+                <p class="font-medium">{{ voo.destino }}</p>
+              </div>
+              <div>
+                <p class="text-gray-600">Data/Hora</p>
+                <p class="font-medium">{{ formatDateTime(voo.dataHora) }}</p>
+              </div>
+              <div>
+                <p class="text-gray-600">Preço por assento</p>
+                <p class="font-medium">{{ formatCurrency(voo.preco) }}</p>
+              </div>
             </div>
           </div>
-          
-          <div class="mb-4">
-            <p class="text-gray-600 mb-2">Usar minhas milhas (Saldo: {{ milhasDisponiveis }} milhas)</p>
+        </template>
+      </Card>
+
+      <Card>
+        <template #default>
+          <div>
+            <h2 class="text-xl font-semibold mb-4">Sua Reserva</h2>
             <Input 
+              title="Quantidade de Passagens" 
               type="number" 
-              v-model="milhasUsadas" 
-              :max="Math.min(milhasDisponiveis, totalMilhas)"
-              min="0"
+              v-model="quantidade" 
+              min="1"
+              class="mb-4"
+            />
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <p class="text-gray-600">Total em Dinheiro</p>
+                <p class="font-bold text-lg">{{ formatCurrency(totalDinheiro) }}</p>
+              </div>
+              <div>
+                <p class="text-gray-600">Total em Milhas</p>
+                <p class="font-bold text-lg">{{ totalMilhas }} milhas</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <p class="text-gray-600 mb-2">Usar minhas milhas (Saldo: {{ milhasDisponiveis }} milhas)</p>
+              <Input 
+                type="number" 
+                v-model="milhasUsadas" 
+                :max="Math.min(milhasDisponiveis, totalMilhas)"
+                min="0"
+              />
+            </div>
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+              <p class="font-bold text-blue-800">Total a Pagar: {{ formatCurrency(totalAPagar) }}</p>
+              <p v-if="milhasUsadas > 0" class="text-sm">
+                ({{ milhasUsadas }} milhas + {{ formatCurrency(totalAPagar) }} em dinheiro)
+              </p>
+            </div>
+            <Button 
+              green
+              label="Confirmar Reserva"
+              @click="confirmReservation"
+              class="w-full"
+              :disabled="!canConfirm"
             />
           </div>
-          
-          <div class="bg-blue-50 p-4 rounded-lg mb-6">
-            <p class="font-bold text-blue-800">Total a Pagar: {{ formatCurrency(totalAPagar) }}</p>
-            <p v-if="milhasUsadas > 0" class="text-sm">
-              ({{ milhasUsadas }} milhas + {{ formatCurrency(totalAPagar) }} em dinheiro)
-            </p>
-          </div>
-          
-          <Button 
-            green
-            label="Confirmar Reserva"
-            @click="confirmReservation"
-            class="w-full"
-            :disabled="!canConfirm"
-          />
-        </div>
-      </div>
+        </template>
+      </Card>
     </div>
   </template>
   

@@ -1,34 +1,33 @@
 <template>
     <main class="p-6 max-w-xl mx-auto space-y-6">
-      <h1 class="text-2xl font-semibold">Comprar Milhas</h1>
+      <Title label="Comprar Milhas" />
   
       <form @submit.prevent="confirmPurchase" class="space-y-4">
-  
-        <Input
-          title="Valor (R$)"
-          type="text"
-          placeholder="Ex: 150,00"
-          icon="fa-money-bill"
-          v-model="form.valor"
-          @input="formatCurrency"
-        />
-  
-        <Input
-          title="Milhas Recebidas"
-          type="text"
-          icon="fa-star"
-          :placeholder="milhasCalculadas || '0'"
-          disabled
-        />
-  
-        <div class="flex justify-end pt-4">
-          <Button
-            type="submit"
-            blue
-            label="Confirmar Compra"
-            icon="fa-check"
-          />
-        </div>
+        <Card>
+          <template #default>
+            <Input
+              title="Valor (R$)"
+              type="text"
+              placeholder="Ex: 150,00"
+              icon="fa-money-bill"
+              v-model="form.valor"
+              @input="formatCurrency"
+            />
+            <Input
+              title="Milhas Recebidas"
+              type="text"
+              icon="fa-star"
+              :placeholder="milhasCalculadas || '0'"
+              disabled
+            />
+            <Button
+              type="submit"
+              blue
+              label="Confirmar Compra"
+              icon="fa-check"
+            />
+          </template>
+        </Card>
       </form>
   
       <Modal v-if="modalVisible" @close="modalVisible = false">
