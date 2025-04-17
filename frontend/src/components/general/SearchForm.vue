@@ -26,12 +26,23 @@
         </div>
 
         <div class="flex flex-col">
-          <Button
-            @click="$emit('search', formData)"
-            icon="fa-search"
-            label="Buscar"
-            blue
-          />
+          <div class="flex space-x-2 justify-end">
+            <Button
+              @click="$emit('search', formData)"
+              icon="fa-search"
+              label="Buscar"
+              blue
+              class="flex-grow"
+            />
+            <Button
+              @click="$router.push('/client/dashboard')"
+              icon="fa-arrow-left"
+              label="Voltar"
+              lightRed
+              size="text-sm"
+              class="w-auto px-2"
+            />
+          </div>
         </div>
       </div>
     </div>

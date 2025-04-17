@@ -41,15 +41,6 @@
             size="text-sm"
             icon="fa-times"
           />
-          <Button 
-            v-if="item.status === 'Realizado'"
-            lightGreen
-            label="Avaliar" 
-            @click="rateFlight(item)" 
-            size="text-sm"
-            class="ml-2"
-            icon="fa-star"
-          />
         </div>
       </template>
     </Table>

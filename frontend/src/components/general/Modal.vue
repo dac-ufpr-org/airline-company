@@ -11,7 +11,7 @@
         <i class="fas fa-times text-lg"></i>
       </button>
       
-      <p class="font-bold mb-3 text-lg text-gray-200 border-b pb-3 pr-6">{{ title }}</p>
+      <p class="font-bold mb-3 text-lg text-black border-b pb-3 pr-6">{{ title }}</p>
       <div class="mb-3">
         <slot name="content"></slot>
       </div>

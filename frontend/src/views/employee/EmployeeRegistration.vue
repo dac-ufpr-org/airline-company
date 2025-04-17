@@ -57,23 +57,49 @@
         />
       </div>
     </form>
+
+    <Modal v-if="mostrarModal" title="Funcionário cadastrado com sucesso!" @close="handleCloseModal">
+      <template #content>
+        <div class="flex mb-2" v-for="(item, index) in modalInfo" :key="index">
+          <p class="font-bold mr-2">{{ `${item.label}:` }}</p>
+          {{ object[item.key] }}
+        </div>
+        <div class="mt-4 flex justify-end">
+          <Button
+            blue
+            label="Continuar"
+            @click="handleCloseModal"
+          />
+        </div>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      object: {},
+      object: {
+        name: "",
+        cpf: "",
+        email: "",
+        phone: "",
+      },
       errors: {},
+      mostrarModal: false,
+      modalInfo: [
+        { label: "Nome", key: "name" },
+        { label: "CPF", key: "cpf" },
+        { label: "Email", key: "email" },
+        { label: "Telefone", key: "phone" },
+      ],
     };
   },
   methods: {
-    async register() {
+    submitForm() {
       this.errors = {};
 
-      // Validação básica
       if (!this.object.name) this.errors.name = "Nome é obrigatório";
       if (!this.object.cpf) this.errors.cpf = "CPF é obrigatório";
       if (!this.object.email) this.errors.email = "Email é obrigatório";
@@ -81,14 +107,18 @@ export default {
 
       if (Object.keys(this.errors).length === 0) {
         try {
-          //Depois colocar aqui a chamada real do backend
-          this.$router.push({ name: "employee" });
+          // Futuramente chamar API para cadastrar
+          this.mostrarModal = true;
         } catch (error) {
           console.error("Erro ao cadastrar funcionário:", error);
-          this.errors.general =
-            "Erro ao cadastrar funcionário. Tente novamente.";
+          this.errors.general = "Erro ao cadastrar funcionário. Tente novamente.";
         }
       }
+    },
+
+    handleCloseModal() {
+      this.mostrarModal = false;
+      this.$router.push({ name: "employee" });
     },
   },
 };
