@@ -63,12 +63,40 @@
       </template>
     </Modal>
 
-    <ModalCancelReservation
-      v-if="showCancelModal"
-      :reservation="reservaParaCancelar"
-      @close="showCancelModal = false"
-      @confirm="processCancelReservation"
-    />
+    <Modal v-if="showCancelModal" title="Cancelar Reserva" @close="showCancelModal = false">
+      <template #content>
+        <div class="space-y-4">
+          <div v-for="(item, index) in reservationDetails" :key="index" class="flex items-baseline">
+            <p class="font-bold mr-2 w-32 text-gray-700">{{ item.label }}:</p>
+            <span class="text-gray-900">{{ formattedValue(item) }}</span>
+          </div>
+          
+          <div class="mt-6 pt-4 border-t border-gray-200">
+            <p class="text-sm text-gray-600 mb-6">
+              Ao cancelar esta reserva, <span class="font-bold text-gray-900">{{ reservaParaCancelar.milhas }} milhas</span> serão devolvidas à sua conta.
+            </p>
+            
+            <div class="flex justify-center space-x-3">
+              <Button 
+                lightBlue
+                label="Voltar" 
+                @click="showCancelModal = false" 
+                size="text-sm"
+                class="px-4 py-2"
+              />
+              <Button 
+                lightRed
+                label="Confirmar Cancelamento" 
+                @click="processCancelReservation" 
+                size="text-sm"
+                icon="fa-times"
+                class="px-4 py-2"
+              />
+            </div>
+          </div>
+        </div>
+      </template>
+    </Modal>
 
   </main>
 </template>
@@ -86,6 +114,14 @@ export default {
         { label: 'Status', key: 'status' }
       ],
       milhas: 3250,
+      reservationDetails: [
+        { label: 'Código', key: 'id' },
+        { label: 'Origem', key: 'origem' },
+        { label: 'Destino', key: 'destino' },
+        { label: 'Data/Hora', key: 'dataHora', formatter: (val) => this.$filters.formatDateTime(val) },
+        { label: 'Milhas utilizadas', key: 'milhas', formatter: (val) => `${val} milhas` },
+        { label: 'Status', key: 'status' }
+      ],
 
       activeTab: 'reservas',
       mostrarModal: false,
@@ -158,6 +194,12 @@ export default {
     viewReservation(reservation) {
       this.reservaSelecionada = reservation
       this.mostrarModal = true
+    },
+    formattedValue(item) {
+      if (item.formatter) {
+        return item.formatter(this.reservaParaCancelar[item.key])
+      }
+      return this.reservaParaCancelar[item.key]
     },
     openCancelModal(reservation) {
       this.reservaParaCancelar = reservation

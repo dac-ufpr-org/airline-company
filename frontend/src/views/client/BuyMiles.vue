@@ -44,7 +44,7 @@
       </Modal>
     </main>
   </template>
-  
+
   <script>
   export default {
     data() {
