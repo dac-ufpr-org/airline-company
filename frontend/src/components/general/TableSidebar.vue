@@ -44,7 +44,8 @@ export default {
       default: () => [
         { id: 'reservas', label: 'Minhas Reservas', icon: 'fa-calendar-check' },
         { id: 'voos', label: 'Voos Realizados', icon: 'fa-plane' },
-        { id: 'cancelados', label: 'Voos Cancelados', icon: 'fa-ban' }
+        { id: 'cancelados', label: 'Voos Cancelados', icon: 'fa-ban' },
+        { id: 'checkin', label: 'Fazer Check-in', icon: 'fa-clock' }
       ]
     }
   },

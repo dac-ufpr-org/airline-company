@@ -50,10 +50,12 @@
         </div>
       </template>
     </Table>
-    <Modal v-if="modalType === 'boarding'" @close="closeModal">
+
+    <Modal v-if="modalType === 'boarding'" title="Confirmação de Embarque" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Confirmação de Embarque</h2>
-        <p>Digite o código da reserva para confirmar o embarque do cliente.</p>
+        <div class="mb-4">
+          <p>Digite o código da reserva para confirmar o embarque do cliente.</p>
+        </div>
         <input
           type="text"
           placeholder="Código da reserva"
@@ -62,19 +64,23 @@
           <Button label="Confirmar" @click="closeModal" class="my-3" blue />
       </template>
     </Modal>
-    <Modal v-if="modalType === 'cancellation'" @close="closeModal">
+    
+    <Modal v-if="modalType === 'cancellation'" title="Cancelamento de Voo" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Cancelamento de Voo</h2>
-        <p>Você tem certeza que deseja cancelar este voo?</p>
-        <p class="font-semibold">Todas as reservas vinculadas serão canceladas.</p>
+        <div class="mb-4">
+          <p>Você tem certeza que deseja cancelar este voo?</p>
+          <p class="font-semibold">Todas as reservas vinculadas serão canceladas.</p>
+        </div>
         <Button label="Confirmar" @click="closeModal" class="my-3" blue  />
       </template>
     </Modal>
-    <Modal v-if="modalType === 'completion'" @close="closeModal">
+
+    <Modal v-if="modalType === 'completion'" title="Confirmação de Voo Realizado" @close="closeModal">
       <template #content>
-        <h2 class="text-lg font-semibold mb-4">Confirmação de Voo Realizado</h2>
-        <p>Confirme que este voo foi realizado com sucesso.</p>
-        <p class="font-semibold">As reservas embarcadas serão atualizadas automaticamente.</p>
+        <div class="mb-4">
+          <p>Confirme que este voo foi realizado com sucesso.</p>
+          <p class="font-semibold">As reservas embarcadas serão atualizadas automaticamente.</p>
+        </div>
         <Button label="Confirmar Realização" @click="closeModal" blue class="my-3" />
       </template>
     </Modal>

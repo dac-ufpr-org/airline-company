@@ -41,6 +41,14 @@
             size="text-sm"
             icon="fa-times"
           />
+          <Button
+            v-if="activeTab === 'checkin'"
+            lightGreen
+            label="Fazer Check-in"
+            @click="fazerCheckin(item)"
+            size="text-sm"
+            icon="fa-check"
+          />
         </div>
       </template>
     </Table>
@@ -89,6 +97,15 @@
       </template>
     </Modal>
 
+    <Modal v-if="mostrarModal" title="Detalhes da Reserva" @close="mostrarModal = false">
+      <template #content>
+        <div class="flex" v-for="(item, index) in modalInfo" :key="index">
+          <p class="font-bold mr-2">{{ `${item.label}: ` }}</p>
+          {{ reservaSelecionada[item.key] }}
+        </div>
+      </template>
+    </Modal>
+
   </main>
 </template>
 
@@ -131,7 +148,7 @@ export default {
         },
         {
           id: 'DEF456',
-          dataHora: '2023-12-20T08:15:00',
+          dataHora: '2025-04-24T08:15:00',
           origem: 'CGH - Congonhas',
           destino: 'BSB - Brasília',
           status: 'Reservado',
@@ -173,10 +190,24 @@ export default {
   },
   computed: {
     currentItems() {
+      const now = new Date()
+      const in48Hours = new Date(now.getTime() + 48 * 60 * 60 * 1000)
       switch (this.activeTab) {
-        case 'reservas': return this.reservas.filter(i => i.status === 'Reservado' || i.status === 'Check-in')
-        case 'voos': return this.voosRealizados
-        case 'cancelados': return this.voosCancelados
+        case 'reservas':
+          return this.reservas.filter(i => i.status === 'Reservado' || i.status === 'Check-in')
+        case 'voos':
+          return this.voosRealizados
+        case 'cancelados':
+          return this.voosCancelados
+        case 'checkin':
+          return this.reservas.filter(i => {
+            const dataHora = new Date(i.dataHora) 
+            return (
+              i.status === 'Reservado' &&
+              dataHora > now &&
+              dataHora <= in48Hours
+            )
+          })
         default: return []
       }
     }
@@ -247,7 +278,12 @@ export default {
     },
     rateFlight(flight) {
       console.log('Avaliar voo:', flight.id)
+    },
+    fazerCheckin(reserva) {
+      reserva.status = 'Check-in'
+      this.$toast.success(`Check-in realizado para o voo ${reserva.id}`)
     }
+
   }
 }
 </script>
