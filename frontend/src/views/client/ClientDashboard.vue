@@ -45,7 +45,7 @@
             v-if="activeTab === 'checkin'"
             lightGreen
             label="Fazer Check-in"
-            @click="fazerCheckin(item)"
+            @click="openCheckinModal(item)"
             size="text-sm"
             icon="fa-check"
           />
@@ -106,6 +106,41 @@
       </template>
     </Modal>
 
+    <Modal
+      v-if="showCheckinModal"
+      title="Confirmar Check-in"
+      @close="showCheckinModal = false"
+    >
+  <template #content>
+
+      <div class="space-y-4">
+          <p>
+            Você confirma que está ciente da data e hora do voo
+            <span class="font-bold text-gray-900">{{ reservaParaCheckin?.id }}</span>?
+          </p>
+        
+      <div class="flex justify-center space-x-3 pt-4">
+        <Button
+          lightBlue
+          label="Voltar"
+          @click="showCheckinModal = false"
+          size="text-sm"
+        />
+
+        <Button
+          lightGreen
+          label="Confirmar Check-in"
+          icon="fa-check"
+          @click="confirmarCheckin"
+          size="text-sm"
+        />
+
+      </div>
+    </div>
+
+    </template>
+</Modal>
+
   </main>
 </template>
 
@@ -136,6 +171,9 @@ export default {
       showCancelModal: false,
       reservaSelecionada: null,
       reservaParaCancelar: null,
+      showCheckinModal: false,
+      reservaParaCheckin: null,
+
       reservas: [
         {
           id: 'ABC123',
@@ -279,10 +317,24 @@ export default {
     rateFlight(flight) {
       console.log('Avaliar voo:', flight.id)
     },
-    fazerCheckin(reserva) {
-      reserva.status = 'Check-in'
-      this.$toast.success(`Check-in realizado para o voo ${reserva.id}`)
-    }
+    
+    openCheckinModal(reserva) {
+      this.reservaParaCheckin = reserva
+      this.showCheckinModal = true
+    },
+
+    confirmarCheckin() {
+      if (this.reservaParaCheckin) {
+      this.showCheckinModal = false 
+
+      const index = this.reservas.findIndex(r => r.id === this.reservaParaCheckin.id)
+      if (index !== -1) {
+      this.reservas[index].status = 'Check-in'
+      }
+
+      this.$toast.success(`Check-in realizado para o voo ${this.reservaParaCheckin.id}`)
+      }
+    } 
 
   }
 }
