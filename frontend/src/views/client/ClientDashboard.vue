@@ -324,17 +324,17 @@ export default {
     },
 
     confirmarCheckin() {
-  if (this.reservaParaCheckin) {
-    this.showCheckinModal = false // <- FECHA O MODAL PRIMEIRO
+      if (this.reservaParaCheckin) {
+      this.showCheckinModal = false 
 
-    const index = this.reservas.findIndex(r => r.id === this.reservaParaCheckin.id)
-    if (index !== -1) {
+      const index = this.reservas.findIndex(r => r.id === this.reservaParaCheckin.id)
+      if (index !== -1) {
       this.reservas[index].status = 'Check-in'
-    }
+      }
 
-    this.$toast.success(`Check-in realizado para o voo ${this.reservaParaCheckin.id}`)
-  }
-}
+      this.$toast.success(`Check-in realizado para o voo ${this.reservaParaCheckin.id}`)
+      }
+    } 
 
   }
 }

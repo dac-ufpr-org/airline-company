@@ -55,9 +55,8 @@
             title="Equivalente em Milhas"
             type="text"
             icon="fa-star"
-            placeholder="10"
+            :placeholder="milhasCalculadas || '0'"
             disabled
-           
         />
         </div>
 
@@ -136,6 +135,15 @@ import formatCurrency from '@/utils/formatMoney';
         poltronasError: false,
       };
     },
+    
+    computed: {
+      milhasCalculadas() {
+        const valor = parseFloat(this.form.valor.replace(/\./g, '').replace(',', '.'));
+        if (isNaN(valor)) return 0;
+        return Math.floor(valor / 5);
+      },
+    },
+
     methods: {
       submitForm() {
         const {
