@@ -23,24 +23,27 @@
       </template>
 
       <template #cell-actions="{ item }">
-        <div class="flex items-center space-x-3">   
+        <div class="flex flex-wrap gap-2">   
           <Button 
             v-if="item.status === 'Reservado' || item.status === 'Check-in'"
             lightBlue
             label="Ver Detalhes" 
             @click="viewReservation(item)" 
-            size="text-sm"
+            size="sm"  
             class="mr-2"
             icon="fa-eye"
           />
+
           <Button 
             v-if="item.status === 'Reservado' || item.status === 'Check-in'"
             lightRed
             label="Cancelar" 
             @click="openCancelModal(item)" 
-            size="text-sm"
+            size="sm"  
+            class="mr-2"
             icon="fa-times"
           />
+
           <Button
             v-if="activeTab === 'checkin'"
             lightGreen
@@ -111,35 +114,34 @@
       title="Confirmar Check-in"
       @close="showCheckinModal = false"
     >
-  <template #content>
+      <template #content>
 
-      <div class="space-y-4">
+        <div class="space-y-4">
           <p>
             Você confirma que está ciente da data e hora do voo
             <span class="font-bold text-gray-900">{{ reservaParaCheckin?.id }}</span>?
           </p>
         
-      <div class="flex justify-center space-x-3 pt-4">
-        <Button
-          lightBlue
-          label="Voltar"
-          @click="showCheckinModal = false"
-          size="text-sm"
-        />
+          <div class="flex justify-center space-x-3 pt-4">
+            <Button
+              lightBlue
+              label="Voltar"
+              @click="showCheckinModal = false"
+              size="text-sm"
+            />
 
-        <Button
-          lightGreen
-          label="Confirmar Check-in"
-          icon="fa-check"
-          @click="confirmarCheckin"
-          size="text-sm"
-        />
+            <Button
+              lightGreen
+              label="Confirmar Check-in"
+              icon="fa-check"
+              @click="confirmarCheckin"
+              size="text-sm"
+            />
+          </div>
+        </div>
 
-      </div>
-    </div>
-
-    </template>
-</Modal>
+      </template>
+    </Modal>
 
   </main>
 </template>
@@ -222,7 +224,7 @@ export default {
         { key: 'destino', label: 'Destino' },
         { key: 'milhas', label: 'Milhas', formatter: (val) => `${val} milhas` ?? '-' },
         { key: 'status', label: 'Status' },
-        { key: 'actions', label: 'Ações', class: 'text-right' }
+        ...(this.activeTab !== 'voos' ? [{ key: 'actions', label: 'Ações', class: 'text-right' }] : []),
       ]
     }
   },
@@ -270,72 +272,38 @@ export default {
     },
     async processCancelReservation(reservation) {
       try {
-        // Simular chamada API
         await new Promise(resolve => setTimeout(resolve, 1000))
-        
-        // Atualizar status da reserva
         const index = this.reservas.findIndex(r => r.id === reservation.id)
         if (index !== -1) {
           this.reservas[index].status = 'Cancelado'
-          
-          // Devolver milhas
           this.milhas += reservation.milhas
-          
-          // Mover para lista de cancelados
           this.voosCancelados.unshift({
             ...this.reservas[index],
             dataHoraCancelamento: new Date().toISOString()
           })
-          
-          // Remover da lista de reservas
           this.reservas.splice(index, 1)
-          
-          // Registrar no extrato (simulado)
-          this.registrarExtrato({
-            data: new Date().toISOString(),
-            codigoReserva: reservation.id,
-            valor: 0,
-            milhas: reservation.milhas,
-            descricao: `${reservation.origem.split(' - ')[0]}->${reservation.destino.split(' - ')[0]}`,
-            tipo: 'ENTRADA',
-            motivo: 'CANCELAMENTO'
-          })
-          
           this.$toast.success('Reserva cancelada com sucesso! Milhas devolvidas.')
         }
-        
         this.showCancelModal = false
       } catch (error) {
-        this.$toast.error('Ocorreu um erro ao cancelar a reserva.')
-        console.error('Erro ao cancelar reserva:', error)
+        this.$toast.error('Erro ao cancelar reserva.')
+        console.error('Erro:', error)
       }
     },
-    registrarExtrato(transacao) {
-      // Aqui você faria a chamada API para registrar no extrato
-      console.log('Registrando no extrato:', transacao)
-    },
-    rateFlight(flight) {
-      console.log('Avaliar voo:', flight.id)
-    },
-    
     openCheckinModal(reserva) {
       this.reservaParaCheckin = reserva
       this.showCheckinModal = true
     },
-
     confirmarCheckin() {
       if (this.reservaParaCheckin) {
-      this.showCheckinModal = false 
-
-      const index = this.reservas.findIndex(r => r.id === this.reservaParaCheckin.id)
-      if (index !== -1) {
-      this.reservas[index].status = 'Check-in'
+        this.showCheckinModal = false
+        const index = this.reservas.findIndex(r => r.id === this.reservaParaCheckin.id)
+        if (index !== -1) {
+          this.reservas[index].status = 'Check-in'
+        }
+        this.$toast.success(`Check-in realizado para o voo ${this.reservaParaCheckin.id}`)
       }
-
-      this.$toast.success(`Check-in realizado para o voo ${this.reservaParaCheckin.id}`)
-      }
-    } 
-
+    }
   }
 }
 </script>
