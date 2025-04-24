@@ -2,7 +2,7 @@
     <main>
         <Title label="Consultar Reserva" />
         <SearchForm @search="handleSearch" :items="formItems" :error="errors.reservationId" />
-        <Loading v-if="loading" label="Buscando reservas..." />
+        <LoadingMessage v-if="loading" label="Buscando reservas..." />
         <div v-else>
             <div v-if="reservations.length === 0 && searchPerformed" class="text-center py-8 text-gray-500">
                 <p>Nenhuma reserva encontrada. Tente alterar seus critérios de busca.</p>

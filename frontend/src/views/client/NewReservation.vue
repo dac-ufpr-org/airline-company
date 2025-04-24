@@ -4,7 +4,7 @@
     
     <SearchForm @search="handleSearch" :items="formItems" />
 
-    <Loading v-if="loading" label="Buscando voos disponíveis..." />
+    <LoadingMessage v-if="loading" label="Buscando voos disponíveis..." />
     
     <div v-else>
       <div v-if="voos.length === 0 && searchPerformed" class="text-center py-8 text-gray-500">
@@ -12,12 +12,28 @@
       </div>
       
       <div v-else-if="voos.length > 0">
-        <FlightSelectionCard 
+        <Card 
           v-for="voo in voos" 
-          :key="voo.id" 
-          :voo="voo"
-          @select="goToReservationDetails"
-        />
+          :key="voo.id">
+          <template #default>
+            <div class="flex justify-between items-start">
+              <div>
+                <h3 class="font-bold text-blue-800">{{ voo.origem }} → {{ voo.destino }}</h3>
+                <p class="text-gray-600">{{ $filters.formatDateTime(voo.dataHora) }}</p>
+              </div>
+              <span class="font-bold text-lg">{{ $filters.formatMoney(voo.preco) }}</span>
+            </div>
+            <div class="mt-4 flex justify-end">
+              <Button 
+                class="max-w-[90px]"
+                blue
+                label="Selecionar"
+                @click="goToReservationDetails(voo)"
+                size="text-sm"
+              />
+            </div>
+          </template>
+        </Card>
       </div>
 
       <div v-else class="text-center py-8 text-gray-500">

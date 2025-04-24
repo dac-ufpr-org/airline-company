@@ -12,10 +12,7 @@
 </template>
 
 <script>
-import Button from './Button.vue'
-
 export default {
-    components: { Button },
     props: {
         label: {
             type: String,

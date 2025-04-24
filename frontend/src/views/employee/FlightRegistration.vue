@@ -115,7 +115,6 @@
   </template>
   
   <script>
-import formatCurrency from '@/utils/formatMoney';
 
   export default {
     data() {

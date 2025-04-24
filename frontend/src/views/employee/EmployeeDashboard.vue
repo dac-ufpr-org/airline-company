@@ -10,7 +10,6 @@
             icon="fa-check"
             @click="openModal('boarding')"
           />
-
           <Button
             green
             label="Realizar Voo"
@@ -18,7 +17,6 @@
             icon="fa-plane-departure"
             @click="openModal('completion')"
           />
-
           <Button 
           red 
           label="Cancelar Voo" 
