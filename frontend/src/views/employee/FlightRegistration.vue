@@ -9,6 +9,7 @@
         <div class="grid grid-cols-2 gap-4">
           <Input
             title="Data do Voo"
+            required
             type="date"
             icon="fa-calendar"
             v-model="form.data"
@@ -17,6 +18,7 @@
           <Input
             title="Hora do Voo"
             type="time"
+            required
             icon="fa-clock"
             v-model="form.hora"
             placeholder="Selecione a hora"
@@ -27,6 +29,7 @@
           <Input
             title="Aeroporto de Origem"
             type="text"
+            required
             icon="fa-plane-departure"
             v-model="form.origem"
             placeholder="Ex: CWB - Curitiba"
@@ -34,6 +37,7 @@
           <Input
             title="Aeroporto de Destino"
             type="text"
+            required
             icon="fa-plane-arrival"
             v-model="form.destino"
             placeholder="Ex: POA - Porto Alegre"
@@ -45,6 +49,7 @@
         <Input
             title="Valor da Passagem (R$)"
             type="text"
+            required
             icon="fa-money-bill"
             v-model="form.valor"
             placeholder="Ex: 350,00"
