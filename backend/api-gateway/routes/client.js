@@ -6,34 +6,37 @@ const clientServiceUrl = process.env.MS_CLIENTE_URL
 const clientServiceSagaUrl = process.env.MS_CLIENTE_SAGA_URL
 
 router.post(
-    "/api/clientes",
-    createProxyMiddleware({
-      target: clientServiceSagaUrl,
-      changeOrigin: true,
-      pathRewrite: (path, req) =>
-        path.replace("/api/clientes", "/saga/ms-cliente/new")
-    })
-  )
-  
-  router.get(
-    "/api/clientes/email/:id",
-    createProxyMiddleware({
-      target: clientServiceUrl,
-      changeOrigin: true,
-      pathRewrite: (path, req) =>
-        path.replace("/api/clientes/email", "/ms-cliente/check-email")
-    })
-  )
-  
-  router.get(
-    "/api/clientes/endereco/:id",
-    createProxyMiddleware({
-      target: clientServiceUrl,
-      changeOrigin: true,
-      pathRewrite: (path, req) =>
-        path.replace(
-          "/api/clientes/endereco",
-          "/ms-cliente/check-endereco"
-        ),
-    })
-  )
+  "/api/clientes",
+  createProxyMiddleware({
+    target: clientServiceSagaUrl,
+    changeOrigin: true,
+    pathRewrite: (path, req) =>
+      path.replace("/api/clientes", "/saga/ms-cliente/new")
+  })
+)
+
+router.get(
+  "/api/clientes/email/:id",
+  createProxyMiddleware({
+    target: clientServiceUrl,
+    changeOrigin: true,
+    pathRewrite: (path, req) =>
+      path.replace("/api/clientes/email", "/ms-cliente/check-email")
+  })
+)
+
+router.get(
+  "/api/clientes/endereco/:id",
+  createProxyMiddleware({
+    target: clientServiceUrl,
+    changeOrigin: true,
+    pathRewrite: (path, req) =>
+      path.replace(
+        "/api/clientes/endereco",
+        "/ms-cliente/check-endereco"
+      ),
+  })
+)
+
+// Adicione esta linha no final para exportar o router
+module.exports = router;
