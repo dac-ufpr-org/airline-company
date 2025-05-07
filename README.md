@@ -39,7 +39,58 @@ Airline Company is a modern airline management system built using a **microservi
 ## Installation & Setup
 
 ## Prerequisites
-?
+
+Before running the project, ensure you have the following installed:
+
+- Docker
+- Docker Compose
+- Node.js (for running the API Gateway)
+- Java 17+ (for Spring Boot services)
+- Maven (for building Java services)
+- Vue CLI (for frontend development)
 
 ## Steps to Run
-?
+
+1. Clone the repository 
+
+   ```sh
+   git clone https://github.com/your-username/airline-company.git
+   ```
+2. In the terminal, make sure you are in the root directory of the project. If not, navigate there using the cd command. For example:
+    ```sh
+   cd airline-company
+   ```
+3. Build Java Microservices
+     ```sh
+   cd backend/services
+   mvn clean install
+   ```
+
+4. Start all services with Docker Compose
+
+   ```sh
+   docker-compose up --build
+   ```
+5. Run the API Gateway
+   ```sh
+   cd api-gateway
+   npm install
+   npm run start
+   ```
+   
+6. Run the Frontend
+   ```sh
+    cd frontend
+   npm install
+   npm run serve
+   ```
+  
+### Access the Application
+
+- Frontend:  http://localhost:5173/
+- API Gateway: http://localhost:3000
+- RabbitMQ Dashboard: http://localhost:15672 (default: guest/guest)
+
+  
+
+
