@@ -1,70 +1,80 @@
 <template>
-  <main>
-    <Table 
-      activeSidebar
-      :items="currentItems" 
-      :columns="tableColumns"
-      :initial-search-term="searchTerm"
-      @tab-change="updateTab"
-    >
-      <template #cell-status="{ item }">
-        <ColorBadge :flightStatus="item.status" />
-      </template>
+  <main class="p-4 md:p-8">
+    <!-- Container da Tabela com Scroll Horizontal se necessário -->
+    <div class="overflow-x-auto">
+      <Table 
+        activeSidebar
+        :items="currentItems" 
+        :columns="tableColumns"
+        :initial-search-term="searchTerm"
+        @tab-change="updateTab"
+      >
+        <template #cell-status="{ item }">
+          <ColorBadge :flightStatus="item.status" />
+        </template>
 
-      <template #table-actions>
-        <Input 
-          class="col-span-3"
-          title="Buscar voos" 
-          type="text" 
-          placeholder="Digite para filtrar..." 
-          search 
-          v-model="searchTerm"
-        />
-      </template>
-
-      <template #cell-actions="{ item }">
-        <div class="flex flex-wrap gap-2">   
-          <Button 
-            v-if="item.status === 'Reservado' || item.status === 'Check-in'"
-            lightBlue
-            label="Ver Detalhes" 
-            @click="viewReservation(item)" 
-            size="sm"  
-            class="mr-2"
-            icon="fa-eye"
+        <!-- Filtro de busca de voos -->
+        <template #table-actions>
+          <Input 
+            class="col-span-3 w-full md:w-96" 
+            title="Buscar voos" 
+            type="text" 
+            placeholder="Digite para filtrar..." 
+            search 
+            v-model="searchTerm"
           />
+        </template>
 
-          <Button 
-            v-if="item.status === 'Reservado' || item.status === 'Check-in'"
-            lightRed
-            label="Cancelar" 
-            @click="openCancelModal(item)" 
-            size="sm"  
-            class="mr-2"
-            icon="fa-times"
-          />
+        <!-- Coluna de Ações com Botões -->
+        <template #cell-actions="{ item }">
+          <div class="flex flex-wrap gap-2 justify-center md:justify-start">   
+            <!-- Botão 'Ver Detalhes' (aparece apenas para voos 'Reservado' ou 'Check-in') -->
+            <Button 
+              v-if="item.status === 'Reservado' || item.status === 'Check-in'"
+              lightBlue
+              label="Ver Detalhes" 
+              @click="viewReservation(item)" 
+              size="small"
+              class="mr-2"
+              icon="fa-eye"
+            />
 
-          <Button
-            v-if="activeTab === 'checkin'"
-            lightGreen
-            label="Fazer Check-in"
-            @click="openCheckinModal(item)"
-            size="text-sm"
-            icon="fa-check"
-          />
-        </div>
-      </template>
-    </Table>
+            <!-- Botão 'Cancelar' (aparece apenas para voos 'Reservado' ou 'Check-in') -->
+            <Button 
+              v-if="item.status === 'Reservado' || item.status === 'Check-in'"
+              lightRed
+              label="Cancelar" 
+              @click="openCancelModal(item)" 
+              size="small"
+              class="mr-2"
+              icon="fa-times"
+            />
 
+            <!-- Botão 'Fazer Check-in' (aparece apenas na aba 'checkin') -->
+            <Button
+              v-if="activeTab === 'checkin'"
+              lightGreen
+              label="Fazer Check-in"
+              @click="openCheckinModal(item)"
+              size="small"
+              icon="fa-check"
+            />
+          </div>
+        </template>
+      </Table>
+    </div>
+
+    <!-- Modal de Detalhes da Reserva -->
     <Modal v-if="mostrarModal" title="Detalhes da Reserva" @close="mostrarModal = false">
       <template #content>
-        <div class="flex" v-for="(item, index) in modalInfo" :key="index">
+        <div class="flex flex-wrap gap-2" v-for="(item, index) in modalInfo" :key="index">
           <p class="font-bold mr-2">{{ `${item.label}: ` }}</p>
           {{ reservaSelecionada[item.key] }}
         </div>
       </template>
     </Modal>
 
+    <!-- Modal para Cancelar a Reserva -->
     <Modal v-if="showCancelModal" title="Cancelar Reserva" @close="showCancelModal = false">
       <template #content>
         <div class="space-y-4">
@@ -83,14 +93,14 @@
                 lightBlue
                 label="Voltar" 
                 @click="showCancelModal = false" 
-                size="text-sm"
+                size="small"
                 class="px-4 py-2"
               />
               <Button 
                 lightRed
                 label="Confirmar Cancelamento" 
                 @click="processCancelReservation" 
-                size="text-sm"
+                size="small"
                 icon="fa-times"
                 class="px-4 py-2"
               />
@@ -100,22 +110,9 @@
       </template>
     </Modal>
 
-    <Modal v-if="mostrarModal" title="Detalhes da Reserva" @close="mostrarModal = false">
+    <!-- Modal para Confirmar Check-in -->
+    <Modal v-if="showCheckinModal" title="Confirmar Check-in" @close="showCheckinModal = false">
       <template #content>
-        <div class="flex" v-for="(item, index) in modalInfo" :key="index">
-          <p class="font-bold mr-2">{{ `${item.label}: ` }}</p>
-          {{ reservaSelecionada[item.key] }}
-        </div>
-      </template>
-    </Modal>
-
-    <Modal
-      v-if="showCheckinModal"
-      title="Confirmar Check-in"
-      @close="showCheckinModal = false"
-    >
-      <template #content>
-
         <div class="space-y-4">
           <p>
             Você confirma que está ciente da data e hora do voo
@@ -127,7 +124,7 @@
               lightBlue
               label="Voltar"
               @click="showCheckinModal = false"
-              size="text-sm"
+              size="small"
             />
 
             <Button
@@ -135,11 +132,10 @@
               label="Confirmar Check-in"
               icon="fa-check"
               @click="confirmarCheckin"
-              size="text-sm"
+              size="small"
             />
           </div>
         </div>
-
       </template>
     </Modal>
 
@@ -147,7 +143,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
