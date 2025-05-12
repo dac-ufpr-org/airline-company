@@ -1,0 +1,12 @@
+{
+  "name": "airline-company",
+  "version": "1.0.0",
+  "description": "Airline Company is a modern airline management system built using a **microservices** architecture. The project is designed to handle airline operations efficiently, ensuring scalability, maintainability, and reliability. It integrates various technologies to provide a robust infrastructure for managing flights, bookings, customer interactions, and payments.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
