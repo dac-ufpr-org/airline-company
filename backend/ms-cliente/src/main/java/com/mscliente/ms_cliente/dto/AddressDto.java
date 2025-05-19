@@ -5,8 +5,10 @@ import lombok.Data;
 @Data
 public class AddressDto {
     private String cep;
-    private String ruaNumero;
-    private String complemento;
-    private String cidade;
-    private String uf;
+    private String street;
+    private String number;
+    private String complement;
+    private String city;
+    private String state;
+    private String neighborhood;
 }
