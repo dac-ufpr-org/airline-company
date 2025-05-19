@@ -7,5 +7,11 @@ public class ClientRequestDto {
     private String cpf;
     private String email;
     private String name;
-    private AddressDto address;
+
+    private String cep;
+    private String rua;
+    private String numero;
+    private String complemento;
+    private String cidade;
+    private String estado;
 }
