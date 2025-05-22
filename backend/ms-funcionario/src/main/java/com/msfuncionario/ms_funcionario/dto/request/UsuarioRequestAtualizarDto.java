@@ -1,4 +1,4 @@
-package com.msfuncionario.dto.request;
+package com.msfuncionario.ms_funcionario..dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

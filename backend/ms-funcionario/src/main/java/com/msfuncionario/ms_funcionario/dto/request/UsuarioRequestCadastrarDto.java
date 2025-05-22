@@ -1,4 +1,4 @@
-package com.msfuncionario.dto.response;
+package com.msfuncionario.ms_funcionario..dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +8,8 @@ import lombok.Setter;
 @Setter @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioRequestResponseDto {
+public class UsuarioRequestCadastrarDto {
     private String email;
-    private String errorMessage;
+    private String senha = "";
+    private String tipo = "FUNCIONARIO";
 }

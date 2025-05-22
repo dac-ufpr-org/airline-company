@@ -1,4 +1,4 @@
-package br.com.funcionario.funcionario.repository;
+package com.msfuncionario.ms_funcionario..repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

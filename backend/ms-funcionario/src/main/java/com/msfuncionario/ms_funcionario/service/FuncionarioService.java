@@ -1,4 +1,4 @@
-import com.msfuncionario.exceptions.ListaVaziaException;
+import com.msfuncionario.ms_funcionario..exceptions.ListaVaziaException;
 
 @Service
 public class FuncionarioService {

@@ -1,4 +1,4 @@
-package com.msvoo.ms_voo.entity;
+package com.msfuncionario.ms_funcionario..model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

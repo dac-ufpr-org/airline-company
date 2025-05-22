@@ -1,4 +1,4 @@
-package br.com.msfuncionario.exceptions;
+package com.msfuncionario.ms_funcionario..exceptions;
 
 public class FuncionarioNaoEncontradoException extends Exception {
     public FuncionarioNaoEncontradoException(String mensagem) {
