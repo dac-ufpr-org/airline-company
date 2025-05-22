@@ -1,6 +1,6 @@
-import com.msfuncionario.ms_funcionario..exceptions.specific.FuncionarioNaoEncontradoException;
-import com.msfuncionario.ms_funcionario..exceptions.specific.FuncionarioJaExisteException;
-import com.msfuncionario.ms_funcionario..exceptions.specific.ListaVaziaException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioNaoEncontradoException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioJaExisteException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.ListaVaziaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
