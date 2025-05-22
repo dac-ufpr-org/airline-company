@@ -22,4 +22,9 @@ public class PasswordUtils {
             throw new RuntimeException("Erro ao criptografar senha", e);
         }
     }
+
+    public static String gerarSenhaAleatoria() {
+        SecureRandom random = new SecureRandom();
+        return String.format("%04d", random.nextInt(10000));
+    }
 }

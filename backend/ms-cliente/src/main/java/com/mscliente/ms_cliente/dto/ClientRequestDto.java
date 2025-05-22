@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ClientRequestDto {
+
     private String cpf;
     private String email;
     private String name;

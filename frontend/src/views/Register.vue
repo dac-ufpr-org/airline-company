@@ -29,39 +29,46 @@
   </div>
 </template>
 
-
 <script>
+import api from '@/services/api'; // Importar o serviço
+
 export default {
   data: () => ({
-      object: {},
-      errors: {},
-      inputs: [
-          { title: 'Nome', type: 'text', model: 'name', isRequired: true, error: 'name' },
-          { title: 'Email', type: 'email', model: 'email', isRequired: true, error: 'email' },
-          { title: 'CPF', type: 'text', model: 'cpf', isRequired: true, error: 'cpf' },
-          { title: 'CEP', type: 'text', model: 'cep', isRequired: true, error: 'cep' },
-          { title: 'Rua', type: 'text', model: 'rua', isRequired: true, error: 'rua' },
-          { title: 'Número', type: 'number', model: 'numero', isRequired: true, error: 'numero' },
-          { title: 'Complemento', type: 'text', model: 'complemento', isRequired: false, error: 'complemento' },
-          { title: 'Cidade', type: 'text', model: 'cidade', isRequired: false, error: 'cidade' },
-          { title: 'Estado', type: 'text', model: 'estado', isRequired: false, error: 'estado' },
-      ]
+    object: {},
+    errors: {},
+    inputs: [
+      { title: 'Nome', type: 'text', model: 'name', required: true, error: 'name' },
+      { title: 'Email', type: 'email', model: 'email', required: true, error: 'email' },
+      { title: 'CPF', type: 'text', model: 'cpf', required: true, error: 'cpf' },
+      { title: 'CEP', type: 'text', model: 'cep', required: true, error: 'cep' },
+      { title: 'Rua', type: 'text', model: 'rua', required: true, error: 'rua' },
+      { title: 'Número', type: 'number', model: 'numero', required: true, error: 'numero' },
+      // ... outros campos
+    ],
   }),
   methods: {
-      async register() {
-          if (this.object.email && this.object.name && this.object.password) {
-              // const response = await this.register(this.object) //implementar depois no backend
-              // if (!response?.data) {
-              // }
-              this.$router.push('login')
-          }
-          else {
-              if (!this.object.name) this.errors.name = 'Nome é obrigatório'
-              if (!this.object.email) this.errors.email = 'Email é obrigatório'
-              if (!this.object.password) this.errors.password = 'Senha é obrigatória'
-          }
-      }
-  }
+    async register() {
+      this.errors = {};
+      let hasError = false;
 
-}
+      // Validação
+      this.inputs.forEach((input) => {
+        if (input.required && !this.object[input.model]) {
+          this.errors[input.error] = `${input.title} é obrigatório`;
+          hasError = true;
+        }
+      });
+
+      if (!hasError) {
+        try {
+          await api.autocadastrarCliente(this.object);
+          alert("Cadastro iniciado! Verifique seu e-mail para a senha temporária.");
+          this.$router.push('login');
+        } catch (error) {
+          alert("Erro: " + error.response?.data?.message || "Falha no cadastro");
+        }
+      }
+    },
+  },
+};
 </script>

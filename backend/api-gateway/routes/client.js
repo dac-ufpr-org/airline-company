@@ -6,17 +6,16 @@ const clientServiceUrl = process.env.MS_CLIENTE_URL
 const clientServiceSagaUrl = process.env.MS_CLIENTE_SAGA_URL
 
 router.post(
-  "/api/clientes",
+  "/clientes/autocadastro", // Rota ajustada
   createProxyMiddleware({
     target: clientServiceSagaUrl,
     changeOrigin: true,
-    pathRewrite: (path, req) =>
-      path.replace("/api/clientes", "/saga/ms-cliente/new")
+    pathRewrite: { "^/api/clientes/autocadastro": "/clientes/autocadastro" }
   })
 )
 
 router.get(
-  "/api/clientes/email/:id",
+  "/clientes/email/:id",
   createProxyMiddleware({
     target: clientServiceUrl,
     changeOrigin: true,
@@ -26,7 +25,7 @@ router.get(
 )
 
 router.get(
-  "/api/clientes/endereco/:id",
+  "/clientes/endereco/:id",
   createProxyMiddleware({
     target: clientServiceUrl,
     changeOrigin: true,
