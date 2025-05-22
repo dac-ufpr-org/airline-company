@@ -10,6 +10,7 @@ public class User {
     private String id;
     private String login;
     private String senha;
+    private String salt;
     private String tipo; // "cliente" ou "funcionario"
 
     // Getters e Setters 
@@ -43,5 +44,13 @@ public class User {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

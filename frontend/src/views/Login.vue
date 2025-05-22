@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import api from '@/services/api';
 
 export default {
   data: () => ({
@@ -43,29 +44,36 @@ export default {
   }),
   methods: {
     async login() {
-      // Reset erros anteriores
       this.errors = {};
-
-      // Validação básica
+      
+      // Validação
       if (!this.object.email) this.errors.email = "Email é obrigatório";
       if (!this.object.password) this.errors.password = "Senha é obrigatória";
 
-      // Se não houver erros, procede com o login
       if (Object.keys(this.errors).length === 0) {
         try {
-          // Implementar aqui a chamada real ao backend posteriormente
-          // const response = await authService.login(this.object);
-          // if (response.success) {
-          //  this.$router.push({ name: 'clientDashboard' });
-          // } else {
-          //   this.errors.general = "Credenciais inválidas";
-          // }
-
-          // Por enquanto, apenas redireciona
-          this.$router.push({ name: "clientDashboard" });
+          // 1. Chamada ao backend
+          const response = await api.login(this.object.email, this.object.password);
+          
+          // 2. Armazenar token e role
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userRole', response.role); // Adicionado
+          
+          // 3. Redirecionar conforme o tipo de usuário
+          const redirectRoute = response.role === 'FUNCIONARIO' 
+            ? 'Dashboard do Funcionário' 
+            : 'Dashboard do Cliente';
+          
+          this.$router.push({ name: redirectRoute });
+          
         } catch (error) {
-          console.error("Erro no login:", error);
-          this.errors.general = "Ocorreu um erro durante o login";
+          // 4. Tratamento de erros mais robusto
+          if (error.response?.status === 401) {
+            this.errors.general = "Credenciais inválidas";
+          } else {
+            this.errors.general = "Erro ao conectar com o servidor";
+            console.error("Erro no login:", error);
+          }
         }
       }
     },

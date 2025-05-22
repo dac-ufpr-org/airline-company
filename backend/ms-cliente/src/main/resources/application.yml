@@ -1,0 +1,9 @@
+# Arquivo: resources/application.yml
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/ms-cliente
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update

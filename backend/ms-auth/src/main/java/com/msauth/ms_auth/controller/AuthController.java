@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.security.SecureRandom;
 import java.util.Collections;
 
 import com.msauth.ms_auth.dto.LoginDTO;
@@ -34,7 +35,8 @@ public class AuthController {
             return ResponseEntity.status(401).body("Usuário não encontrado");
         }
 
-        String hashed = PasswordUtils.hashPassword(dto.getSenha(), dto.getLogin());
+        // Usar o salt do usuário, não o login como salt
+        String hashed = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
         if (!user.getSenha().equals(hashed)) {
             return ResponseEntity.status(403).body("Senha incorreta");
         }
@@ -45,13 +47,22 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterDTO dto) {
-        String salt = dto.getLogin(); // usar login como salt
-        String hashed = PasswordUtils.hashPassword(dto.getSenha(), salt);
+        if (userRepository.findByLogin(dto.getLogin()) != null) {
+            return ResponseEntity.badRequest().body("Usuário já existe");
+        }
+
+        String salt = PasswordUtils.generateSalt(); // Salt aleatório
+        String senhaAleatoria = PasswordUtils.gerarSenhaAleatoria();
+        String hashed = PasswordUtils.hashPassword(senhaAleatoria, salt);
+
         User user = new User();
         user.setLogin(dto.getLogin());
         user.setSenha(hashed);
+        user.setSalt(salt); // Adicione este campo na entidade User
         user.setTipo(dto.getTipo());
+
         userRepository.save(user);
         return ResponseEntity.ok("Usuário cadastrado");
     }
+
 }

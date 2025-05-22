@@ -32,7 +32,7 @@ public class ClientController {
 
     @PutMapping("/{cpf}")
     public ResponseEntity<ClientResponseDto> atualizar(@PathVariable String cpf,
-                                                       @RequestBody ClientRequestDto dto) {
+            @RequestBody ClientRequestDto dto) {
         return ResponseEntity.ok(clientService.atualizar(cpf, dto));
     }
 }
