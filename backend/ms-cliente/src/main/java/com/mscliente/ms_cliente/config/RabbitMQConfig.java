@@ -14,4 +14,9 @@ public class RabbitMQConfig {
     public Queue criarUsuarioQueue() {
         return new Queue("saga.criar.usuario");
     }
+
+    @Bean
+    public Queue compensarUsuarioQueue() {
+        return new Queue("saga.compensar.usuario");
+    }
 }

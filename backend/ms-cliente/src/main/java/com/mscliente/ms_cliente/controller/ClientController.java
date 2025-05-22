@@ -25,9 +25,14 @@ public class ClientController {
 
     // Novo endpoint para autocadastro via SAGA
     @PostMapping("/autocadastro")
-    public ResponseEntity<String> autocadastrar(@RequestBody ClientRequestDto dto) {
-        sagaService.iniciarSagaAutocadastro(dto);
-        return ResponseEntity.accepted().body("Cadastro iniciado. Verifique seu e-mail para a senha temporária.");
+    public ResponseEntity<?> autocadastrar(@RequestBody ClientRequestDto dto) {
+        try {
+            sagaService.iniciarSagaAutocadastro(dto);
+            return ResponseEntity.accepted().body("Cadastro iniciado. Verifique seu e-mail para a senha temporária.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro ao processar cadastro: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{cpf}")

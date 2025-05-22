@@ -9,7 +9,7 @@ router.post(
   createProxyMiddleware({
     target: authServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/auth/register": "/auth/register" }
+    pathRewrite: { "^/auth": "" } // Remove /auth do path ao encaminhar
   })
 );
 
@@ -18,7 +18,7 @@ router.post(
   createProxyMiddleware({
     target: authServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/auth/login": "/auth/login" }
+    pathRewrite: { "^/auth": "" } // Remove /auth do path ao encaminhar
   })
 );
 

@@ -10,7 +10,7 @@ router.post(
   createProxyMiddleware({
     target: clientServiceSagaUrl,
     changeOrigin: true,
-    pathRewrite: { "^/api/clientes/autocadastro": "/clientes/autocadastro" }
+    pathRewrite: { "^/clientes": "" } // Remove /clientes do path ao encaminhar
   })
 )
 
@@ -19,8 +19,7 @@ router.get(
   createProxyMiddleware({
     target: clientServiceUrl,
     changeOrigin: true,
-    pathRewrite: (path, req) =>
-      path.replace("/api/clientes/email", "/ms-cliente/check-email")
+    pathRewrite: { "^/clientes": "" } // Remove /clientes do path ao encaminhar
   })
 )
 
@@ -29,11 +28,7 @@ router.get(
   createProxyMiddleware({
     target: clientServiceUrl,
     changeOrigin: true,
-    pathRewrite: (path, req) =>
-      path.replace(
-        "/api/clientes/endereco",
-        "/ms-cliente/check-endereco"
-      ),
+    pathRewrite: { "^/clientes": "" } // Remove /clientes do path ao encaminhar
   })
 )
 

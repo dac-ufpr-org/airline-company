@@ -50,17 +50,19 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Usuário já existe");
         }
 
-        String salt = PasswordUtils.generateSalt(); // Salt aleatório
+        String salt = PasswordUtils.generateSalt();
         String senhaAleatoria = PasswordUtils.gerarSenhaAleatoria();
         String hashed = PasswordUtils.hashPassword(senhaAleatoria, salt);
 
         User user = new User();
         user.setLogin(dto.getLogin());
         user.setSenha(hashed);
-        user.setSalt(salt); // Adicione este campo na entidade User
+        user.setSalt(salt);
         user.setTipo(dto.getTipo());
 
         userRepository.save(user);
-        return ResponseEntity.ok("Usuário cadastrado");
+
+        // Retornar a senha temporária para fins de teste (em produção, enviar por email)
+        return ResponseEntity.ok(Collections.singletonMap("senhaTemporaria", senhaAleatoria));
     }
 }
