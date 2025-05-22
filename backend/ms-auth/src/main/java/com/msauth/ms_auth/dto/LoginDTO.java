@@ -6,5 +6,5 @@ import lombok.Data;
 public class LoginDTO {
 
     private String login;
-    private String senha;
+    private String password; // Alterado de senha para password
 }

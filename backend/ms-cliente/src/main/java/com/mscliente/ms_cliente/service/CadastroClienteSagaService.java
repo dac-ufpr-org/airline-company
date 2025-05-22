@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import com.mscliente.ms_cliente.dto.ClientRequestDto;
 import com.mscliente.ms_cliente.dto.AddressDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.Queue;
+import java.security.SecureRandom;
+import com.mscliente.ms_cliente.dto.CriarUsuarioEvent;
 
 @Service
 @RequiredArgsConstructor

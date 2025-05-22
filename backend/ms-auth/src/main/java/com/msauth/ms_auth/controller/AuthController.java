@@ -19,7 +19,6 @@ import com.msauth.ms_auth.util.PasswordUtils;
 
 @RestController
 @RequestMapping("/auth")
-
 public class AuthController {
 
     @Autowired
@@ -36,7 +35,7 @@ public class AuthController {
         }
 
         // Usar o salt do usuário, não o login como salt
-        String hashed = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
+        String hashed = PasswordUtils.hashPassword(dto.getPassword(), user.getSalt()); // Alterado de senha para password
         if (!user.getSenha().equals(hashed)) {
             return ResponseEntity.status(403).body("Senha incorreta");
         }
@@ -64,5 +63,4 @@ public class AuthController {
         userRepository.save(user);
         return ResponseEntity.ok("Usuário cadastrado");
     }
-
 }

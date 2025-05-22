@@ -5,11 +5,20 @@ const router = express.Router();
 const authServiceUrl = process.env.MS_AUTENTICACAO_URL;
 
 router.post(
-  "/api/auth/login",
+  "/auth/register",  
   createProxyMiddleware({
     target: authServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/api/auth/login": "/ms-auth/login" }
+    pathRewrite: { "^/auth/register": "/auth/register" }
+  })
+);
+
+router.post(
+  "/auth/login",  
+  createProxyMiddleware({
+    target: authServiceUrl,
+    changeOrigin: true,
+    pathRewrite: { "^/auth/login": "/auth/login" }
   })
 );
 

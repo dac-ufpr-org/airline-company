@@ -24,6 +24,7 @@ public class PasswordUtils {
     }
 
     public static String gerarSenhaAleatoria() {
-        return String.format("%04d", new SecureRandom().nextInt(10000));
+        SecureRandom random = new SecureRandom();
+        return String.format("%04d", random.nextInt(10000));
     }
 }
