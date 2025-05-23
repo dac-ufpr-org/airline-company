@@ -1,4 +1,11 @@
 require('dotenv').config();
+
+// Adicione no início:
+console.log('Configurações JWT:', {
+  secret: process.env.JWT_SECRET,
+  env: process.env.NODE_ENV
+});
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');

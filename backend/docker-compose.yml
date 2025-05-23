@@ -103,7 +103,7 @@ services:
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: rabbit_user
       SPRING_RABBITMQ_PASSWORD: rabbit_pass
-      JWT_SECRET: 123456
+      JWT_SECRET: "123456"
     depends_on:
       mongodb:
         condition: service_healthy

@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
+# Instala curl e dependências básicas
+RUN apk add --no-cache curl
+
 # Copia o código fonte
 COPY . .
 

@@ -8,13 +8,16 @@ const clientRoutes = require('./client');
 
 // Rotas públicas
 router.use('/auth', authRoutes);
-router.use('/clientes/autocadastro', clientRoutes.publicRoutes);
-
-// Middleware de autenticação global
-router.use(authenticate);
+router.post('/clientes/autocadastro', clientRoutes.publicRoutes);
 
 // Rotas autenticadas
-router.use('/clientes', clientRoutes.authenticatedRoutes);
+router.get('/clientes', authenticate, clientRoutes.authenticatedRoutes);
+
+// Não implementadas
+//router.get('/clientes/:id', authenticate, clientRoutes.authenticatedRoutes);
+//router.get('/employee', authenticate, employeeRoutes);
+//router.get('/flight', authenticate, flightRoutes);
+//router.get('/reservation', authenticate, reservationRoutes);
 
 // Rota de fallback para 404
 router.use('*', (req, res) => {

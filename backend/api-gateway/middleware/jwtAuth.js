@@ -4,43 +4,37 @@ const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
   
   if (!authHeader?.startsWith('Bearer ')) {
-    return res.status(401).json({ 
-      error: 'Unauthorized',
-      details: 'No token provided or malformed'
-    });
+    return next(); // Permite que rotas públicas continuem
   }
 
   const token = authHeader.split(' ')[1];
   
   try {
-    // Verificação compatível com Spring Security JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || '123456', {
-      algorithms: ['HS256'],
-      ignoreExpiration: false
-    });
+    // Decodificação BASE64 do secret para compatibilidade com Spring
+    const secret = Buffer.from(process.env.JWT_SECRET || '123456', 'utf8');
     
-    // Ajuste para a estrutura do token gerado pelo ms-auth
+    const decoded = jwt.verify(token, secret, {
+      algorithms: ['HS256'],
+      ignoreExpiration: false,
+    });
+
     req.user = {
-      login: decoded.sub, // Spring usa 'sub' para username
-      tipo: decoded.role  // Claim personalizado
+      login: decoded.sub,
+      tipo: decoded.role
     };
     
     next();
   } catch (error) {
-    console.error('JWT Verification Error:', error);
-    
-    const response = {
+    console.error('JWT Error:', {
+      error: error.message,
+      token: token,
+      envSecret: process.env.JWT_SECRET
+    });
+    res.status(403).json({ 
       error: 'Forbidden',
-      details: 'Invalid token'
-    };
-
-    if (error.name === 'TokenExpiredError') {
-      response.details = 'Token expired';
-    } else if (error.message.includes('invalid signature')) {
-      response.debug = 'Signature verification failed (check JWT_SECRET)';
-    }
-
-    res.status(403).json(response);
+      details: 'Invalid token',
+      debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 

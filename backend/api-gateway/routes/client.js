@@ -16,10 +16,14 @@ const clientProxy = createProxyMiddleware({
 
 // Configuração do proxy SAGA
 const clientSagaProxy = createProxyMiddleware({
-  target: process.env.MS_CLIENTE_SAGA_URL,
+  target: process.env.MS_CLIENTE_URL,
   changeOrigin: true,
-  pathRewrite: { '^/api/clientes': '/clientes' },
-  timeout: 8000
+  pathRewrite: {
+    '^/api/clientes/autocadastro': '/clientes/autocadastro' // Path exato
+  },
+  onProxyReq: (proxyReq) => {
+    console.log('Redirecionando para:', proxyReq.path); // Log para debug
+  }
 });
 
 // Rota pública
