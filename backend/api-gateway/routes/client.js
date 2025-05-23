@@ -1,49 +1,37 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const { authenticate } = require('../middleware/jwtAuth');
 
-const clientServiceUrl = process.env.MS_CLIENTE_URL
-const clientServiceSagaUrl = process.env.MS_CLIENTE_SAGA_URL
+// Crie um router separado para rotas públicas
+const publicRouter = express.Router();
+const authRouter = express.Router();
 
-// Aplica JWT em todas as rotas de clientes
-router.use(jwtMiddleware);
-router.use(authErrorHandler);
+// Configuração do proxy
+const clientProxy = createProxyMiddleware({
+  target: process.env.MS_CLIENTE_URL,
+  changeOrigin: true,
+  pathRewrite: { '^/api/clientes': '/clientes' },
+  timeout: 5000
+});
 
-router.post(
-  "/clientes/autocadastro", // Rota ajustada
-  createProxyMiddleware({
-    target: clientServiceSagaUrl,
-    changeOrigin: true,
-    pathRewrite: { '^/clientes': '/clientes' }
-  })
-)
+// Configuração do proxy SAGA
+const clientSagaProxy = createProxyMiddleware({
+  target: process.env.MS_CLIENTE_SAGA_URL,
+  changeOrigin: true,
+  pathRewrite: { '^/api/clientes': '/clientes' },
+  timeout: 8000
+});
 
-router.get(
-  '/clientes',
-  createProxyMiddleware({
-    target: process.env.MS_CLIENTE_URL,
-    changeOrigin: true,
-    pathRewrite: { '^/clientes': '/clientes' }
-  })
-)
+// Rota pública
+publicRouter.post('/autocadastro', clientSagaProxy);
 
-router.get(
-  "/clientes/email/:id",
-  createProxyMiddleware({
-    target: clientServiceUrl,
-    changeOrigin: true,
-    pathRewrite: { '^/clientes': '/clientes' }
-  })
-)
+// Rotas autenticadas
+authRouter.use(authenticate);
+authRouter.get('/', clientProxy);
+authRouter.get('/:id', clientProxy);
 
-router.get(
-  "/clientes/endereco/:id",
-  createProxyMiddleware({
-    target: clientServiceUrl,
-    changeOrigin: true,
-    pathRewrite: { '^/clientes': '/clientes' }
-  })
-)
-
-// Adicione esta linha no final para exportar o router
-module.exports = router;
+// Exporte os routers separadamente
+module.exports = {
+  publicRoutes: publicRouter,
+  authenticatedRoutes: authRouter
+};
