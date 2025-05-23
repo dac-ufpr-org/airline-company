@@ -29,39 +29,17 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    //@PostMapping("/login")
-    //public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
-    //    User user = userRepository.findByLogin(dto.getLogin());
-    //    if (user == null) {
-    //        return ResponseEntity.status(401).body("Usuário não encontrado");
-    //    }
-//
-    //    // Verificação corrigida:
-    //    String hashedInput = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
-    //    if (!user.getSenha().equals(hashedInput)) {
-    //        return ResponseEntity.status(403).body("Senha incorreta");
-    //    }
-//
-    //    String token = jwtUtil.generateToken(user.getLogin(), user.getTipo());
-    //    return ResponseEntity.ok(Collections.singletonMap("token", token));
-    //}
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
-        System.out.println("Tentativa de login: " + dto.getLogin()); // Log
 
         User user = userRepository.findByLogin(dto.getLogin());
         if (user == null) {
             return ResponseEntity.status(401).body("Usuário não encontrado");
         }
 
-        System.out.println("Senha armazenada: " + user.getSenha()); // Log
-        System.out.println("Salt armazenado: " + user.getSalt()); // Log
-
         String hashedInput = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
-        System.out.println("Senha hasheada: " + hashedInput); // Log
 
         if (!user.getSenha().equals(hashedInput)) {
-            System.out.println("Falha na comparação de hashes"); // Log
             return ResponseEntity.status(403).body("Senha incorreta");
         }
 

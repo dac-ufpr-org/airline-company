@@ -41,7 +41,10 @@ public class ClientController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClientResponseDto>> listarTodos() {
+    public ResponseEntity<List<ClientResponseDto>> listarTodos(
+            @RequestHeader("Authorization") String authHeader
+    ) {
+        // Validação adicional do token se necessário
         return ResponseEntity.ok(clientService.listarTodos());
     }
 
