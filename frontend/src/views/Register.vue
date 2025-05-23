@@ -69,6 +69,25 @@ export default {
         }
       }
     },
+    async buscarCep() {
+        if (this.object.cep && this.object.cep.length === 8) {
+            try {
+                const response = await axios.get(`https://viacep.com.br/ws/${this.object.cep}/json/`);
+                this.object.rua = response.data.logradouro;
+                this.object.cidade = response.data.localidade;
+                this.object.estado = response.data.uf;
+            } catch (error) {
+                console.error("Erro ao buscar CEP:", error);
+            }
+        }
+    }
   },
+  watch: {
+      'object.cep': function(newVal) {
+          if (newVal && newVal.length === 8) {
+              this.buscarCep();
+          }
+      }
+  }
 };
 </script>

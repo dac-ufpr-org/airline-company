@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.SecureRandom;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.msauth.ms_auth.dto.LoginDTO;
 import com.msauth.ms_auth.dto.RegisterDTO;
@@ -29,14 +31,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
+
         User user = userRepository.findByLogin(dto.getLogin());
         if (user == null) {
             return ResponseEntity.status(401).body("Usuário não encontrado");
         }
 
-        // Usar o salt do usuário, não o login como salt
-        String hashed = PasswordUtils.hashPassword(dto.getPassword(), user.getSalt()); // Alterado de senha para password
-        if (!user.getSenha().equals(hashed)) {
+        String hashedInput = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
+
+        if (!user.getSenha().equals(hashedInput)) {
             return ResponseEntity.status(403).body("Senha incorreta");
         }
 
@@ -50,17 +53,24 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Usuário já existe");
         }
 
-        String salt = PasswordUtils.generateSalt(); // Salt aleatório
+        String salt = PasswordUtils.generateSalt();
         String senhaAleatoria = PasswordUtils.gerarSenhaAleatoria();
         String hashed = PasswordUtils.hashPassword(senhaAleatoria, salt);
 
         User user = new User();
         user.setLogin(dto.getLogin());
         user.setSenha(hashed);
-        user.setSalt(salt); // Adicione este campo na entidade User
+        user.setSalt(salt);
         user.setTipo(dto.getTipo());
 
         userRepository.save(user);
-        return ResponseEntity.ok("Usuário cadastrado");
+
+        //return ResponseEntity.ok("Usuário cadastrado com sucesso");
+        // Retorno com ambos: mensagem + senha temporária
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Usuário cadastrado com sucesso");
+        response.put("senhaTemporaria", senhaAleatoria); // Apenas para testes
+
+        return ResponseEntity.ok(response);
     }
 }

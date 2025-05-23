@@ -17,18 +17,15 @@ public class CadastroClienteSagaService {
     private final ViaCepService viaCepService;
 
     public void iniciarSagaAutocadastro(ClientRequestDto dto) {
-        // 1. Preencher endereço via ViaCEP
         AddressDto endereco = viaCepService.consultarCep(dto.getCep());
 
-        // 2. Gerar senha aleatória (4 dígitos)
         String senhaAleatoria = String.format("%04d", new SecureRandom().nextInt(10000));
 
-        // 3. Publicar evento para ms-auth
-        CriarUsuarioEvent event = new CriarUsuarioEvent(
-                dto.getEmail(),
-                "CLIENTE",
-                senhaAleatoria
-        );
+        CriarUsuarioEvent event = new CriarUsuarioEvent();
+        event.setEmail(dto.getEmail());
+        event.setTipo("CLIENTE");
+        event.setSenhaTemporaria(senhaAleatoria);
+
         rabbitTemplate.convertAndSend("saga.criar.usuario", event);
     }
 }

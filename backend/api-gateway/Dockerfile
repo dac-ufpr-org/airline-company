@@ -1,20 +1,24 @@
-# Imagem base
-FROM node:18
+FROM node:18-alpine
 
-# Diretório de trabalho dentro do container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copia os arquivos de dependência
+# Instala dependências (incluindo devDependencies temporariamente)
 COPY package*.json ./
+RUN npm install
 
-# Instala as dependências
-RUN npm install --production
+# Instala curl e dependências básicas
+RUN apk add --no-cache curl
 
-# Copia todo o restante do código
+# Copia o código fonte
 COPY . .
 
-# Expõe a porta
+# Configurações de segurança
+RUN chown -R node:node /app
+USER node
+
+ENV NODE_ENV=production
+ENV PORT=8000
+
 EXPOSE 8000
 
-# Comando de execução
-CMD [ "node", "app.js" ]
+CMD ["npm", "start"]

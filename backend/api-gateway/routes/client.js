@@ -1,41 +1,41 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const { authenticate } = require('../middleware/jwtAuth');
 
-const clientServiceUrl = process.env.MS_CLIENTE_URL
-const clientServiceSagaUrl = process.env.MS_CLIENTE_SAGA_URL
+// Crie um router separado para rotas públicas
+const publicRouter = express.Router();
+const authRouter = express.Router();
 
-router.post(
-  "/clientes/autocadastro", // Rota ajustada
-  createProxyMiddleware({
-    target: clientServiceSagaUrl,
-    changeOrigin: true,
-    pathRewrite: { "^/api/clientes/autocadastro": "/clientes/autocadastro" }
-  })
-)
+// Configuração do proxy
+const clientProxy = createProxyMiddleware({
+  target: process.env.MS_CLIENTE_URL,
+  changeOrigin: true,
+  pathRewrite: { '^/api/clientes': '/clientes' },
+  timeout: 5000
+});
 
-router.get(
-  "/clientes/email/:id",
-  createProxyMiddleware({
-    target: clientServiceUrl,
-    changeOrigin: true,
-    pathRewrite: (path, req) =>
-      path.replace("/api/clientes/email", "/ms-cliente/check-email")
-  })
-)
+// Configuração do proxy SAGA
+const clientSagaProxy = createProxyMiddleware({
+  target: process.env.MS_CLIENTE_URL,
+  changeOrigin: true,
+  pathRewrite: {
+    '^/api/clientes/autocadastro': '/clientes/autocadastro' // Path exato
+  },
+  onProxyReq: (proxyReq) => {
+    console.log('Redirecionando para:', proxyReq.path); // Log para debug
+  }
+});
 
-router.get(
-  "/clientes/endereco/:id",
-  createProxyMiddleware({
-    target: clientServiceUrl,
-    changeOrigin: true,
-    pathRewrite: (path, req) =>
-      path.replace(
-        "/api/clientes/endereco",
-        "/ms-cliente/check-endereco"
-      ),
-  })
-)
+// Rota pública
+publicRouter.post('/autocadastro', clientSagaProxy);
 
-// Adicione esta linha no final para exportar o router
-module.exports = router;
+// Rotas autenticadas
+authRouter.use(authenticate);
+authRouter.get('/', clientProxy);
+authRouter.get('/:id', clientProxy);
+
+// Exporte os routers separadamente
+module.exports = {
+  publicRoutes: publicRouter,
+  authenticatedRoutes: authRouter
+};

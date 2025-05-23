@@ -1,28 +1,46 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
+require('dotenv').config();
+
+// Adicione no início:
+console.log('Configurações JWT:', {
+  secret: process.env.JWT_SECRET,
+  env: process.env.NODE_ENV
+});
+
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
 const app = express();
 
-// Middlewares
-app.use(cors({
-    origin: 'http://localhost:4200',
-    credentials: true,
-}));
-app.use(express.json()); // Importante para POST/PUT com body JSON
+// Middlewares básicos
+app.use(cors());
+app.use(bodyParser.json());
+
+// Health Check simplificado
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'API Gateway operacional',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Rotas
-const clientRoutes = require('./routes/client');
-const employeeRoutes = require('./routes/employee');
-const flightRoutes = require('./routes/flight');
-const reservationRoutes = require('./routes/reservation');
-const authRoutes = require('./routes/auth');
+app.use('/api', require('./routes'));
 
-app.use('/api/client', clientRoutes);
-app.use('/api/employee', employeeRoutes);
-app.use('/api/flight', flightRoutes);
-app.use('/api/reservation', reservationRoutes);
-app.use('/api/auth', authRoutes);
+// Error Handling básico
+app.use((err, req, res, next) => {
+  console.error('Erro não tratado:', err);
+  res.status(500).json({ error: 'Erro interno no servidor' });
+});
 
-// Start
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`API Gateway rodando na porta ${PORT}`));
+const server = app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+  console.log('Ambiente:', process.env.NODE_ENV);
+});
+
+// Captura erros críticos
+process.on('uncaughtException', (err) => {
+  console.error('Erro não capturado:', err);
+  server.close(() => process.exit(1));
+});

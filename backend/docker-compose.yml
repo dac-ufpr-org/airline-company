@@ -53,8 +53,8 @@ services:
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
       interval: 5s
-      timeout: 5s
-      retries: 5
+      timeout: 10s
+      retries: 10
 
   # --- API GATEWAY (Node.js) ---
   api-gateway:
@@ -65,16 +65,26 @@ services:
     ports:
       - "8000:8000"
     environment:
-      NODE_ENV: production
+      NODE_ENV: development # Temporário para logs detalhados
       PORT: 8000
+      JWT_SECRET: "123456"
+      # URLs devem usar os nomes de serviço do Docker
       MS_AUTENTICACAO_URL: http://ms-auth:8080
       MS_CLIENTE_URL: http://ms-cliente:8080
-      MS_VOO_URL: http://ms-voo:8080
-      MS_RESERVA_URL: http://ms-reserva:8080
-      MS_FUNCIONARIO_URL: http://ms-funcionario:8080
     depends_on:
       rabbitmq:
         condition: service_healthy
+      ms-auth:
+        condition: service_started
+      ms-cliente:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: unless-stopped
     networks:
       - airline-net
 
@@ -93,6 +103,7 @@ services:
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: rabbit_user
       SPRING_RABBITMQ_PASSWORD: rabbit_pass
+      JWT_SECRET: "123456"
     depends_on:
       mongodb:
         condition: service_healthy
