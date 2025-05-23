@@ -6,6 +6,6 @@ import lombok.Data;
 public class RegisterDTO {
 
     private String login;
-    private String password;  // Alterado de 'senha' para 'password'
+    private String senha;
     private String tipo;
 }

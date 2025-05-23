@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.security.SecureRandom;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.msauth.ms_auth.dto.LoginDTO;
 import com.msauth.ms_auth.dto.RegisterDTO;
@@ -27,16 +29,39 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    //@PostMapping("/login")
+    //public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
+    //    User user = userRepository.findByLogin(dto.getLogin());
+    //    if (user == null) {
+    //        return ResponseEntity.status(401).body("Usuário não encontrado");
+    //    }
+//
+    //    // Verificação corrigida:
+    //    String hashedInput = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
+    //    if (!user.getSenha().equals(hashedInput)) {
+    //        return ResponseEntity.status(403).body("Senha incorreta");
+    //    }
+//
+    //    String token = jwtUtil.generateToken(user.getLogin(), user.getTipo());
+    //    return ResponseEntity.ok(Collections.singletonMap("token", token));
+    //}
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
+        System.out.println("Tentativa de login: " + dto.getLogin()); // Log
+
         User user = userRepository.findByLogin(dto.getLogin());
         if (user == null) {
             return ResponseEntity.status(401).body("Usuário não encontrado");
         }
 
-        // Usar o salt do usuário, não o login como salt
-        String hashed = PasswordUtils.hashPassword(dto.getPassword(), user.getSalt()); // Alterado de senha para password
-        if (!user.getSenha().equals(hashed)) {
+        System.out.println("Senha armazenada: " + user.getSenha()); // Log
+        System.out.println("Salt armazenado: " + user.getSalt()); // Log
+
+        String hashedInput = PasswordUtils.hashPassword(dto.getSenha(), user.getSalt());
+        System.out.println("Senha hasheada: " + hashedInput); // Log
+
+        if (!user.getSenha().equals(hashedInput)) {
+            System.out.println("Falha na comparação de hashes"); // Log
             return ResponseEntity.status(403).body("Senha incorreta");
         }
 
@@ -62,7 +87,12 @@ public class AuthController {
 
         userRepository.save(user);
 
-        // Retornar a senha temporária para fins de teste (em produção, enviar por email)
-        return ResponseEntity.ok(Collections.singletonMap("senhaTemporaria", senhaAleatoria));
+        //return ResponseEntity.ok("Usuário cadastrado com sucesso");
+        // Retorno com ambos: mensagem + senha temporária
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Usuário cadastrado com sucesso");
+        response.put("senhaTemporaria", senhaAleatoria); // Apenas para testes
+
+        return ResponseEntity.ok(response);
     }
 }
