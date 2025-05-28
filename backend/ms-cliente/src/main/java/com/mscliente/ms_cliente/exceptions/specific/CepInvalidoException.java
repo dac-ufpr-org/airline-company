@@ -1,7 +1,7 @@
-package br.com.cliente.ms_cliente.exceptions.specific;
+package com.mscliente.ms_cliente.exceptions.specific;
 
-public class CepInvalidoException extends Exception{
-    public CepInvalidoException(String mensagem){
+public class CepInvalidoException extends RuntimeException {
+    public CepInvalidoException(String mensagem) {
         super(mensagem);
     }
 }

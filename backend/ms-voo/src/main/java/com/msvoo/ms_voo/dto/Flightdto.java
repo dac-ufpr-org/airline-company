@@ -1,4 +1,4 @@
-package main.java.com.msvoo.ms_voo.dto;
+package com.msvoo.ms_voo.dto;
 
 import lombok.Data;
 

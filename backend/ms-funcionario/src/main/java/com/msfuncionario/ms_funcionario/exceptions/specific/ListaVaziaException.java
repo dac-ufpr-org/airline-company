@@ -1,6 +1,6 @@
-package com.msfuncionario.ms_funcionario.exeptions.specific;
+package com.msfuncionario.ms_funcionario.exceptions.specific;
 
-public class ListaVaziaException extends Exception {
+public class ListaVaziaException extends RuntimeException {
     public ListaVaziaException (String mensagem) {
         super(mensagem);
     }
