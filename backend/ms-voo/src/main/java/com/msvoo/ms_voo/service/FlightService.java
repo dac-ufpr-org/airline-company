@@ -1,4 +1,4 @@
-package main.java.com.msvoo.ms_voo.service;
+package com.msvoo.ms_voo.service;
 import com.msvoo.ms_voo.entity.Flight;
 import org.springframework.stereotype.Service;
 

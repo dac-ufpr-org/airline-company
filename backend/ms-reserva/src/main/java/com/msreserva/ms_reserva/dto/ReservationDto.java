@@ -1,4 +1,5 @@
-package main.java.com.msreserva.ms_reserva.dto;
+package com.msreserva.ms_reserva.dto;
+
 import com.mscliente.ms_cliente.dto.AddressDto;
 
 import lombok.Data;

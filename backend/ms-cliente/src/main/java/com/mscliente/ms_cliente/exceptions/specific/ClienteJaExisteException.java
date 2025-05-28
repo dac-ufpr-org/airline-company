@@ -1,7 +1,7 @@
-package br.com.cliente.ms_cliente.exceptions.specific;
+package com.mscliente.ms_cliente.exceptions.specific;
 
-public class OutroClienteDadosJaExistenteException extends Exception{
-    public OutroClienteDadosJaExistenteException(String mensagem){
+public class ClienteJaExisteException extends RuntimeException {
+    public ClienteJaExisteException(String mensagem) {
         super(mensagem);
     }
 }

@@ -1,4 +1,4 @@
-package com.msfuncionario.ms_funcionario..dto.response;
+package com.msfuncionario.ms_funcionario.dto.response;
 
 public class FuncionarioResponseDto {
     private Long id;

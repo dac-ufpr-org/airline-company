@@ -1,4 +1,4 @@
-package com.mscliente.ms_cliente.exceptions.handler;
+package com.mscliente.ms_cliente.exceptions;
 
 import com.mscliente.ms_cliente.exceptions.specific.CepInvalidoException;
 import com.mscliente.ms_cliente.exceptions.specific.ClienteJaExisteException;

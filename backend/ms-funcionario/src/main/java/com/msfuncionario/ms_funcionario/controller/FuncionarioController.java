@@ -1,12 +1,12 @@
-package com.msfuncionario.ms_funcionario..controller;
+package com.msfuncionario.ms_funcionario.controller;
 
-import com.msfuncionario.ms_funcionario..dto.FuncionarioRequestDto;
-import com.msfuncionario.ms_funcionario..dto.FuncionarioResponseDto;
-import com.msfuncionario.ms_funcionario..entity.Funcionario;
-import com.msfuncionario.ms_funcionario..exceptions.FuncionarioJaExisteException;
-import com.msfuncionario.ms_funcionario..exceptions.FuncionarioNaoEncontradoException;
-import com.msfuncionario.ms_funcionario..exceptions.ListaVaziaException;
-import com.msfuncionario.ms_funcionario..service.FuncionarioService;
+import com.msfuncionario.ms_funcionario.dto.request.FuncionarioRequestDto;
+import com.msfuncionario.ms_funcionario.dto.response.FuncionarioResponseDto;
+import com.msfuncionario.ms_funcionario.model.Funcionario;
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioJaExisteException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioNaoEncontradoException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.ListaVaziaException;
+import com.msfuncionario.ms_funcionario.service.FuncionarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

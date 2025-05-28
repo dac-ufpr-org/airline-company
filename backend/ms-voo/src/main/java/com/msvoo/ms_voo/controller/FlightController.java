@@ -1,4 +1,4 @@
-package main.java.com.msvoo.ms_voo.controller;
+package com.msvoo.ms_voo.controller;
 
 import com.msvoo.ms_voo.entity.Flight;
 import com.msvoo.ms_voo.service.FlightService;

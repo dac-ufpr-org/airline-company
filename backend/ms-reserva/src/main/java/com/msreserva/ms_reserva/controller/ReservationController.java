@@ -1,4 +1,4 @@
-package main.java.com.msreserva.ms_reserva.controller;
+package com.msreserva.ms_reserva.controller;
 
 import com.msreserva.ms_reserva.entity.Reserva;
 import com.msreserva.ms_reserva.service.ReservaService;

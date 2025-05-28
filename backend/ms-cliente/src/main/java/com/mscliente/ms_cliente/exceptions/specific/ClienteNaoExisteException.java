@@ -1,7 +1,7 @@
-package br.com.cliente.ms_cliente.exceptions.specific;
+package com.mscliente.ms_cliente.exceptions.specific;
 
-public class ClienteNaoExisteException extends Exception{
-    public ClienteNaoExisteException(String mensagem){
+public class ClienteNaoExisteException extends RuntimeException {
+    public ClienteNaoExisteException(String mensagem) {
         super(mensagem);
     }
 }
