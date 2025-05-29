@@ -13,4 +13,5 @@ public class CriarUsuarioEvent implements Serializable {
     private String email;
     private String tipo; // "CLIENTE" ou "FUNCIONARIO"
     private String senhaTemporaria;
+    
 }

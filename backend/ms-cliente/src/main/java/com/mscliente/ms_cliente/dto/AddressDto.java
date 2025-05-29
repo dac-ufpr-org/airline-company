@@ -12,4 +12,6 @@ public class AddressDto {
     private String city;
     private String state;
     private String neighborhood;
+    private String country;
+    private String referencePoint;
 }

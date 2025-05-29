@@ -15,4 +15,11 @@ public class ClientRequestDto {
     private String complemento;
     private String cidade;
     private String estado;
+    private String bairro;
+    private String pais;
+    private String pontoReferencia;
+    private String telefone;
+    private String dataNascimento;
+
+    
 }
