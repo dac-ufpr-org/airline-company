@@ -1,91 +1,91 @@
-# Airline Company - Microservices Architecture
+# Companhia aérea - Arquitetura de Microsservicos 
 
-## Overview
+## Visão Geral 
 
-Airline Company is a modern airline management system built using a **microservices** architecture. The project is designed to handle airline operations efficiently, ensuring scalability, maintainability, and reliability. It integrates various technologies to provide a robust infrastructure for managing flights, bookings, customer interactions, and payments.
+Companhia aerea é um sistema moderno de gestão de companhias aéreas desenvolvido com uma arquitetura de **microsserviços**. O projeto foi desenvolvido para gerenciar as operações de companhias aéreas com eficiência, garantindo escalabilidade, manutenibilidade e confiabilidade. Ele integra diversas tecnologias para fornecer uma infraestrutura robusta para gerenciar voos, reservas, interações com clientes e pagamentos.
 
-## Technologies Used
+## Tecnologias usadas
 
 - Frontend: Vue.js
 - Backend: Spring Boot (Java)
 - API Gateway: Node.js
-- Orchestration & Transactions: SAGA Pattern
-- Containerization: Docker
-- Service Communication: REST APIs
-- Database: MySQL, MongoDB
-- Messaging: RabbitMQ
-- Authentication & Security: JWT
+- Orquestração e transações: SAGA Pattern
+- Conteinerização: Docker
+- Comunicação de serviços: REST APIs
+- Banco de Dados: MySQL, MongoDB
+- mensageria: RabbitMQ
+- Autenticação e segurança: JWT
 
-## Microservices Architecture
+## Arquitetura de microsserviços
 
-  **The system consists of the following microservices:**
+  **O sistema contem os seguintes microsserviços:**
 
-- User Service: Manages user authentication and profiles.
-- Flight Service: Handles flight schedules, availability, and status updates.
-- Booking Service: Manages ticket reservations and payments.
-- Payment Service: Processes transactions securely.
-- Notification Service: Sends alerts and notifications to customers.
-- API Gateway: Centralized entry point for routing requests.
+- Serviço de Usuário: Gerencia a autenticação de usuários e perfis.
+- Serviço de Voos: Lida com os horários dos voos, disponibilidade e atualizações de status.
+- Serviço de Reservas: Gerencia as reservas de passagens e pagamentos.
+- Serviço de Pagamentos: Processa transações de forma segura.
+- Serviço de Notificações: Envia alertas e notificações para os clientes.
+- Gateway de API: Ponto de entrada centralizado para roteamento de requisições.
 
-## Key Features
+## Principais funcionalidades
 
-- Distributed system with independent microservices
-- Event-driven communication using message brokers
-- SAGA pattern for distributed transaction management
-- Scalable containerized deployment using Docker
-- Secure API management with JWT authentication
-- Real-time monitoring and logging
+- Sistema distribuído com microsserviços independentes
+- Comunicação orientada a eventos utilizando brokers de mensagens
+- Padrão SAGA para gerenciamento de transações distribuídas
+- Implantação escalável e conteinerizada usando Docker
+- Gerenciamento seguro de APIs com autenticação JWT
+- Monitoramento e registro em tempo real
 
-## Installation & Setup
+## Instalação e configurações
 
-## Prerequisites
+## Pré-requisitos 
 
-Before running the project, ensure you have the following installed:
+Antes de rodar o projeto, tenha certeza de que tenha instalado:
 
 - Docker
 - Docker Compose
-- Node.js (for running the API Gateway)
-- Java 17+ (for Spring Boot services)
-- Maven (for building Java services)
-- Vue CLI (for frontend development)
+- Node.js (para rodar o API Gateway)
+- Java 17+ (para serviços Spring Boot )
+- Maven (para construir serviços em Java)
+- Vue CLI (para desenvolvimento frontend)
 
-## Steps to Run
+## Passos para rodar
 
-1. Clone the repository 
+1. Clone o repositório
 
    ```sh
    git clone https://github.com/your-username/airline-company.git
    ```
-2. In the terminal, make sure you are in the root directory of the project. If not, navigate there using the cd command. For example:
+2. No terminal, certifique-se de que você está no diretório raiz do projeto. Caso não esteja, navegue até ele usando o comando cd. Por exemplo:
     ```sh
    cd airline-company
    ```
-3. Build Java Microservices
+3. Build Microsseviços Java 
      ```sh
    cd backend/services
    mvn clean install
    ```
 
-4. Start all services with Docker Compose
+4. Comece todos os serviços com  Docker Compose
 
    ```sh
    docker-compose up --build
    ```
-5. Run the API Gateway
+5. Rode o API Gateway
    ```sh
    cd api-gateway
    npm install
    npm run start
    ```
    
-6. Run the Frontend
+6. Rode o Frontend
    ```sh
     cd frontend
    npm install
    npm run serve
    ```
   
-### Access the Application
+### Acesso a Aplicação
 
 - Frontend:  http://localhost:5173/
 - API Gateway: http://localhost:3000
