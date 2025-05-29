@@ -1,5 +1,10 @@
 package com.msreserva.ms_reserva.model;
 
+import com.msreserva.ms_reserva.model.ReservationStatusEntity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -15,8 +20,9 @@ public class Reservation {
 
     private LocalDate reservationDate;
 
-    @Enumerated(EnumType.STRING)
-    private ReservationStatus status;
+    @ManyToOne
+    @JoinColumn(name = "status_id") // nome da coluna no banco
+    private ReservationStatusEntity status;
 
     public Reservation() {}
 
@@ -57,11 +63,11 @@ public class Reservation {
         this.reservationDate = reservationDate;
     }
 
-    public ReservationStatus getStatus() {
+    public ReservationStatusEntity getStatus() {
         return status;
     }
 
-    public void setStatus(ReservationStatus status) {
+    public void setStatus(ReservationStatusEntity status) {
         this.status = status;
     }
 }
