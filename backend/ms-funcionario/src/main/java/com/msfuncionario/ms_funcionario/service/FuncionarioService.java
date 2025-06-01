@@ -1,5 +1,9 @@
 package com.msfuncionario.ms_funcionario.service;
 
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioNaoEncontradoException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioBusinessException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.FuncionarioJaExisteException;
+import com.msfuncionario.ms_funcionario.exceptions.specific.ListaVaziaException;
 import com.msfuncionario.ms_funcionario.dto.request.FuncionarioRequestDto;
 import com.msfuncionario.ms_funcionario.dto.response.FuncionarioResponseDto;
 import com.msfuncionario.ms_funcionario.dto.request.UsuarioRequestCadastrarDto;
@@ -23,27 +27,6 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    private void validarDadosObrigatorios(FuncionarioRequestDto dto) {
-        if (dto.getCpf() == null || dto.getCpf().isBlank()) {
-            throw new FuncionarioBusinessException("CPF é obrigatório.");
-        }
-        if (!dto.getCpf().matches("\\d{11}")) {
-            throw new FuncionarioBusinessException("CPF deve conter exatamente 11 dígitos numéricos.");
-        }
-        if (dto.getEmail() == null || dto.getEmail().isBlank()) {
-            throw new FuncionarioBusinessException("Email é obrigatório.");
-        }
-        if (dto.getNome() == null || dto.getNome().isBlank()) {
-            throw new FuncionarioBusinessException("Nome é obrigatório.");
-        }
-        if (dto.getSenha() == null || dto.getSenha().isBlank()) {
-            throw new FuncionarioBusinessException("Senha é obrigatória.");
-        }
-        if (dto.getDataAdmissao() != null && dto.getDataAdmissao().isAfter(LocalDate.now())) {
-            throw new FuncionarioBusinessException("Data de admissão não pode ser no futuro.");
-        }
-    }
-
     public List<FuncionarioResponseDto> listar() {
         Optional<List<Funcionario>> listaFuncionarioBD = funcionarioRepository.findByAtivo(true);
 
@@ -63,7 +46,7 @@ public class FuncionarioService {
         return modelMapper.map(funcionario, FuncionarioResponseDto.class);
     }
 
-    public FuncionarioResponseDto consultarEmail(String email) {
+    public FuncionarioResponseDto buscarPorEmail(String email) {
         if (email == null || email.isBlank()) {
             throw new FuncionarioBusinessException("Email é obrigatório.");
         }
@@ -75,8 +58,6 @@ public class FuncionarioService {
     }
 
     public UsuarioRequestCadastrarDto cadastrar(FuncionarioRequestDto dto) {
-        validarDadosObrigatorios(dto);
-
         List<Funcionario> funcionariosExistentes = funcionarioRepository
                 .findByCpfOrEmail(dto.getCpf(), dto.getEmail())
                 .orElse(Collections.emptyList());
@@ -84,17 +65,6 @@ public class FuncionarioService {
         boolean cpfExists = false;
         boolean emailExists = false;
         Long idFuncionario = 0L;
-
-        for (Funcionario f : funcionariosExistentes) {
-            if (f.isAtivo()) {
-                if (f.getCpf().equals(dto.getCpf())) {
-                    cpfExists = true;
-                }
-                if (f.getEmail().equals(dto.getEmail())) {
-                    emailExists = true;
-                }
-            }
-        }
 
         if (cpfExists && emailExists) {
             throw new FuncionarioJaExisteException("Outro funcionário ativo com CPF e email já existentes.");
@@ -105,13 +75,13 @@ public class FuncionarioService {
         }
 
         if (funcionariosExistentes.size() == 1) {
-            idFuncionario = funcionariosExistentes.get(0).getIdFuncionario();
+            idFuncionario = funcionariosExistentes.get(0).getId();
         } else if (funcionariosExistentes.size() > 1) {
             throw new FuncionarioJaExisteException("Funcionários inativos já existentes com CPF e email.");
         }
 
         Funcionario funcionario = modelMapper.map(dto, Funcionario.class);
-        funcionario.setIdFuncionario(idFuncionario);
+        funcionario.setId(idFuncionario);
 
         Funcionario funcionarioCriado = funcionarioRepository.save(funcionario);
 
@@ -122,9 +92,7 @@ public class FuncionarioService {
     }
 
     public UsuarioRequestAtualizarDto atualizar(FuncionarioRequestDto dto) {
-        validarDadosObrigatorios(dto);
-
-        Optional<Funcionario> funcionarioBD = funcionarioRepository.findByIdAndAtivo(dto.getIdFuncionario(), true);
+        Optional<Funcionario> funcionarioBD = funcionarioRepository.findByIdAndAtivo(dto.getId(), true);
         if (!funcionarioBD.isPresent()) {
             throw new FuncionarioNaoEncontradoException("Funcionário ativo não encontrado.");
         }
@@ -135,11 +103,11 @@ public class FuncionarioService {
         if (funcionarioExistente.isPresent()) {
             List<Funcionario> listaFuncionarioExistente = funcionarioExistente.get();
             boolean duplicado = listaFuncionarioExistente.stream()
-                    .anyMatch(funcionario -> !funcionario.getIdFuncionario().equals(dto.getIdFuncionario()));
+                    .anyMatch(funcionario -> !funcionario.getId().equals(dto.getId()));
 
             if (duplicado) {
                 boolean cpfDuplicado = listaFuncionarioExistente.stream()
-                        .anyMatch(funcionario -> !funcionario.getIdFuncionario().equals(dto.getIdFuncionario()) &&
+                        .anyMatch(funcionario -> !funcionario.getId().equals(dto.getId()) &&
                                 funcionario.getCpf().equals(dto.getCpf()));
                 if (cpfDuplicado) {
                     throw new FuncionarioJaExisteException("Outro funcionário com CPF já existente.");
@@ -150,12 +118,12 @@ public class FuncionarioService {
         }
 
         Funcionario funcionario = modelMapper.map(dto, Funcionario.class);
-        funcionario.setIdFuncionario(dto.getIdFuncionario());
+        funcionario.setId(dto.getId());
 
         Funcionario funcionarioAtualizado = funcionarioRepository.save(funcionario);
 
         UsuarioRequestAtualizarDto usuarioDto = modelMapper.map(funcionarioAtualizado, UsuarioRequestAtualizarDto.class);
-        usuarioDto.setId(funcionarioAtualizado.getIdFuncionario());
+        usuarioDto.setId(funcionarioAtualizado.getId());
         usuarioDto.setOldEmail(funcionarioBD.get().getEmail());
         usuarioDto.setSenha(dto.getSenha());
 
@@ -198,18 +166,18 @@ public class FuncionarioService {
         Funcionario funcionario = funcionarioRepository.findByEmail(email)
                 .orElseThrow(() -> new FuncionarioNaoEncontradoException("Funcionário não encontrado para o email: " + email));
 
-        funcionarioRepository.deleteById(funcionario.getIdFuncionario());
+        funcionarioRepository.deleteById(funcionario.getId());
         return modelMapper.map(funcionario, FuncionarioResponseDto.class);
     }
 
-    public FuncionarioResponseDto reverter(Long idFuncionario) throws FuncionarioNaoExisteException {
+    // public FuncionarioResponseDto reverter(Long idFuncionario) throws FuncionarioNaoEncontradoException {
         // Funcionario funcionarioCache = redisFuncionarioCache.getCache(idFuncionario);
         // if (funcionarioCache == null) {
         //     throw new FuncionarioNaoExisteException("Funcionario nao existe no cache!");
         // }
 
         // Funcionario funcionario = funcionarioRepository.save(funcionarioCache);
-        // redisFuncionarioCache.removeCache(funcionarioCache.getIdFuncionario());
-        return modelMapper.map(funcionario, FuncionarioResponseDto.class);
-    }
+        // redisFuncionarioCache.removeCache(funcionarioCache.getId());
+        // return modelMapper.map(funcionario, FuncionarioResponseDto.class);
+    // }
 }

@@ -2,7 +2,7 @@ package com.msvoo.ms_voo.model;
 
 import java.io.Serializable;
 
-import br.com.voos.voos.enums.TipoEstadoVoo;
+import com.msvoos.ms_voos.enums.TipoEstadoVoo;
 
 import jakarta.persistence.*;
 import lombok.*;
