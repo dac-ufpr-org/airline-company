@@ -8,10 +8,10 @@ const clientRoutes = require('./client');
 
 // Rotas públicas
 router.use('/auth', authRoutes);
-router.post('/clientes/autocadastro', clientRoutes.publicRoutes);
+router.use('/clientes', clientRoutes.publicRoutes); // /api/clientes/autocadastro
 
 // Rotas autenticadas
-router.get('/clientes', authenticate, clientRoutes.authenticatedRoutes);
+router.use('/clientes', clientRoutes.authenticatedRoutes); // /api/clientes (GET autenticado)
 
 // Não implementadas
 //router.get('/clientes/:id', authenticate, clientRoutes.authenticatedRoutes);

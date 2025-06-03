@@ -1,12 +1,40 @@
+// routes/client.js
 const express = require('express');
+const axios = require('axios');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const { authenticate } = require('../middleware/jwtAuth');
 
-// Crie um router separado para rotas públicas
 const publicRouter = express.Router();
 const authRouter = express.Router();
 
-// Configuração do proxy
+// ROTA: /autocadastro (pública)
+publicRouter.post('/autocadastro', async (req, res) => {
+  try {
+    const response = await axios.post(
+      `${process.env.MS_CLIENTE_URL}/clientes/autocadastro`,
+      req.body,
+      { timeout: 5000 }
+    );
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    if (error.code === 'ECONNABORTED') {
+      return res.status(504).json({
+        error: 'Gateway Timeout',
+        message: 'Cliente Service não respondeu a tempo'
+      });
+    }
+
+    const status = error.response?.status || 500;
+    const data = error.response?.data || { error: error.message };
+
+    res.status(status).json({
+      ...data,
+      service: 'Cliente Service'
+    });
+  }
+});
+
+// ROTA: /clientes (autenticada)
 const clientProxy = createProxyMiddleware({
   target: process.env.MS_CLIENTE_URL,
   changeOrigin: true,
@@ -14,27 +42,10 @@ const clientProxy = createProxyMiddleware({
   timeout: 5000
 });
 
-// Configuração do proxy SAGA
-const clientSagaProxy = createProxyMiddleware({
-  target: process.env.MS_CLIENTE_URL,
-  changeOrigin: true,
-  pathRewrite: {
-    '^/api/clientes/autocadastro': '/clientes/autocadastro' // Path exato
-  },
-  onProxyReq: (proxyReq) => {
-    console.log('Redirecionando para:', proxyReq.path); // Log para debug
-  }
-});
-
-// Rota pública
-publicRouter.post('/autocadastro', clientSagaProxy);
-
-// Rotas autenticadas
 authRouter.use(authenticate);
-authRouter.get('/', clientProxy);
-authRouter.get('/:id', clientProxy);
+authRouter.get('/', clientProxy);      // GET /api/clientes
+authRouter.get('/:id', clientProxy);   // GET /api/clientes/:id
 
-// Exporte os routers separadamente
 module.exports = {
   publicRoutes: publicRouter,
   authenticatedRoutes: authRouter
