@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ms-auth
+  data:
+    mongodb:
+      uri: mongodb://admin:admin123@mongodb:27017/auth_db?authSource=admin
+      database: auth_db
+      authentication-database: admin
+      username: admin
+      password: admin123
+  rabbitmq:
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 2000ms
+
+jwt:
+  secret: 123456
+  expiration: 86400000  # 24 horas em milissegundos

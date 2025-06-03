@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { authenticate } = require('../middleware/jwtAuth');
 
 // Timeout de 5 segundos para chamadas aos microserviços
 const AXIOS_CONFIG = { timeout: 5000 };
