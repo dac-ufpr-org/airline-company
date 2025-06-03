@@ -1,0 +1,327 @@
+{
+	"info": {
+		"_postman_id": "e285c5bd-ed00-4755-8a3c-cd05d4b7c346",
+		"name": "DAC Testes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31948599"
+	},
+	"item": [
+		{
+			"name": "Testes MS",
+			"item": [
+				{
+					"name": "ms-cliente",
+					"item": [
+						{
+							"name": "Autocadastro",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cpf\": \"98765432100\",\r\n    \"name\": \"Maria Souza\",\r\n    \"email\": \"maria@teste.com\",\r\n    \"cep\": \"20040000\",\r\n    \"rua\": \"Av. Rio Branco\",\r\n    \"numero\": \"456\",\r\n    \"complemento\": \"Sala 202\",\r\n    \"cidade\": \"Rio de Janeiro\",\r\n    \"estado\": \"RJ\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8082/clientes/autocadastro",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"clientes",
+										"autocadastro"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnQyQHRlc3RlLmNvbSIsInJvbGUiOiJDTElFTlRFIiwiaWF0IjoxNzQ4MDI0Njk0LCJleHAiOjE3NDgwMjgyOTR9.N9NuaYPwZRE0x8GarlZZHsjns2iLl-0l-chl-OTMhlk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8082/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8082",
+									"path": [
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ms-auth",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"client2@teste.com\",\r\n  \"senha\": \"9027\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"client2@teste.com\",\r\n    \"tipo\": \"CLIENTE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8081/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8081",
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Testes via API Gateway",
+			"item": [
+				{
+					"name": "ms-cliente (via API)",
+					"item": [
+						{
+							"name": "Autocadastro",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnQ2X2dhdGV3YXlAdGVzdGUuY29tIiwicm9sZSI6IkNMSUVOVEUiLCJpYXQiOjE3NDgwMzk3NzYsImV4cCI6MTc0ODEyNjE3Nn0.LTfrRL6u5NHKSMfQXN9VddM31tdDLgycEzWS2TsnDCA",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"cpf\": \"98765432100\",\r\n    \"name\": \"Maria Souza\",\r\n    \"email\": \"maria@teste.com\",\r\n    \"cep\": \"20040000\",\r\n    \"rua\": \"Av. Rio Branco\",\r\n    \"numero\": \"456\",\r\n    \"complemento\": \"Sala 202\",\r\n    \"cidade\": \"Rio de Janeiro\",\r\n    \"estado\": \"RJ\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/clientes/autocadastro",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"clientes",
+										"autocadastro"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjbGllbnQxN19nYXRld2F5QHRlc3RlLmNvbSIsInJvbGUiOiJDTElFTlRFIiwiaWF0IjoxNzQ4OTc0MzU3LCJleHAiOjE3NDkwNjA3NTd9.kTlXJI0rmWM0ew1_DSa-VtU2RBta9-ESwlYXyBhY7JA",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:8000/api/clientes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"clientes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ms-auth (via API)",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"login\": \"client17_gateway@teste.com\",\r\n  \"senha\": \"0363\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Register",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"login\": \"client17_gateway@teste.com\",\r\n    \"tipo\": \"CLIENTE\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8000",
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
