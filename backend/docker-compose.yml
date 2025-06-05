@@ -1,7 +1,6 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  # --- INFRAESTRUTURA BASE ---
   postgres:
     image: postgres:14-alpine
     container_name: airline-postgres
@@ -21,6 +20,7 @@ services:
       timeout: 5s
       retries: 5
 
+  # --- MONGODB ---
   mongodb:
     image: mongo:6.0
     container_name: airline-mongodb
@@ -39,12 +39,16 @@ services:
       timeout: 5s
       retries: 5
 
+  # --- RABBITMQ ---
   rabbitmq:
     image: rabbitmq:3.11-management-alpine
     container_name: airline-rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: rabbit_user
       RABBITMQ_DEFAULT_PASS: rabbit_pass
+      RABBITMQ_ERLANG_COOKIE: "secret_cookie"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -79,7 +83,13 @@ services:
       ms-cliente:
         condition: service_started
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:8000/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -209,8 +219,9 @@ services:
 #      - airline-net
 
 volumes:
-  postgres_data:
-  mongodb_data:
+  postgres_data: {}
+  mongodb_data: {}
+  rabbitmq_data: {}
 
 networks:
   airline-net:

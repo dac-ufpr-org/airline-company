@@ -7,6 +7,5 @@ import com.msauth.ms_auth.model.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
-    @Query("{login: ?0}")
     User findByLogin(String login);
 }
