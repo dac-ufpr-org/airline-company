@@ -1,4 +1,4 @@
-package com.msvoo.ms_voo.controller;
+package main.java.com.msvoo.ms_voo.controller;
 
 import com.msvoo.ms_voo.dto.FlightRequestDto;
 import com.msvoo.ms_voo.dto.FlightResponseDto;

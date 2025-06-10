@@ -1,4 +1,4 @@
-package com.msreserva.ms_reserva.controller;
+package main.java.com.msreserva.ms_reserva.controller;
 
 import com.msreserva.ms_reserva.entity.Reserva;
 import com.msreserva.ms_reserva.service.ReservaService;
@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
-
 
 
 @RestController
