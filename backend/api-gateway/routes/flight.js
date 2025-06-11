@@ -9,7 +9,7 @@ router.get(
   createProxyMiddleware({
     target: flightServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/api/flights": "/ms-voo/list" }
+    pathRewrite: { "^/api/flights": "/flights" } 
   })
 );
 
