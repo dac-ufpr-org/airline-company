@@ -1,4 +1,4 @@
-package com.msvoo.ms_voo.services;
+package com.msvoo.ms_voo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;

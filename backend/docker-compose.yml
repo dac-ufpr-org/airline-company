@@ -39,15 +39,36 @@ services:
       timeout: 5s
       retries: 5
 
-  rabbitmq:
+#  rabbitmq:
+#    image: rabbitmq:3.11-management-alpine
+#    container_name: airline-rabbitmq
+#    environment:
+#      RABBITMQ_DEFAULT_USER: rabbit_user
+#      RABBITMQ_DEFAULT_PASS: rabbit_pass
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    networks:
+#      - airline-net
+#    healthcheck:
+#      test: ["CMD", "rabbitmqctl", "status"]
+#      interval: 5s
+#      timeout: 10s
+#      retries: 10
+  rabbitmq:  # <-- Corrigido: agora com 2 espaços de indentação como os demais
     image: rabbitmq:3.11-management-alpine
     container_name: airline-rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: rabbit_user
       RABBITMQ_DEFAULT_PASS: rabbit_pass
+      RABBITMQ_ERLANG_COOKIE: "SECRETCOOKIE"
+      RABBITMQ_NODENAME: "rabbit@localhost"
     ports:
       - "5672:5672"
       - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    command: sh -c "chown -R rabbitmq:rabbitmq /var/lib/rabbitmq && docker-entrypoint.sh rabbitmq-server"
     networks:
       - airline-net
     healthcheck:
@@ -55,6 +76,8 @@ services:
       interval: 5s
       timeout: 10s
       retries: 10
+    restart: unless-stopped
+
 
   # --- API GATEWAY (Node.js) ---
   api-gateway:
@@ -72,6 +95,7 @@ services:
       MS_AUTENTICACAO_URL: http://ms-auth:8080
       MS_CLIENTE_URL: http://ms-cliente:8080
       MS_FUNCIONARIO_URL: http://ms-funcionario:8080
+      MS_VOO_URL: http://ms-voo:8080 
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -139,29 +163,29 @@ services:
     networks:
       - airline-net
 
-#  ms-voo:
-#    build:
-#      context: ./ms-voo
-#      dockerfile: Dockerfile
-#    container_name: airline-ms-voo
-#    ports:
-#      - "8083:8080"
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airline_db
-#      SPRING_DATASOURCE_USERNAME: airline_user
-#      SPRING_DATASOURCE_PASSWORD: airline_pass
-#      SPRING_RABBITMQ_HOST: rabbitmq
-#      SPRING_RABBITMQ_PORT: 5672
-#      SPRING_RABBITMQ_USERNAME: rabbit_user
-#      SPRING_RABBITMQ_PASSWORD: rabbit_pass
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#      rabbitmq:
-#        condition: service_healthy
-#    networks:
-#      - airline-net
+  ms-voo:
+    build:
+      context: ./ms-voo
+      dockerfile: Dockerfile
+    container_name: airline-ms-voo
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airline_db
+      SPRING_DATASOURCE_USERNAME: airline_user
+      SPRING_DATASOURCE_PASSWORD: airline_pass
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbit_user
+      SPRING_RABBITMQ_PASSWORD: rabbit_pass
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - airline-net
 #
 #  ms-reserva:
 #    build:
@@ -214,6 +238,7 @@ services:
 volumes:
   postgres_data:
   mongodb_data:
+  rabbitmq_data:
 
 networks:
   airline-net:
