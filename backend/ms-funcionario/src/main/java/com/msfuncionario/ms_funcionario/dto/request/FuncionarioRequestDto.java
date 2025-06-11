@@ -31,7 +31,6 @@ public class FuncionarioRequestDto {
     public FuncionarioRequestDto() {}
 
     public FuncionarioRequestDto(Long id, String cpf, String email, String nome, String telefone, String senha) {
-        this.id = id;
         this.cpf = cpf;
         this.email = email;
         this.nome = nome;
@@ -46,7 +45,6 @@ public class FuncionarioRequestDto {
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getCpf() {
         return cpf;
     }

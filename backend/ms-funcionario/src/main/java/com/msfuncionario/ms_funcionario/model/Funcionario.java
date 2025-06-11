@@ -3,6 +3,7 @@ package com.msfuncionario.ms_funcionario.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "funcionario")
 public class Funcionario {
 
     @Id
