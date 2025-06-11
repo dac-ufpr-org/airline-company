@@ -14,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -62,9 +61,11 @@ public class FuncionarioService {
                 .findByCpfOrEmail(dto.getCpf(), dto.getEmail())
                 .orElse(Collections.emptyList());
 
-        boolean cpfExists = false;
-        boolean emailExists = false;
-        Long idFuncionario = 0L;
+        boolean cpfExists = funcionariosExistentes.stream()
+                .anyMatch(f -> f.getCpf().equals(dto.getCpf()) && Boolean.TRUE.equals(f.getAtivo()));
+
+        boolean emailExists = funcionariosExistentes.stream()
+                .anyMatch(f -> f.getEmail().equals(dto.getEmail()) && Boolean.TRUE.equals(f.getAtivo()));
 
         if (cpfExists && emailExists) {
             throw new FuncionarioJaExisteException("Outro funcionário ativo com CPF e email já existentes.");
@@ -74,15 +75,15 @@ public class FuncionarioService {
             throw new FuncionarioJaExisteException("Outro funcionário ativo com email já existente.");
         }
 
-        if (funcionariosExistentes.size() == 1) {
-            idFuncionario = funcionariosExistentes.get(0).getId();
-        } else if (funcionariosExistentes.size() > 1) {
-            throw new FuncionarioJaExisteException("Funcionários inativos já existentes com CPF e email.");
-        }
-
         Funcionario funcionario = modelMapper.map(dto, Funcionario.class);
-        funcionario.setId(idFuncionario);
 
+        Optional<Funcionario> funcionarioInativo = funcionariosExistentes.stream()
+                .filter(f -> Boolean.FALSE.equals(f.getAtivo()))
+                .findFirst();
+
+        funcionarioInativo.ifPresent(f -> funcionario.setId(f.getId()));
+
+        funcionario.setAtivo(true);
         Funcionario funcionarioCriado = funcionarioRepository.save(funcionario);
 
         UsuarioRequestCadastrarDto usuarioDto = modelMapper.map(funcionarioCriado, UsuarioRequestCadastrarDto.class);
@@ -92,9 +93,9 @@ public class FuncionarioService {
     }
 
     public UsuarioRequestAtualizarDto atualizar(FuncionarioRequestDto dto) {
-        Optional<Funcionario> funcionarioBD = funcionarioRepository.findByIdAndAtivo(dto.getId(), true);
+        Optional<Funcionario> funcionarioBD = funcionarioRepository.findById(dto.getId());
         if (!funcionarioBD.isPresent()) {
-            throw new FuncionarioNaoEncontradoException("Funcionário ativo não encontrado.");
+            throw new FuncionarioNaoEncontradoException("Funcionário não encontrado.");
         }
 
         Optional<List<Funcionario>> funcionarioExistente = funcionarioRepository.findByCpfOrEmail(
@@ -169,15 +170,4 @@ public class FuncionarioService {
         funcionarioRepository.deleteById(funcionario.getId());
         return modelMapper.map(funcionario, FuncionarioResponseDto.class);
     }
-
-    // public FuncionarioResponseDto reverter(Long idFuncionario) throws FuncionarioNaoEncontradoException {
-        // Funcionario funcionarioCache = redisFuncionarioCache.getCache(idFuncionario);
-        // if (funcionarioCache == null) {
-        //     throw new FuncionarioNaoExisteException("Funcionario nao existe no cache!");
-        // }
-
-        // Funcionario funcionario = funcionarioRepository.save(funcionarioCache);
-        // redisFuncionarioCache.removeCache(funcionarioCache.getId());
-        // return modelMapper.map(funcionario, FuncionarioResponseDto.class);
-    // }
 }

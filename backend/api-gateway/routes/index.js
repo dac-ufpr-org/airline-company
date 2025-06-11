@@ -5,6 +5,7 @@ const { authenticate } = require('../middleware/jwtAuth');
 // Importação correta dos routers
 const authRoutes = require('./auth');
 const clientRoutes = require('./client');
+const employeeRoutes = require('./employee');
 
 // Rotas públicas
 router.use('/auth', authRoutes);
@@ -12,6 +13,8 @@ router.use('/clientes', clientRoutes.publicRoutes); // /api/clientes/autocadastr
 
 // Rotas autenticadas
 router.use('/clientes', clientRoutes.authenticatedRoutes); // /api/clientes (GET autenticado)
+router.use('/api', employeeRoutes); // Ativa todas as rotas de funcionário (/api/employees, etc.)
+
 
 // Não implementadas
 //router.get('/clientes/:id', authenticate, clientRoutes.authenticatedRoutes);

@@ -41,8 +41,13 @@ public class FuncionarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> cadastrar(@RequestBody FuncionarioRequestDto dto) throws FuncionarioJaExisteException {
+    public ResponseEntity<Void> cadastrar(@RequestBody FuncionarioRequestDto dto) {
+    try {
         funcionarioService.cadastrar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    } catch (Exception e) {
+        e.printStackTrace(); // <- isso imprime o erro no console do docker
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
+}
 }
