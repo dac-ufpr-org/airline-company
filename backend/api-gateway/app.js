@@ -7,25 +7,41 @@ console.log('Configurações JWT:', {
 });
 
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors'); // Já está aqui, mas vamos usar uma configuração mais detalhada
 const bodyParser = require('body-parser');
 
 const app = express();
 
+// --- CONFIGURAÇÃO DO CORS: AGORA MAIS ESPECÍFICA E SEGURA ---
+// IMPORT
+// Em produção, liste os domínios reais do seu frontend.
+const corsOptions = {
+  origin: ' http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], // Métodos HTTP permitidos
+  credentials: true, // Permite que o navegador inclua cookies e cabeçalhos de autenticação
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'], // Cabeçalhos permitidos nas requisições
+  optionsSuccessStatus: 204 // Para requisições OPTIONS de pré-voo
+};
+
+app.use(require('cors')(corsOptions)); // Use o middleware CORS com as opções configuradas
+
+
 // Middlewares básicos
-app.use(cors());
 app.use(bodyParser.json());
 
 // Health Check simplificado
 app.get('/health', (req, res) => {
-  res.status(200).json({ 
+  res.status(200).json({
     status: 'API Gateway operacional',
     timestamp: new Date().toISOString()
   });
 });
 
 // Rotas
+// Presumo que 'routes' aqui se refere ao 'index.js' dentro da pasta 'routes'
+// e que ele lida com a importação de auth, client, etc.
 app.use('/api', require('./routes'));
+
 
 // Error Handling básico
 app.use((err, req, res, next) => {

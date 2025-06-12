@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-const API_GATEWAY = 'http://localhost:8080'; // URL do API Gateway
+// ATENÇÃO: Corrigido para a porta 8000, onde seu API Gateway está rodando.
+const API_GATEWAY = 'http://localhost:8000'; // URL CORRETA do API Gateway
 
 export default {
   // src/services/api.js
   async login(email, senha) {
-    const response = await axios.post(`${API_GATEWAY}/auth/login`, {
-      login: email,
-      senha: senha,
+    const response = await axios.post(`${API_GATEWAY}/api/auth/login`, { // Adicionado '/api' ao path
+      email: email, // Alterado 'login' para 'email' para corresponder ao v-model e ao que o backend geralmente espera
+      password: senha, // Alterado 'senha' para 'password' para corresponder ao que o backend geralmente espera
     });
     
     return {
@@ -18,7 +19,7 @@ export default {
 
   // Autocadastro de cliente (SAGA)
   async autocadastrarCliente(dadosCliente) {
-    const response = await axios.post(`${API_GATEWAY}/clientes/autocadastro`, {
+    const response = await axios.post(`${API_GATEWAY}/api/clientes/autocadastro`, { // Adicionado '/api' ao path
       cpf: dadosCliente.cpf,
       email: dadosCliente.email,
       name: dadosCliente.name,
