@@ -1,6 +1,13 @@
 package com.msreserva.ms_reserva.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 @Table(name = "reservation_status")
@@ -10,40 +17,14 @@ public class ReservationStatusEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String sigla;
+    @Column(nullable = false, unique = true, length = 20)
+    private String code;
 
-    @Column(nullable = false)
-    private String descricao;
+    @Column(nullable = false, length = 100)
+    private String description;
 
-    public ReservationStatusEntity() {}
-
-    public ReservationStatusEntity(String sigla, String descricao) {
-        this.sigla = sigla;
-        this.descricao = descricao;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getSigla() {
-        return sigla;
-    }
-
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    @OneToMany(mappedBy = "status")
+    private List<Reservation> reservations;
+    
+    // Getters and Setters
 }
-
-
-
-
