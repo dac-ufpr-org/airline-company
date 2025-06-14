@@ -32,7 +32,6 @@ public class ClientService {
         address.setComplement(dto.getComplemento());
         address.setCity(dto.getCidade());
         address.setState(dto.getEstado());
-        address.setNeighborhood("Centro"); // default se não vier do frontend
 
         client.setAddress(address);
         clientRepository.save(client);
@@ -67,7 +66,6 @@ public class ClientService {
         address.setComplement(dto.getComplemento());
         address.setCity(dto.getCidade());
         address.setState(dto.getEstado());
-        address.setNeighborhood("Centro");
 
         clientRepository.save(client);
         return mapToDto(client);
@@ -82,7 +80,6 @@ public class ClientService {
         addrDto.setComplement(addr.getComplement());
         addrDto.setCity(addr.getCity());
         addrDto.setState(addr.getState());
-        addrDto.setNeighborhood(addr.getNeighborhood());
 
         ClientResponseDto dto = new ClientResponseDto();
         dto.setCpf(client.getCpf());

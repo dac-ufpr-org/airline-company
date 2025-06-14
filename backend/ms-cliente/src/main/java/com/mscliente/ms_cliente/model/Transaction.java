@@ -3,7 +3,7 @@ package com.mscliente.ms_cliente.model;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import lombok.*;
-import com.mscliente.ms_cliente.enums.TransactionType;
+import com.mscontracts.ms_contracts.enums.TransactionType;
 
 @Entity
 @Setter

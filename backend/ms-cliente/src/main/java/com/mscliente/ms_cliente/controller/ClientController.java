@@ -1,7 +1,8 @@
 package com.mscliente.ms_cliente.controller;
 
-import com.mscliente.ms_cliente.dto.*;
-import com.mscliente.ms_cliente.service.CadastroClienteSagaService;
+import com.mscontracts.ms_contracts.dto.client.ClientRequestDTO;
+import com.mscontracts.ms_contracts.dto.client.ClientResponseDTO;
+import com.mssagas.ms_sagas.service.CadastroClienteSagaService;
 import com.mscliente.ms_cliente.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -19,13 +20,13 @@ public class ClientController {
 
     // Endpoint para cadastro normal (sem SAGA)
     @PostMapping
-    public ResponseEntity<ClientResponseDto> cadastrar(@RequestBody ClientRequestDto dto) {
+    public ResponseEntity<ClientResponseDto> cadastrar(@RequestBody ClientRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.cadastrar(dto));
     }
 
     // Novo endpoint para autocadastro via SAGA
     @PostMapping("/autocadastro")
-    public ResponseEntity<?> autocadastrar(@RequestBody ClientRequestDto dto) {
+    public ResponseEntity<?> autocadastrar(@RequestBody ClientRequestDTO dto) {
         try {
             sagaService.iniciarSagaAutocadastro(dto);
             return ResponseEntity.accepted().body("Cadastro iniciado. Verifique seu e-mail para a senha temporária.");
@@ -50,7 +51,7 @@ public class ClientController {
 
     @PutMapping("/{cpf}")
     public ResponseEntity<ClientResponseDto> atualizar(@PathVariable String cpf,
-            @RequestBody ClientRequestDto dto) {
+            @RequestBody ClientRequestDTO dto) {
         return ResponseEntity.ok(clientService.atualizar(cpf, dto));
     }
 }
