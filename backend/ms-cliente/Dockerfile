@@ -5,6 +5,11 @@ WORKDIR /app
 # Copia toda a pasta backend para o contexto de build
 COPY . .
 
+# Instala dos2unix para garantir que o mvnw tenha finais de linha corretos
+RUN apk add --no-cache dos2unix \
+    && dos2unix mvnw \
+    && chmod +x mvnw
+
 # Compila o projeto Maven multi-módulo a partir da raiz
 RUN ./mvnw clean package -DskipTests
 
