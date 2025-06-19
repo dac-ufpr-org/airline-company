@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ClientResponse extends ClientDTO {
+public class ClientResponseDTO extends ClientDTO {
 
     private Double milesBalance;
     private String userId;
