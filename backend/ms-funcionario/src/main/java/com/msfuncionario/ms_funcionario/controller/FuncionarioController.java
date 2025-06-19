@@ -40,7 +40,7 @@ public class FuncionarioController {
         return ResponseEntity.ok(funcionario);
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar-funcionario")
     public ResponseEntity<Void> cadastrar(@RequestBody FuncionarioRequestDto dto) {
     try {
         funcionarioService.cadastrar(dto);
