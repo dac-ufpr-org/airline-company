@@ -27,6 +27,8 @@
         <module>ms-sagas</module>
         <module>ms-auth</module>
         <module>ms-cliente</module>
+        <module>ms-voo</module>
+        <module>ms-reserva</module>
     </modules>
 
     <dependencyManagement>

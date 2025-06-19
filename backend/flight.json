@@ -1,0 +1,8 @@
+{
+  "code": "JJ1234",
+  "originCodigo": "GRU",
+  "destinationCodigo": "GIG",
+  "departureTime": "2025-07-01T10:00:00",
+  "price": 1000.00,
+  "seatCount": 180
+} 

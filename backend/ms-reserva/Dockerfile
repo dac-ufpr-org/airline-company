@@ -5,9 +5,11 @@ WORKDIR /app
 # Copia toda a pasta backend para o contexto de build
 COPY . .
 
-# Compila o projeto Maven
-RUN chmod +x ms-reserva/mvnw
-RUN cd ms-reserva && ./mvnw clean package -DskipTests
+# Instala dos2unix e converte o mvnw para Unix
+RUN apk add --no-cache dos2unix && dos2unix mvnw && chmod +x mvnw
+
+# Compila todos os módulos Maven para garantir dependências locais
+RUN ./mvnw clean package -DskipTests
 
 # Etapa de runtime
 FROM eclipse-temurin:17-jre-alpine
@@ -16,8 +18,8 @@ WORKDIR /app
 # Copie o .jar do build
 COPY --from=build /app/ms-reserva/target/*.jar app.jar
 
-# Expoe a porta padrão
-EXPOSE 8080
+# Expoe a porta padrão do serviço de reserva
+EXPOSE 8082
 
 # Comando de entrada
 ENTRYPOINT ["java", "-jar", "app.jar"]

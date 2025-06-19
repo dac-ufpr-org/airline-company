@@ -5,9 +5,11 @@ WORKDIR /app
 # Copia toda a pasta backend para o contexto de build
 COPY . .
 
-# Compila o projeto Maven
-RUN chmod +x ms-voo/mvnw
-RUN cd ms-voo && ./mvnw clean package -DskipTests
+# Instala dos2unix e converte o mvnw para Unix
+RUN apk add --no-cache dos2unix && dos2unix mvnw && chmod +x mvnw
+
+# Compila todos os módulos Maven para garantir dependências locais
+RUN ./mvnw clean package -DskipTests
 
 # Etapa de runtime
 FROM eclipse-temurin:17-jre-alpine
@@ -16,7 +18,7 @@ WORKDIR /app
 # Copie o .jar do build
 COPY --from=build /app/ms-voo/target/*.jar app.jar
 
-# Expoe a porta padrão
+# Expoe a porta padrão do serviço de voo
 EXPOSE 8080
 
 # Comando de entrada

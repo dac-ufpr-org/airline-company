@@ -13,7 +13,7 @@ import jakarta.persistence.CascadeType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.msreserva.ms_reserva.controller.ReservationStatusHistory;
+import com.msreserva.ms_reserva.model.ReservationStatusHistory;
 
 @Entity
 @Table(name = "reservas")
@@ -42,50 +42,59 @@ public class Reservation {
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<ReservationStatusHistory> statusHistory;
 
-    public Object getStatus() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStatus'");
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getFlightCode() {
+        return flightCode;
+    }
+
+    public void setFlightCode(String flightCode) {
+        this.flightCode = flightCode;
     }
 
     public LocalDateTime getReservationDate() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getReservationDate'");
+        return reservationDate;
     }
 
-    public String getId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getId'");
+    public void setReservationDate(LocalDateTime reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public ReservationStatusEntity getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReservationStatusEntity status) {
+        this.status = status;
     }
 
     public boolean isCheckInDone() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isCheckInDone'");
+        return checkInDone;
     }
 
-    public void setClientId(Object clientId2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setClientId'");
+    public void setCheckInDone(boolean checkInDone) {
+        this.checkInDone = checkInDone;
     }
 
-    public void setFlightCode(Object flightCode2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFlightCode'");
+    public List<ReservationStatusHistory> getStatusHistory() {
+        return statusHistory;
     }
 
-    public void setReservationDate(LocalDateTime now) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setReservationDate'");
+    public void setStatusHistory(List<ReservationStatusHistory> statusHistory) {
+        this.statusHistory = statusHistory;
     }
-
-    public void setStatus(ReservationStatusEntity status2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStatus'");
-    }
-
-    public void setCheckInDone(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCheckInDone'");
-    }
-    
-    // Getters and Setters
 }

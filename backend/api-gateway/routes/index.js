@@ -6,7 +6,8 @@ const { authenticate } = require('../middleware/jwtAuth');
 const authRoutes = require('./auth');
 const clientRoutes = require('./client');
 const employeeRoutes = require('./employee');
-// const reservationRoutes = require('./reservation');
+const flightRoutes = require('./flight');
+const reservationRoutes = require('./reservation');
 
 // Rotas públicas
 router.use('/auth', authRoutes);
@@ -15,6 +16,8 @@ router.use('/clientes', clientRoutes.publicRouter); // /api/clientes/autocadastr
 // Rotas autenticadas
 router.use('/clientes', clientRoutes.authRouter); // /api/clientes (GET autenticado)
 router.use('/api', employeeRoutes); // Ativa todas as rotas de funcionário (/api/employees, etc.)
+router.use(flightRoutes);
+router.use(reservationRoutes);
 
 // Rotas de reserva (não implementadas ainda)
 //router.use('/api', reservationRoutes);

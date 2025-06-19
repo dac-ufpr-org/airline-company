@@ -3,7 +3,7 @@ package com.msreserva.ms_reserva.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.msreserva.ms_reserva.controller.ReservationStatusHistory;
+import com.msreserva.ms_reserva.model.ReservationStatusHistory;
 
 import java.util.List;
 

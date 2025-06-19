@@ -163,54 +163,54 @@ services:
     networks:
       - airline-net
 
-#  ms-voo:
-#    build:
-#      context: ./ms-voo
-#      dockerfile: Dockerfile
-#    container_name: airline-ms-voo
-#    ports:
-#      - "8083:8080"
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airline_db
-#      SPRING_DATASOURCE_USERNAME: airline_user
-#      SPRING_DATASOURCE_PASSWORD: airline_pass
-#      SPRING_RABBITMQ_HOST: rabbitmq
-#      SPRING_RABBITMQ_PORT: 5672
-#      SPRING_RABBITMQ_USERNAME: rabbit_user
-#      SPRING_RABBITMQ_PASSWORD: rabbit_pass
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#      rabbitmq:
-#        condition: service_healthy
-#    networks:
-#      - airline-net
-#
-#  ms-reserva:
-#    build:
-#      context: ./ms-reserva
-#      dockerfile: Dockerfile
-#    container_name: airline-ms-reserva
-#    ports:
-#      - "8084:8080"
-#    environment:
-#      SPRING_PROFILES_ACTIVE: docker
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airline_db
-#      SPRING_DATASOURCE_USERNAME: airline_user
-#      SPRING_DATASOURCE_PASSWORD: airline_pass
-#      SPRING_RABBITMQ_HOST: rabbitmq
-#      SPRING_RABBITMQ_PORT: 5672
-#      SPRING_RABBITMQ_USERNAME: rabbit_user
-#      SPRING_RABBITMQ_PASSWORD: rabbit_pass
-#    depends_on:
-#      postgres:
-#        condition: service_healthy
-#      rabbitmq:
-#        condition: service_healthy
-#    networks:
-#      - airline-net
-#
+  ms-voo:
+    build:
+      context: .
+      dockerfile: ms-voo/Dockerfile
+    container_name: airline-ms-voo
+    ports:
+      - "8083:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airline_db
+      SPRING_DATASOURCE_USERNAME: airline_user
+      SPRING_DATASOURCE_PASSWORD: airline_pass
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbit_user
+      SPRING_RABBITMQ_PASSWORD: rabbit_pass
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - airline-net
+
+  ms-reserva:
+    build:
+      context: .
+      dockerfile: ms-reserva/Dockerfile
+    container_name: airline-ms-reserva
+    ports:
+      - "8084:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/airline_db
+      SPRING_DATASOURCE_USERNAME: airline_user
+      SPRING_DATASOURCE_PASSWORD: airline_pass
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: rabbit_user
+      SPRING_RABBITMQ_PASSWORD: rabbit_pass
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - airline-net
+
 #  ms-funcionario:
 #    build:
 #      context: ./ms-funcionario

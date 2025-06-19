@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "e285c5bd-ed00-4755-8a3c-cd05d4b7c346",
-		"name": "DAC Testes",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31948599"
+		"_postman_id": "dac-airline-test-collection",
+		"name": "DAC Airline Testes (Atualizada)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -154,6 +153,320 @@
 										"auth",
 										"register"
 									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ms-voo",
+					"item": [
+						{
+							"name": "Criar Voo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"JJ1234\",\n  \"originCodigo\": \"GRU\",\n  \"destinationCodigo\": \"GIG\",\n  \"departureTime\": \"2025-07-01T10:00:00\",\n  \"price\": 1000.00,\n  \"seatCount\": 180\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8083/flights",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar Voos",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "http://localhost:8083/flights",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar Voo por ID",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "http://localhost:8083/flights/{{flightId}}",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights", "{{flightId}}"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar Voo",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"JJ5678\",\n  \"originCodigo\": \"GRU\",\n  \"destinationCodigo\": \"GIG\",\n  \"departureTime\": \"2025-07-01T10:00:00\",\n  \"price\": 1000.00,\n  \"seatCount\": 180\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8083/flights/{{flightId}}",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights", "{{flightId}}"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar Voo",
+							"request": {
+								"method": "DELETE",
+								"url": {
+									"raw": "http://localhost:8083/flights/{{flightId}}",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights", "{{flightId}}"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar voos próximas 48h",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8083/flights/next-48-hours",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights", "next-48-hours"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar status do voo",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"EM_VOO\""
+								},
+								"url": {
+									"raw": "http://localhost:8083/flights/1/status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flights", "1", "status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar estados de voo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8083/flight-status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flight-status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar estado de voo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"EM_VOO\""
+								},
+								"url": {
+									"raw": "http://localhost:8083/flight-status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flight-status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar estado de voo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8083/flight-status/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8083",
+									"path": ["flight-status", "1"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ms-reserva",
+					"item": [
+						{
+							"name": "Criar Reserva",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientId\": 1,\n  \"flightCode\": \"JJ1234\",\n  \"reservationDate\": \"2025-07-01T09:00:00\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/reservations",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar Reservas por Cliente",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/client/{{clientId}}",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "client", "{{clientId}}"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar Reserva por ID",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/{{reservationId}}",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "{{reservationId}}"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar Reserva",
+							"request": {
+								"method": "PUT",
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/{{reservationId}}/cancel",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "{{reservationId}}", "cancel"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check-in Reserva",
+							"request": {
+								"method": "PUT",
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/{{reservationId}}/check-in",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "{{reservationId}}", "check-in"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Receber Evento de Status de Voo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"flightId\": 1,\n  \"status\": \"ATRASADO\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/flight-status-event",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "flight-status-event"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Alterar Status da Reserva",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"newStatus\": \"CONFIRMADA\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/{{reservationId}}/status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "{{reservationId}}", "status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Histórico de Status da Reserva",
+							"request": {
+								"method": "GET",
+								"url": {
+									"raw": "http://localhost:8084/api/reservations/{{reservationId}}/history",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8084",
+									"path": ["api", "reservations", "{{reservationId}}", "history"]
 								}
 							},
 							"response": []
@@ -315,6 +628,328 @@
 										"auth",
 										"register"
 									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ms-voo (via API)",
+					"item": [
+						{
+							"name": "Criar voo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"flightNumber\": \"JJ1234\",\n  \"origin\": \"GRU\",\n  \"destination\": \"GIG\",\n  \"departureTime\": \"2025-07-01T10:00:00\",\n  \"arrivalTime\": \"2025-07-01T12:00:00\",\n  \"aircraft\": \"A320\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/flights",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar voos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/flights",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar voo por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/flights/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights", "1"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar voo",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"flightNumber\": \"JJ1234\",\n  \"origin\": \"GRU\",\n  \"destination\": \"GIG\",\n  \"departureTime\": \"2025-07-01T10:00:00\",\n  \"arrivalTime\": \"2025-07-01T12:00:00\",\n  \"aircraft\": \"A320\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/flights/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights", "1"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar voo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/flights/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights", "1"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar voos próximas 48h",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/flights/next-48-hours",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights", "next-48-hours"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Atualizar status do voo",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"EM_VOO\""
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/flights/1/status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flights", "1", "status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar estados de voo",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/flight-status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flight-status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Criar estado de voo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "\"EM_VOO\""
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/flight-status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flight-status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deletar estado de voo",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/flight-status/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "flight-status", "1"]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ms-reserva (via API)",
+					"item": [
+						{
+							"name": "Criar reserva",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"clientId\": 1,\n  \"flightCode\": \"JJ1234\",\n  \"reservationDate\": \"2025-07-01T09:00:00\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/reservations",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar reservas por cliente",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/client/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "client", "1"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Buscar reserva por ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/1",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "1"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar reserva",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/1/cancel",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "1", "cancel"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check-in reserva",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/1/check-in",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "1", "check-in"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Receber evento de status de voo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"flightId\": 1,\n  \"status\": \"ATRASADO\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/flight-status-event",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "flight-status-event"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Alterar status da reserva",
+							"request": {
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"newStatus\": \"CONFIRMADA\"\n}"
+								},
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/1/status",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "1", "status"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Histórico de status da reserva",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8000/api/reservations/1/history",
+									"protocol": "http",
+									"host": ["localhost"],
+									"port": "8000",
+									"path": ["api", "reservations", "1", "history"]
 								}
 							},
 							"response": []

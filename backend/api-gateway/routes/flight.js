@@ -4,12 +4,13 @@ const router = express.Router();
 
 const flightServiceUrl = process.env.MS_VOO_URL;
 
-router.get(
-  "/api/flights",
+// Proxy para todos os métodos e subpaths de /flights
+router.use(
+  '/flights',
   createProxyMiddleware({
     target: flightServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/api/flights": "/flights" } 
+    pathRewrite: { '^/api': '' },
   })
 );
 

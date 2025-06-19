@@ -26,5 +26,14 @@ public class ReservationStatusEntity {
     @OneToMany(mappedBy = "status")
     private List<Reservation> reservations;
     
+    public ReservationStatusEntity(String code, String description) {
+        this.code = code;
+        this.description = description;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
     // Getters and Setters
 }

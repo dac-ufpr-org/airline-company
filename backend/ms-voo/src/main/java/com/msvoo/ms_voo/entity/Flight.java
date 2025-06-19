@@ -1,26 +1,31 @@
 package com.msvoo.ms_voo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Entidade que representa um voo.
+ * Utiliza relacionamentos com Aeroporto (origem/destino) e EstadoVoo (status).
+ */
 @Entity
 public class Flight {
-    
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Código do voo
     private String code;
 
-    private String origin;
-    private String destination;
+    // Aeroporto de origem
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "origin_codigo", referencedColumnName = "codigo")
+    private Aeroporto origin;
+
+    // Aeroporto de destino
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "destination_codigo", referencedColumnName = "codigo")
+    private Aeroporto destination;
 
     @Column(name = "departure_time")
     private LocalDateTime departureTime;
@@ -28,13 +33,18 @@ public class Flight {
     private BigDecimal price;
     private int seatCount;
 
-    private String status; // e.g., SCHEDULED, CANCELED
+    // Poltronas ocupadas
+    private int occupiedSeats;
 
-    public Flight() {
-    }
+    // Status do voo
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "estado_voo_id")
+    private com.msvoo.ms_voo.model.EstadoVoo status;
 
-    public Flight(String code, String origin, String destination, LocalDateTime departureTime,
-                  BigDecimal price, int seatCount, String status) {
+    public Flight() {}
+
+    public Flight(String code, Aeroporto origin, Aeroporto destination, LocalDateTime departureTime,
+                  BigDecimal price, int seatCount, com.msvoo.ms_voo.model.EstadoVoo status) {
         this.code = code;
         this.origin = origin;
         this.destination = destination;
@@ -62,19 +72,19 @@ public class Flight {
         this.code = code;
     }
 
-    public String getOrigin() {
+    public Aeroporto getOrigin() {
         return origin;
     }
 
-    public void setOrigin(String origin) {
+    public void setOrigin(Aeroporto origin) {
         this.origin = origin;
     }
 
-    public String getDestination() {
+    public Aeroporto getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
+    public void setDestination(Aeroporto destination) {
         this.destination = destination;
     }
 
@@ -102,11 +112,19 @@ public class Flight {
         this.seatCount = seatCount;
     }
 
-    public String getStatus() {
+    public int getOccupiedSeats() {
+        return occupiedSeats;
+    }
+
+    public void setOccupiedSeats(int occupiedSeats) {
+        this.occupiedSeats = occupiedSeats;
+    }
+
+    public com.msvoo.ms_voo.model.EstadoVoo getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(com.msvoo.ms_voo.model.EstadoVoo status) {
         this.status = status;
     }
     

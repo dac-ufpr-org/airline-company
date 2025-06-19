@@ -13,3 +13,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+    listener:
+      simple:
+        concurrency: 1
+        max-concurrency: 5
+server:
+  port: 8080

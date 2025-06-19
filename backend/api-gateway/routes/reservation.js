@@ -4,21 +4,13 @@ const router = express.Router();
 
 const reservationServiceUrl = process.env.MS_RESERVA_URL;
 
-router.post(
-  "/api/reservations",
+// Proxy para todos os métodos e subpaths de /reservations
+router.use(
+  '/reservations',
   createProxyMiddleware({
     target: reservationServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/api/reservations": "/ms-reserva/new" }
-  })
-);
-
-router.get(
-  "/api/reservations/:id",
-  createProxyMiddleware({
-    target: reservationServiceUrl,
-    changeOrigin: true,
-    pathRewrite: { "^/api/reservations": "/ms-reserva" }
+    pathRewrite: { '^/api': '' },
   })
 );
 
