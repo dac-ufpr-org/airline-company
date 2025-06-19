@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "dac-airline-test-collection",
-		"name": "DAC Airline Testes (Atualizada)",
+		"_postman_id": "dac-airline-test-collection-updated",
+		"name": "DAC Airline Testes (Completa)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -171,7 +171,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"code\": \"JJ1234\",\n  \"originCodigo\": \"GRU\",\n  \"destinationCodigo\": \"GIG\",\n  \"departureTime\": \"2025-07-01T10:00:00\",\n  \"price\": 1000.00,\n  \"seatCount\": 180\n}"
+									"raw": "{\n  \"code\": \"JJ9999\",\n  \"originCodigo\": \"GRU\",\n  \"destinationCodigo\": \"GIG\",\n  \"departureTime\": \"2025-08-01T10:00:00\",\n  \"price\": 1500.00,\n  \"seatCount\": 200\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8083/flights",
@@ -266,18 +266,18 @@
 							"request": {
 								"method": "PUT",
 								"header": [
-									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+									{ "key": "Content-Type", "value": "text/plain" }
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "\"EM_VOO\""
+									"raw": "CANCELADO"
 								},
 								"url": {
-									"raw": "http://localhost:8083/flights/1/status",
+									"raw": "http://localhost:8083/flights/5/status",
 									"protocol": "http",
 									"host": ["localhost"],
 									"port": "8083",
-									"path": ["flights", "1", "status"]
+									"path": ["flights", "5", "status"]
 								}
 							},
 							"response": []
@@ -347,7 +347,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"clientId\": 1,\n  \"flightCode\": \"JJ1234\",\n  \"reservationDate\": \"2025-07-01T09:00:00\"\n}"
+									"raw": "{\n  \"clientId\": 1,\n  \"flightCode\": \"JJ9999\"\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8084/api/reservations",
@@ -445,7 +445,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"newStatus\": \"CONFIRMADA\"\n}"
+									"raw": "{\n  \"newStatusCode\": \"CHECK_IN\"\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8084/api/reservations/{{reservationId}}/status",
@@ -638,16 +638,9 @@
 					"name": "ms-voo (via API)",
 					"item": [
 						{
-							"name": "Criar voo",
+							"name": "Listar Voos",
 							"request": {
-								"method": "POST",
-								"header": [
-									{ "key": "Content-Type", "value": "application/json", "type": "default" }
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"flightNumber\": \"JJ1234\",\n  \"origin\": \"GRU\",\n  \"destination\": \"GIG\",\n  \"departureTime\": \"2025-07-01T10:00:00\",\n  \"arrivalTime\": \"2025-07-01T12:00:00\",\n  \"aircraft\": \"A320\"\n}"
-								},
+								"method": "GET",
 								"url": {
 									"raw": "http://localhost:8000/api/flights",
 									"protocol": "http",
@@ -659,10 +652,16 @@
 							"response": []
 						},
 						{
-							"name": "Listar voos",
+							"name": "Criar Voo",
 							"request": {
-								"method": "GET",
-								"header": [],
+								"method": "POST",
+								"header": [
+									{ "key": "Content-Type", "value": "application/json" }
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"code\": \"JJ9999\",\n  \"originCodigo\": \"GRU\",\n  \"destinationCodigo\": \"GIG\",\n  \"departureTime\": \"2025-08-01T10:00:00\",\n  \"price\": 1500.00,\n  \"seatCount\": 200\n}"
+								},
 								"url": {
 									"raw": "http://localhost:8000/api/flights",
 									"protocol": "http",
@@ -693,7 +692,7 @@
 							"request": {
 								"method": "PUT",
 								"header": [
-									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+									{ "key": "Content-Type", "value": "application/json" }
 								],
 								"body": {
 									"mode": "raw",
@@ -744,18 +743,18 @@
 							"request": {
 								"method": "PUT",
 								"header": [
-									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+									{ "key": "Content-Type", "value": "text/plain" }
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "\"EM_VOO\""
+									"raw": "CANCELADO"
 								},
 								"url": {
-									"raw": "http://localhost:8000/api/flights/1/status",
+									"raw": "http://localhost:8000/api/flights/5/status",
 									"protocol": "http",
 									"host": ["localhost"],
 									"port": "8000",
-									"path": ["api", "flights", "1", "status"]
+									"path": ["api", "flights", "5", "status"]
 								}
 							},
 							"response": []
@@ -816,27 +815,6 @@
 				{
 					"name": "ms-reserva (via API)",
 					"item": [
-						{
-							"name": "Criar reserva",
-							"request": {
-								"method": "POST",
-								"header": [
-									{ "key": "Content-Type", "value": "application/json", "type": "default" }
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"clientId\": 1,\n  \"flightCode\": \"JJ1234\",\n  \"reservationDate\": \"2025-07-01T09:00:00\"\n}"
-								},
-								"url": {
-									"raw": "http://localhost:8000/api/reservations",
-									"protocol": "http",
-									"host": ["localhost"],
-									"port": "8000",
-									"path": ["api", "reservations"]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "Listar reservas por cliente",
 							"request": {
@@ -923,11 +901,11 @@
 							"request": {
 								"method": "POST",
 								"header": [
-									{ "key": "Content-Type", "value": "application/json", "type": "default" }
+									{ "key": "Content-Type", "value": "application/json" }
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"newStatus\": \"CONFIRMADA\"\n}"
+									"raw": "{\n  \"newStatusCode\": \"CHECK_IN\"\n}"
 								},
 								"url": {
 									"raw": "http://localhost:8000/api/reservations/1/status",

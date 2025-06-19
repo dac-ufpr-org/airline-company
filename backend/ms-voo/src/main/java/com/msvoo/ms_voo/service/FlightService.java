@@ -47,9 +47,14 @@ public class FlightService {
         flight.setPrice(dto.getPrice());
         flight.setSeatCount(dto.getSeatCount());
         flight.setOccupiedSeats(0);
-        flight.setStatus(estadoVooRepository.findByTipoEstadoVoo(TipoEstadoVoo.CONFIRMADO));
+        
+        // Buscar status CONFIRMADO e logar para debug
+        EstadoVoo statusConfirmado = estadoVooRepository.findByTipoEstadoVoo(TipoEstadoVoo.CONFIRMADO);
+        logger.info("[CRIAR VOO] Status CONFIRMADO encontrado: id={}, tipo={}", statusConfirmado.getId(), statusConfirmado.getTipoEstadoVoo());
+        flight.setStatus(statusConfirmado);
+        
         flight = flightRepository.save(flight);
-        logger.info("Voo criado com sucesso: {}", flight.getCode());
+        logger.info("Voo criado com sucesso: {} - Status: {} (ID: {})", flight.getCode(), flight.getStatus().getTipoEstadoVoo(), flight.getStatus().getId());
         return toResponseDto(flight);
     }
 
@@ -87,19 +92,40 @@ public class FlightService {
     }
 
     public FlightResponseDto updateFlightStatus(Long flightId, String novoStatus) {
+        logger.info("[UPDATE STATUS] Iniciando atualização de status: flightId={}, novoStatus={}", flightId, novoStatus);
+        
         Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Voo não encontrado"));
+        logger.info("[UPDATE STATUS] Voo encontrado: id={}, code={}, statusAtual={}", flight.getId(), flight.getCode(), flight.getStatus().getTipoEstadoVoo());
+        
         EstadoVoo estadoAtual = flight.getStatus();
-        TipoEstadoVoo novoTipo = TipoEstadoVoo.valueOf(novoStatus);
-        if (novoTipo == TipoEstadoVoo.CANCELADO && estadoAtual.getTipoEstadoVoo() != TipoEstadoVoo.CONFIRMADO) {
-            throw new RuntimeException("Só é possível cancelar voos com status CONFIRMADO");
+        logger.info("[UPDATE STATUS] Estado atual: id={}, tipo={}", estadoAtual.getId(), estadoAtual.getTipoEstadoVoo());
+        
+        try {
+            // Remover aspas se existirem
+            String statusLimpo = novoStatus.replaceAll("\"", "");
+            logger.info("[UPDATE STATUS] Status limpo: {}", statusLimpo);
+            
+            TipoEstadoVoo novoTipo = TipoEstadoVoo.valueOf(statusLimpo);
+            logger.info("[UPDATE STATUS] Tipo convertido: {}", novoTipo);
+            
+            EstadoVoo novoEstado = estadoVooRepository.findByTipoEstadoVoo(novoTipo);
+            if (novoEstado == null) {
+                throw new RuntimeException("Estado não encontrado: " + novoTipo);
+            }
+            logger.info("[UPDATE STATUS] Novo estado encontrado: id={}, tipo={}", novoEstado.getId(), novoEstado.getTipoEstadoVoo());
+            
+            flight.setStatus(novoEstado);
+            Flight vooSalvo = flightRepository.save(flight);
+            logger.info("[UPDATE STATUS] Voo atualizado com sucesso: id={}, novoStatus={}", vooSalvo.getId(), vooSalvo.getStatus().getTipoEstadoVoo());
+            
+            return toResponseDto(vooSalvo);
+        } catch (IllegalArgumentException e) {
+            logger.error("[UPDATE STATUS] Erro ao converter status '{}': {}", novoStatus, e.getMessage());
+            throw new RuntimeException("Status inválido: " + novoStatus);
+        } catch (Exception e) {
+            logger.error("[UPDATE STATUS] Erro inesperado: {}", e.getMessage(), e);
+            throw new RuntimeException("Erro ao atualizar status: " + e.getMessage());
         }
-        EstadoVoo novoEstado = estadoVooRepository.findByTipoEstadoVoo(novoTipo);
-        flight.setStatus(novoEstado);
-        flight = flightRepository.save(flight);
-        logger.info("Status do voo alterado: {} -> {}", estadoAtual.getTipoEstadoVoo(), novoTipo);
-        // Produzir evento RabbitMQ para ms-reserva
-        rabbitTemplate.convertAndSend("flight.status.exchange", "flight.status.changed", toStatusEvent(flight));
-        return toResponseDto(flight);
     }
 
     private FlightResponseDto toResponseDto(Flight flight) {

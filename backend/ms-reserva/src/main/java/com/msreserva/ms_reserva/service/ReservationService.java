@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.msreserva.ms_reserva.dto.ReservationRequestDto;
 import com.msreserva.ms_reserva.dto.ReservationResponseDto;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.stream.Collectors;
@@ -21,16 +20,13 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationStatusRepository statusRepository;
     private final ReservationStatusHistoryRepository historyRepository;
-    private final ModelMapper modelMapper;
 
     public ReservationService(ReservationRepository reservationRepository,
                               ReservationStatusRepository statusRepository,
-                              ReservationStatusHistoryRepository historyRepository,
-                              ModelMapper modelMapper) {
+                              ReservationStatusHistoryRepository historyRepository) {
         this.reservationRepository = reservationRepository;
         this.statusRepository = statusRepository;
         this.historyRepository = historyRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Transactional
@@ -67,17 +63,53 @@ public class ReservationService {
     }
 
     public ReservationResponseDto createReservation(ReservationRequestDto dto) {
+        logger.info("[CRIAR RESERVA] Iniciando criação de reserva: clientId={}, flightCode={}", dto.getClientId(), dto.getFlightCode());
+        
         ReservationStatusEntity status = statusRepository.findByCode("CRIADA")
                 .orElseThrow(() -> new RuntimeException("Status não encontrado"));
-        Reservation reservation = new Reservation();
-        reservation.setClientId(dto.getClientId());
-        reservation.setFlightCode(dto.getFlightCode());
-        reservation.setReservationDate(java.time.LocalDateTime.now());
-        reservation.setStatus(status);
-        reservation.setCheckInDone(false);
-        Reservation saved = reservationRepository.save(reservation);
-        logger.info("Reserva criada: {}", saved.getId());
-        return toResponseDto(saved);
+        
+        // Definir reservationDate explicitamente
+        LocalDateTime now = LocalDateTime.now();
+        logger.info("[CRIAR RESERVA] Definindo reservationDate: {}", now);
+        
+        // Criar reserva usando construtor
+        Reservation reservation = new Reservation(dto.getClientId(), dto.getFlightCode(), now, status);
+        logger.info("[CRIAR RESERVA] Reserva criada via construtor: clientId={}, flightCode={}, reservationDate={}, status={}", 
+                   reservation.getClientId(), reservation.getFlightCode(), reservation.getReservationDate(), reservation.getStatus().getCode());
+        
+        try {
+            if (reservation.getReservationDate() == null) {
+                logger.error("[CRIAR RESERVA] reservationDate está nulo antes do save!");
+                throw new RuntimeException("reservationDate está nulo antes do save!");
+            }
+            logger.info("[CRIAR RESERVA] Salvando reserva com reservationDate={}", reservation.getReservationDate());
+            Reservation savedReservation = reservationRepository.save(reservation);
+            logger.info("[CRIAR RESERVA] Reserva salva: id={}, reservationDate={}", savedReservation.getId(), savedReservation.getReservationDate());
+            
+            // Criar histórico de status
+            ReservationStatusHistory history = new ReservationStatusHistory();
+            history.setReservation(savedReservation);
+            history.setNewStatus(status);
+            history.setChangeDate(now);
+            historyRepository.save(history);
+            logger.info("[CRIAR RESERVA] Histórico de status criado");
+            
+            // Retornar DTO
+            ReservationResponseDto responseDto = new ReservationResponseDto();
+            responseDto.setId(savedReservation.getId());
+            responseDto.setClientId(savedReservation.getClientId());
+            responseDto.setFlightCode(savedReservation.getFlightCode());
+            responseDto.setReservationDate(savedReservation.getReservationDate().toString());
+            responseDto.setStatus(savedReservation.getStatus().getCode());
+            responseDto.setCheckInDone(savedReservation.isCheckInDone());
+            
+            logger.info("[CRIAR RESERVA] DTO criado: {}", responseDto);
+            return responseDto;
+            
+        } catch (Exception e) {
+            logger.error("[CRIAR RESERVA] Erro ao salvar reserva: {}", e.getMessage(), e);
+            throw new RuntimeException("Erro ao criar reserva: " + e.getMessage());
+        }
     }
 
     public List<ReservationResponseDto> listByClient(Long clientId) {
@@ -113,7 +145,7 @@ public class ReservationService {
         logger.info("Processando evento de status de voo: {}", event);
     }
 
-    private ReservationResponseDto toResponseDto(Reservation reservation) {
+    public ReservationResponseDto toResponseDto(Reservation reservation) {
         ReservationResponseDto dto = new ReservationResponseDto();
         dto.setId(reservation.getId());
         dto.setClientId(reservation.getClientId());

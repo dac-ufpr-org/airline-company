@@ -1,0 +1,36 @@
+== Info:   Trying 127.0.0.1:8084...
+== Info: Connected to 127.0.0.1 (127.0.0.1) port 8084
+== Info: using HTTP/1.x
+=> Send header, 146 bytes (0x92)
+0000: POST /api/reservations HTTP/1.1
+0021: Host: 127.0.0.1:8084
+0037: User-Agent: curl/8.13.0
+0050: Accept: */*
+005d: Content-Type: application/json
+007d: Content-Length: 2
+0090: 
+=> Send data, 2 bytes (0x2)
+0000: {\
+== Info: upload completely sent off: 2 bytes
+<= Recv header, 15 bytes (0xf)
+0000: HTTP/1.1 400 
+<= Recv header, 32 bytes (0x20)
+0000: Content-Type: application/json
+<= Recv header, 28 bytes (0x1c)
+0000: Transfer-Encoding: chunked
+<= Recv header, 37 bytes (0x25)
+0000: Date: Thu, 19 Jun 2025 22:08:26 GMT
+<= Recv header, 19 bytes (0x13)
+0000: Connection: close
+<= Recv header, 2 bytes (0x2)
+0000: 
+<= Recv data, 113 bytes (0x71)
+0000: 6b
+0004: {"timestamp":"2025-06-19T22:08:26.627+00:00","status":400,"error
+0044: ":"Bad Request","path":"/api/reservations"}
+<= Recv data, 5 bytes (0x5)
+0000: 0
+0003: 
+== Info: shutting down connection #0
+== Info: URL rejected: Port number was not a decimal number between 0 and 65535
+== Info: closing connection #-1

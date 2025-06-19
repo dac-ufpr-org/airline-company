@@ -97,4 +97,17 @@ public class Reservation {
     public void setStatusHistory(List<ReservationStatusHistory> statusHistory) {
         this.statusHistory = statusHistory;
     }
+
+    // Construtor padrão
+    public Reservation() {
+    }
+
+    // Construtor com parâmetros
+    public Reservation(Long clientId, String flightCode, LocalDateTime reservationDate, ReservationStatusEntity status) {
+        this.clientId = clientId;
+        this.flightCode = flightCode;
+        this.reservationDate = reservationDate;
+        this.status = status;
+        this.checkInDone = false;
+    }
 }

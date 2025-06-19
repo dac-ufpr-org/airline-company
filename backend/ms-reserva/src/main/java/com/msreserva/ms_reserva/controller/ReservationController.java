@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/reservations")
+@RequestMapping("/reservations")
 public class ReservationController {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationController.class);
@@ -28,8 +28,17 @@ public class ReservationController {
 
     @PostMapping
     public ReservationResponseDto create(@RequestBody ReservationRequestDto dto) {
-        logger.info("[CRIAR RESERVA] Recebida requisição para criar reserva: {}", dto);
-        return reservationService.createReservation(dto);
+        logger.info("[CRIAR RESERVA] Recebida requisição para criar reserva: clientId={}, flightCode={}", dto.getClientId(), dto.getFlightCode());
+        logger.info("[CRIAR RESERVA] DTO completo: {}", dto);
+        logger.info("[CRIAR RESERVA] DTO fields: clientId={}, flightCode={}", dto.getClientId(), dto.getFlightCode());
+        try {
+            ReservationResponseDto response = reservationService.createReservation(dto);
+            logger.info("[CRIAR RESERVA] Reserva criada com sucesso: {}", response);
+            return response;
+        } catch (Exception e) {
+            logger.error("[CRIAR RESERVA] Erro no controller: {}", e.getMessage(), e);
+            throw e;
+        }
     }
 
     @GetMapping("/client/{clientId}")
@@ -62,11 +71,12 @@ public class ReservationController {
         reservationService.handleFlightStatusEvent(event);
     }
 
-    @PostMapping("/{id}/status")
-    public ResponseEntity<Reservation> changeStatus(
+    @PutMapping("/{id}/status")
+    public ResponseEntity<ReservationResponseDto> changeStatus(
             @PathVariable Long id,
             @RequestBody ReservationStatusChangeDTO dto) {
-        return ResponseEntity.ok(reservationService.changeStatus(id, dto));
+        Reservation updated = reservationService.changeStatus(id, dto);
+        return ResponseEntity.ok(reservationService.toResponseDto(updated));
     }
     @GetMapping("/{id}/history")
     public ResponseEntity<List<ReservationStatusHistory>> getHistory(@PathVariable Long id) {

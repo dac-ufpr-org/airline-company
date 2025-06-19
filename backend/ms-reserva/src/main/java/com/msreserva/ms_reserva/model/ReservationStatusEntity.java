@@ -26,6 +26,10 @@ public class ReservationStatusEntity {
     @OneToMany(mappedBy = "status")
     private List<Reservation> reservations;
     
+    // Construtor padrão necessário para o Hibernate
+    public ReservationStatusEntity() {
+    }
+    
     public ReservationStatusEntity(String code, String description) {
         this.code = code;
         this.description = description;
@@ -36,4 +40,31 @@ public class ReservationStatusEntity {
     }
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 }

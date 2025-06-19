@@ -32,6 +32,10 @@ public class ReservationStatusHistory {
     @JoinColumn(name = "new_status_id", nullable = false)
     private ReservationStatusEntity newStatus;
 
+    // Construtor padrão necessário para o Hibernate
+    public ReservationStatusHistory() {
+    }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public Reservation getReservation() { return reservation; }

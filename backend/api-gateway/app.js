@@ -14,7 +14,15 @@ const app = express();
 
 // Middlewares básicos
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ 
+  limit: '10mb',
+  strict: false,
+  type: 'application/json'
+}));
+app.use(bodyParser.urlencoded({ 
+  extended: true, 
+  limit: '10mb' 
+}));
 
 // Health Check simplificado
 app.get('/health', (req, res) => {
