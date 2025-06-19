@@ -14,16 +14,17 @@ router.get(
   })
 );
 
-// Busca por ID
-router.get(
-  "/api/employees/:id",
+// Cadastro de funcionário
+router.post(
+  "/api/employees",
   createProxyMiddleware({
     target: employeeServiceUrl,
     changeOrigin: true,
     pathRewrite: (path, req) =>
-      path.replace(/^\/api\/employees/, "/ms-funcionario/listar-funcionario")
+      path.replace(/^\/api\/employees/, "/ms-funcionario/cadastrar-funcionario")
   })
 );
+
 
 // Busca por email
 router.get(
@@ -36,15 +37,17 @@ router.get(
   })
 );
 
-// Cadastro de funcionário
-router.post(
-  "/api/employees",
+// Busca por ID
+router.get(
+  "/api/employees/:id",
   createProxyMiddleware({
     target: employeeServiceUrl,
     changeOrigin: true,
-    pathRewrite: { "^/api/employees": "/ms-funcionario" }
+    pathRewrite: (path, req) =>
+      path.replace(/^\/api\/employees/, "/ms-funcionario/listar-funcionario")
   })
 );
+
 
 
 module.exports = router;
