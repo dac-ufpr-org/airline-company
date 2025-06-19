@@ -1,4 +1,4 @@
-package com.msvoo.ms_voo.service;
+package main.java.com.msvoo.ms_voo.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,10 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.voos.voos.dtos.CodigoAeroportoDto;
-import com.voos.voos.exeptions.specific.ListaAeroportoVaziaException;
-import com.voos.voos.models.Aeroporto;
-import com.voos.voos.repositories.AeroportoRepository;
+import com.msvoo.ms_voo.dto.CodigoAeroportoDto;
+import com.msvoo.ms_voo.exceptions.ListaAeroportoVaziaException;
+import com.msvoo.ms_voo.model.Aeroporto;
+import com.msvoo.ms_voo.repository.AeroportoRepository;
 
 @Service
 public class AeroportoService {
