@@ -14,10 +14,10 @@
     <description>Microsserviço de Voos</description>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
-        <relativePath/> <!-- necessário para projetos fora de multi-módulos -->
+        <groupId>com.airlinecompany</groupId>
+        <artifactId>backend</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <properties>
@@ -70,6 +70,16 @@
             <version>1.18.28</version> <!-- ou versão mais recente -->
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.mscontracts</groupId>
+            <artifactId>ms-contracts</artifactId>
+        </dependency>
+
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
     </dependencies>
 
     <build>

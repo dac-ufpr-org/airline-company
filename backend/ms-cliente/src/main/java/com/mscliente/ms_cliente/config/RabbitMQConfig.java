@@ -1,39 +1,51 @@
 package com.mscliente.ms_cliente.config;
 
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import lombok.RequiredArgsConstructor;
+import com.mscontracts.ms_contracts.queues.QueueNames;
 
+/**
+ * Configuração do RabbitMQ para o serviço de cliente.
+ */
 @Configuration
-@RequiredArgsConstructor
 public class RabbitMQConfig {
 
-    private final ConnectionFactory connectionFactory;
-
-    @Bean
-    public RabbitTemplate rabbitTemplate() {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        return rabbitTemplate;
-    }
-
+    /**
+     * Configura o conversor de mensagens para JSON.
+     */
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 
+    /**
+     * Configura o RabbitTemplate com o conversor JSON.
+     */
     @Bean
-    public Queue criarUsuarioQueue() {
-        return new Queue("saga.criar.usuario");
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        return rabbitTemplate;
     }
 
+    /**
+     * Define a fila de cliente.
+     */
     @Bean
-    public Queue compensarUsuarioQueue() {
-        return new Queue("saga.compensar.usuario");
+    public Queue clienteQueue() {
+        return new Queue(QueueNames.CLIENTE_QUEUE, true);
     }
-}
+
+    /**
+     * Define a fila do orchestrator.
+     */
+    @Bean
+    public Queue orchestratorQueue() {
+        return new Queue(QueueNames.ORCHESTRATOR_QUEUE, true);
+    }
+} 
